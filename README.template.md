@@ -1,64 +1,104 @@
-# wordpress-corporate-portfolio01
+# Yohaku Works — WordPress Corporate Portfolio
 
-**余白ワークス — 仕事を整え、人が活きる余白をつくる。**
+**「見た目」だけでなく、更新しやすさまで設計した企業サイトの自主制作ポートフォリオです。**
 
-WordPress案件への応募を想定した自主制作コーポレートサイトです。企業・サービス・記事はすべて架空です。実在企業の受託実績や顧客実績を示すものではありません。
+架空の地域企業「余白ワークス」を題材に、WordPressの標準機能を中心として、公開サイト・CMS編集・レスポンシブ・アクセシビリティまで一体で設計しました。実在企業の受託実績や顧客実績を示すものではありません。
 
-[**Launch in WordPress Playground →**]({{LAUNCH_URL}})
+[公開サイトを体験する →]({{LAUNCH_URL}})　　[CMS管理画面を試す ↗]({{ADMIN_LAUNCH_URL}})
 
-[GitHub上のBlueprintから起動する（短いリンク）](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/rew552/wordpress-corporate-portfolio01/main/blueprint.json)
+どちらも **WordPress Playground** 上に使い捨て環境を作成します。サーバー契約やアカウント作成は不要で、管理画面側は管理者として自動ログインします。
 
-上のリンクで、ブラウザ内にWordPress・テーマ・デモコンテンツを作成し、管理者として自動ログインします。サーバー契約、GitHub Pages、外部APIキーは不要です。初回は実行資産のダウンロードに数十秒〜数分かかります。Chrome / Edge等の現行ブラウザとネット接続をご利用ください。
+![TOP / desktop](screenshots/home-desktop.png)
 
-リンクは自己完結した圧縮版Blueprintを含みます。GitHubのMarkdown変換でもリンクが保持されることを確認しています。リンクを扱えない環境では、[WordPress Playground](https://playground.wordpress.net/) の **New → Write a Blueprint** に [blueprint.json](blueprint.json) の内容を貼り付けて実行してください。ダウンロード後は `demo/launch.html` をブラウザで開く方法も使えます。
+## このポートフォリオで確認できること
 
-## 概要
+- **管理画面から文章・画像・お知らせ・ナビゲーションを更新**できる
+- TOPページもテーマファイルに固定せず、標準ブロックで編集できる
+- 新しいお知らせを投稿すると、TOP・一覧へ自動反映される
+- Site Editorからヘッダー・フッター・共通スタイルを確認できる
+- PC / Tablet / Mobileを想定したレスポンシブ設計
+- キーボード操作、フォーカス表示、見出し階層、reduced motion等に配慮
+- 外部テーマ・外部UIビルダーへ依存せず、WordPress標準機能を中心に構成
 
-想定企業は地域の中小企業の業務改善を支援する架空の「余白ワークス株式会社」です。派手な依存構成より、非エンジニアが更新できるWordPress標準機能と保守性を優先しました。
+| 公開サイト | WordPress管理画面 |
+|---|---|
+| ![TOP / mobile](screenshots/home-mobile.png) | ![Playground admin](screenshots/playground-admin.png) |
 
-Repository description:
+## CMSデモの試し方
 
-> A WordPress corporate website portfolio showcasing responsive design and common business features.
+公開サイト上部の **PORTFOLIO DEMO** バーから管理画面へ移動できます。管理画面のダッシュボードには「このデモで試せること」を表示しています。
 
-- Block Theme / `theme.json` v3 / Gutenberg / Playground / Blueprint
-- 投稿・カテゴリ・アイキャッチ・固定ページ・Query Loop・Navigationを標準機能で実装
-- 外部テーマや外部プラグインは不要。専用デモフォームプラグインのみ同梱
-- WordPress本体、実サイトの認証情報、個人情報はGit管理しません
+1. **TOPページを編集** — コピーやセクションをブロックエディターで変更
+2. **お知らせを追加** — 投稿を公開し、TOP・一覧への自動反映を確認
+3. **画像を差し替え** — メディアライブラリから追加・置換
+4. **サイト全体を編集** — Site Editorでヘッダー・フッター・Navigationを確認
+5. **公開サイトを確認** — 編集結果をそのままブラウザで確認
+
+Playgroundはデモ専用の使い捨て環境です。変更はGitHubのソースへ反映されません。フォームも入力検証と完了表示のみで、メール送信・保存・外部通信は行いません。
+
+## 制作方針
+
+想定企業は、地域の中小企業の業務改善を支援する架空企業です。派手なプラグイン構成ではなく、**非エンジニアが運用を継続できること**と、引き継ぎやすい実装を優先しました。
+
+- Block Theme / `theme.json` v3
+- 固定ページ + Gutenberg標準ブロック
+- 標準投稿 + Query Loop
+- WordPress Navigation / Site Editor
+- Playground / Blueprintによるブラウザ完結デモ
+- テーマとデモ固有挙動を分離
+- 架空の成果数値・顧客ロゴ・実績を使用しない
 
 ## ページ・機能
 
 | ページ | パス | 内容 |
 |---|---|---|
-| TOP | `/` | 編集可能なヒーロー、サービス、最新投稿、相談導線 |
+| TOP | `/` | Editorial Hero、CMSデモ導線、サービス、最新投稿、CTA |
 | 私たちについて | `/about/` | 理念、画像ブロック、価値観 |
 | サービス | `/services/` | 3つの支援内容、進め方 |
 | 会社概要 | `/company/` | 架空企業の情報表 |
 | お知らせ | `/news/` | 標準投稿一覧、分類、ページ送り、空状態 |
 | お知らせ詳細 | `/site-open/` 等 | 本文、カテゴリ、アイキャッチ、前後の記事 |
-| お問い合わせ | `/contact/` | ラベル・必須・メール形式・最小文字数・同意・完了表示 |
+| お問い合わせ | `/contact/` | 必須・形式・同意・完了表示を含むデモフォーム |
 | 資料 | `/resources/` | 同梱PDF、パスワード保護例への導線 |
 | 保護ページ | `/partners/` | WordPress標準のパスワード保護 |
 | プライバシー | `/privacy/` | デモ上のデータ取り扱い |
-| その他 | 存在しないURLなど | 404、検索、カテゴリ一覧、モバイルナビ |
+| その他 | 404 / Search / Category | 共通デザイン・検索・一覧 |
 
-## デモを試す
+## CMSで更新できる箇所
 
-1. Launchリンクを開き、起動完了を待ちます。
-2. 公開画面の各ページ、スマートフォン幅のナビ、PDFをご確認ください。
-3. フッターの「デモ管理画面」から管理画面へ移動します。
-4. **投稿 → お知らせ記事 → 編集** で見出し・本文・カテゴリ・アイキャッチを編集し、更新します。
-5. **固定ページ → 私たちについて → 編集** で本文や画像を差し替えます。
-6. **外観 → エディター** で共通ヘッダー・フッター・色・文字を確認できます。
+| 更新対象 | 操作 |
+|---|---|
+| TOPの文章・サービス紹介 | 固定ページ「ホーム」の標準ブロックを編集 |
+| 新しいお知らせ | 投稿を追加し、カテゴリ・抜粋・アイキャッチを設定 |
+| お知らせ一覧 | 投稿データから自動表示。本文の手動更新不要 |
+| 会社情報・サービス本文 | 対象の固定ページを編集 |
+| 画像 | 画像ブロックの「置換」からメディアを選択・アップロード |
+| サイト名 | 設定 → 一般、またはSite Editorのサイトタイトル |
+| ナビゲーション | 外観 → エディター → Navigationブロック |
+| 共通ヘッダー・フッター | 外観 → エディター |
+| 配色・書体 | Site Editorのスタイル / `theme.json` |
+| PDF | メディアへ追加して資料ページのリンクを置換 |
+| 保護設定 | 固定ページの公開状態 → パスワード保護 |
 
-Playgroundはデモ専用の使い捨て環境です。変更はGitHubのソースに反映されません。再起動・ブラウザの状態により消えることがあるため、残したい変更はPlaygroundのエクスポート機能をご利用ください。
+## 技術設計
 
-管理画面はBlueprintの `login: true` により自動ログインします。実管理者のパスワードは含めていません。保護ページのパスワード **`yohaku-demo`** は公開デモ専用の無害な値です。
+`templates/front-page.html` は固定ページ本文を表示するだけにし、TOPの内容をテーマテンプレートへ閉じ込めていません。文章、カード、画像、CTAをCMS側で編集できます。
 
-フォームはブラウザ内で入力検証と完了表示だけを行います。メール送信・サーバー保存・LocalStorage保存・外部通信は行いません。テスト値 `デモ 太郎` / `demo@example.com` を使用してください。実際の問い合わせ受付には、送信・保存・スパム対策・運用設計を別途実装する必要があります。
+お知らせは標準投稿を利用し、CPTは追加していません。問い合わせフォームのデモ挙動、Portfolio Demo Bar、Dashboard GuideはPlayground専用プラグインへ分離し、テーマ本体はプレゼンテーションに集中させています。
+
+配色は深いグリーン / オフホワイト / ライムを軸にし、日本語の折り返し、行間、余白、Editorial Layoutを調整しています。外部フォント・外部画像サービス・アクセス解析への依存はありません。
+
+## 品質確認
+
+`npm run validate` ではBlueprint、公開サイト / 管理画面Launch URL、生成物とソースの整合性、CMSデモ導線などを静的検証します。
+
+`npm run quality` ではローカルPlaygroundを起動し、**Chromium / Firefox / WebKit**、375 / 390 / 768 / 1024 / 1440px、主要ページ、404、横スクロール、h1、axeによるWCAG A/AAのserious / critical違反を確認します。
+
+詳細は [docs/test-checklist.md](docs/test-checklist.md) を参照してください。
 
 ## ローカル確認
 
-Node.js **24.18.0以上** とnpm **11.16.0以上**をご用意ください。PHP・MySQL・Dockerのインストールは不要です。
+Node.js **24.18.0以上** とnpmをご用意ください。PHP・MySQL・Dockerのローカルインストールは不要です。
 
 ```sh
 npm ci
@@ -67,78 +107,37 @@ npm run validate
 npm start
 ```
 
-表示された `http://127.0.0.1:9400` を開きます。公式Playground CLIがPHP/WASMとSQLiteでWordPressを実行します。終了は Ctrl+C。初回起動にはネット接続が必要です。WordPressの実行データはリポジトリに含めません。
+ブラウザQAまで実施する場合はPlaywrightのブラウザを用意してから実行します。
 
-テーマ・フォーム・初期コンテンツを変更したら `npm run build` でBlueprintとLaunchリンクを再生成し、新しい環境を起動します。起動済み環境への自動反映はありません。READMEは `README.template.md` が編集元です。
+```sh
+npx playwright install chromium firefox webkit
+npm run quality
+```
+
+テーマ・デモコンテンツを変更したら `npm run build` でBlueprint、公開サイトLaunch、管理画面Launch、READMEを再生成します。READMEの編集元は `README.template.md` です。
 
 ## リポジトリ構成
 
 ```text
 .
 ├── theme/yohaku/             # 自作Block Theme
-│   ├── theme.json            # 配色・文字・幅・余白
-│   ├── templates/            # TOP / 固定 / 投稿 / 一覧 / 検索 / 404
-│   ├── parts/                # 共通ヘッダー・フッター
-│   ├── patterns/             # 共通部品・サービスカード
-│   ├── assets/               # CSS・自作図版・デモPDF
-│   ├── style.css
-│   └── functions.php
-├── plugins/yohaku-demo-form/ # 小さな独立したデモフォーム
-├── demo/                    # ブロック本文・記事JSON・初期化PHP・起動HTML・圧縮起動版
-├── scripts/                 # Blueprint生成・検証
-├── blueprint.json           # 生成済み、公開URL未設定でも実行可能
-├── docs/                    # 要件・設計・検証記録・公開手順
-├── screenshots/             # 実WordPress上の確認画像
-├── README.template.md       # README編集元
-├── README.md                # Launchリンクを含む生成済みREADME
-└── package.json / package-lock.json
+├── plugins/yohaku-demo-form/ # CMSデモガイド + デモフォーム
+├── demo/                     # 初期コンテンツ・初期化・生成Launch Blueprint
+├── scripts/                  # build / validate / browser quality
+├── blueprint.json            # Playground用Blueprint
+├── docs/                     # 要件・設計・検証記録・公開手順
+├── screenshots/              # 実WordPress上の確認画像
+├── README.template.md        # README編集元
+└── README.md                 # buildで生成
 ```
 
-## CMSでの更新箇所
+## 制約
 
-| 更新対象 | 操作 |
-|---|---|
-| TOPの文章・サービス紹介 | 固定ページ「ホーム」の各標準ブロックを編集 |
-| 新しいお知らせ | 投稿を追加し、カテゴリ・抜粋・アイキャッチを設定 |
-| お知らせ一覧 | 投稿データから自動表示。本文の手動更新不要 |
-| 会社情報・サービス本文 | 対象の固定ページを編集 |
-| 画像 | 画像ブロックの「置換」からメディアを選択・アップロード |
-| ロゴ相当のサイト名 | 設定 → 一般、またはサイトエディターのサイトタイトル |
-| ナビゲーション | 外観 → エディター → ヘッダーのNavigationブロック |
-| 共通フッター | 外観 → エディター → フッター |
-| 配色・書体 | サイトエディターのスタイル / `theme.json` |
-| PDF | メディアへPDFを追加して資料ページのリンクを置換 |
-| 保護設定 | 固定ページの公開状態 → パスワード保護 |
-
-## 設計ポイント
-
-`templates/front-page.html` から固定ページ本文を表示し、TOPをテーマファイルに閉じ込めません。標準ブロックで文章・カード・画像を編集できます。お知らせは標準投稿を使い、CPTは追加していません。フォームの振る舞いはテーマから分離しました。
-
-余白、深いグリーン、オフホワイト、自作のワークスペース図版を軸に、架空の成果数値や顧客ロゴに頼らない信頼感を設計しました。外部フォント・画像サービス・アクセス解析への依存はありません。
-
-`main` / `header` / `footer` / Navigation、WordPressのスキップリンク、見出し階層、フォーカス表示、フォームラベル、完了通知、reduced motionに配慮しています。タイトルはWordPress標準、単一ページの説明文はテーマ、canonicalとサイトマップはWordPress標準を利用します。デモ環境は検索エンジンに出さない `blog_public=0` とし、保護ページの本文を説明文に含めません。
-
-## テスト・スクリーンショット
-
-詳細な実施結果と未実施範囲は [docs/test-checklist.md](docs/test-checklist.md) を参照してください。再現手順と採用判断は [docs/design.md](docs/design.md) に記載しています。
-
-![TOP / desktop](screenshots/home-desktop.png)
-![TOP / mobile](screenshots/home-mobile.png)
-![Gutenbergでの編集](screenshots/editor-page.png)
-
-## 公開方法
-
-公開先は [rew552/wordpress-corporate-portfolio01](https://github.com/rew552/wordpress-corporate-portfolio01) です。GitHub Pagesの設定は不要です。自己完結したLaunchリンクは所有者名・ブランチ名に依存しません。短い `?blueprint-url=` リンクにしたい場合は [公開手順](docs/publishing.md) に従います。
-
-## 制約と改善候補
-
-- デモフォームは実際の問い合わせ受付を行いません。
-- パスワード保護はWordPress標準機能の確認用で、機密情報を置きません。
-- 地図、実在住所、実在顧客、成果実績、電話番号は架空企業のため掲載していません。
-- `preferredVersions.wp: latest` は現在の安定版を使います。将来の互換性は更新時に再検証してください。
-- 自動投入した初期本文と、CMS上の編集内容は別です。編集結果を採用する場合はソース側へ反映してください。
-- 実案件への転用時は、実情報への置換、送信基盤、運用・バックアップ・セキュリティ更新、対象ブラウザでの追加確認が必要です。
-- 将来的にはOGP画像、構造化データ、フォームの本番対応、編集者向け権限・承認フローを検討できます。
+- フォームは実際の問い合わせ受付を行いません。
+- Playgroundの編集内容は再起動等で失われる場合があります。
+- `preferredVersions.wp: latest` のためWordPress更新時は再検証します。
+- 実案件への転用時は、実情報への置換、送信基盤、スパム対策、バックアップ、権限、更新運用を別途設計します。
+- WebKitによる自動試験はSafari相当エンジンの回帰確認であり、実機Safariそのものを保証するものではありません。
 
 ## ライセンス
 

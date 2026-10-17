@@ -9,7 +9,9 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "start": "wp-playground-cli server --blueprint=blueprint.json --port=9400",
-    "validate": "node scripts/validate.mjs"
+    "validate": "node scripts/validate.mjs",
+    "quality:browser": "node scripts/quality.mjs",
+    "quality": "node scripts/run-quality.mjs"
   },
   "devDependencies": {
     "@wp-playground/cli": "3.1.58",

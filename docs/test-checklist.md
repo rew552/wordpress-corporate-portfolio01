@@ -1,80 +1,72 @@
 # テスト記録・再確認チェックリスト
 
-実施日：2026-10-17（日本時間）
+最終更新：2026-10-17（日本時間）
 
-## 環境
-- WordPress **7.1.3**（Blueprintの `latest` が取得した安定版）
-- PHP **8.3** / SQLite / 公式Playground CLI **3.1.58**
-- Node.js **24.19.0**
-- Chromium / Chrome for Testing **153.0.8010.12**、macOS
-- 公式ブラウザ版 `https://playground.wordpress.net/` でも実行
+## 自動検証
 
-## 実施結果
+### `npm run validate`
 
-| 項目 | 結果・確認内容 |
+- WordPress Playground Blueprint公式Schema
+- 公開サイトLaunch / 管理画面LaunchのBlueprint URLと生成物の整合性
+- 圧縮Launch Blueprintと可読Blueprintのファイル・バイナリ一致
+- `theme.json` v3
+- Portfolio Demo Bar / Dashboard Guide / CMSデモセクションの存在
+- favicon / OGPアセットの存在
+- READMEのCMS訴求・管理画面スクリーンショット
+
+### `npm run quality`
+
+Playgroundをローカル起動し、以下を自動確認する。
+
+- Chromium / Firefox / WebKit
+- TOP / Services / Contact / News / 404
+- HTTPステータス
+- `main` と単一 `h1`
+- 横スクロールの発生有無
+- axe WCAG 2 A / AA・2.1 A / AAのserious / critical違反
+- Chromiumで 375 / 390 / 768 / 1024 / 1440px
+- 1440px / 390px のTOPスクリーンショット更新
+
+WebKitはSafari相当エンジンの回帰試験であり、macOS / iOS実機Safariそのものを保証するものではない。
+
+## 既存機能の手動確認実績
+
+初期実装時に以下を実WordPress / 公式Playgroundで確認済み。
+
+| 項目 | 確認内容 |
 |---|---|
-| theme.json公式仕様 | PASS：取得時点のWordPress公式theme.json JSON Schemaに適合 |
-| 公式Blueprint仕様 | PASS：公式CLI同梱JSON Schemaに適合 |
-| READMEのLaunchリンク | PASS：URLを復号し圧縮起動版との一致、圧縮データ展開後に可読Blueprintとのファイル・バイナリ・後続ステップの一致を確認 |
-| 未公開状態からの起動 | PASS：テーマ・専用プラグイン・本文・バイナリを自己完結Blueprintから展開 |
-| 公式ブラウザ版起動 | PASS：READMEと同じリンクでTOP表示・サービスへのスコープ内移動 |
-| GitHubでのREADME表示 | PASS：公式Markdown変換APIでLaunchのhrefが保持され、元URLと完全一致（28,968文字） |
-| GitHub公開・短い起動リンク | PASS：Public / mainへ公開。raw BlueprintがHTTP 200・CORS *・ローカルと一致。公開URLからPlayground起動、管理画面自動ログイン、固定ページ保存・公開反映を確認 |
-| 管理画面 | PASS：公式ブラウザ版で日本語管理画面へ自動ログイン |
-| 公式ブラウザ版CMS | PASS：固定ページへブロック追加→保存→公開画面で追加内容を確認 |
-| 公開画面 | PASS：TOP・紹介・サービス・会社・お知らせ一覧・詳細・問い合わせ・資料・プライバシーの9画面、200・正しいh1・main・自主制作注記 |
-| レスポンシブ | PASS：375 / 390 / 768 / 1440px × TOP・サービス・会社・問い合わせ・お知らせ一覧。横はみ出しなし |
-| モバイルナビ | PASS：390pxで開閉・オーバーレイの表示確認 |
-| 投稿一覧・分類 | PASS：一覧3件、カテゴリ「お知らせ」2件、カテゴリから対象記事へ遷移可能 |
-| 検索 | PASS：業務で検索し関連コンテンツを表示 |
-| 投稿詳細ルーティング | PASS：`/site-open/` に正しい記事見出し・本文を表示 |
-| Gutenbergブロック | PASS：TOP・紹介・投稿詳細を開き、入れ子を含む全ブロックがvalid |
-| 固定ページ編集 | PASS：標準段落ブロック追加→保存ボタン→公開画面反映→元の本文に復元 |
-| 投稿編集 | PASS：既存お知らせの段落追加→保存ボタン→詳細URLへの反映→復元 |
-| 画像差し替え | PASS：画像ブロックの置換→アップロード→標準メディア登録→保存→公開imgのURL変更を確認→元の画像に復元 |
-| アイキャッチ | PASS：デモ記事への添付画像登録、詳細画面の画像読み込みを確認 |
-| 画像表示 | PASS：公開main内の全画像が読み込み完了・naturalWidthあり |
-| フォーム必須 | PASS：空のまま送信して完了表示されない |
-| フォーム形式 | PASS：不正メールでcheckValidity=false。正しい入力と同意でtrue |
-| フォーム完了 | PASS：完了通知、フォーカス移動、入力リセットを確認 |
-| フォーム送信なし | PASS：フォーム操作中のPOST 0件、LocalStorage 0件。保存・通信APIを持たない実装も確認 |
-| JavaScript無効 | PASS：送信ボタンが無効、noscript案内が表示される |
-| PDF | PASS：リンク先200、`%PDF`ヘッダー。1ページを画像化し日本語・余白・図版・文字切れを目視確認 |
-| パスワード保護 | PASS：未認証では本文なし、誤パスワードは解除されず、正しい値で本文表示 |
-| 404 | PASS：存在しないURLで404ステータスと専用テンプレートを表示 |
-| 基本アクセシビリティ | PASS：main/header/footer、単一h1、画像alt、入力ラベル、フォーカスCSS、標準スキップリンク、標準Navigationを確認 |
-| JavaScript例外 | PASS：ローカル一連の画面操作でpageerror 0件 |
-| ローカル再現 | PASS：配布先ディレクトリでnpm ci / build / validate / startを実行 |
-| 開発依存 | PASS：Ajv・qs修正後、npm auditで既知の脆弱性0件（実施時点） |
+| CMS編集 | 固定ページ・投稿・画像差し替え・保存・公開反映 |
+| 管理画面 | 日本語管理画面への自動ログイン |
+| 投稿 | 一覧、カテゴリ、詳細、Query Loop |
+| フォーム | 必須、メール形式、同意、完了通知、保存・外部送信なし |
+| モバイルナビ | 390pxで開閉・オーバーレイ |
+| PDF | HTTP 200 / PDFヘッダー / 目視 |
+| 保護ページ | 誤・正パスワード |
+| 404 / Search | 専用テンプレート・検索結果 |
+| Gutenberg | TOP・固定ページ・投稿でブロックvalid |
+| キーボード | フォーカス表示・標準Navigation・フォームラベル |
+| JavaScript | 一連操作でpageerror 0件 |
 
-## 確認画像
+Issue #1以降は、見た目の変更による基本回帰を `npm run quality` へ寄せ、CMSの保存操作などWordPress管理画面固有の操作は必要に応じて手動確認する。
 
-- `screenshots/home-desktop.png`：PC版全体
-- `screenshots/home-mobile.png`：390px版全体
-- `screenshots/navigation-mobile.png`：モバイルナビ
-- `screenshots/contact.png` / `contact-success.png`：フォーム前後
-- `screenshots/editor-page.png` / `editor-post.png`：標準ブロックエディター
-- `screenshots/editor-image.png`：画像ブロックの編集
-- `screenshots/playground-browser.png`：公式Playgroundの公開画面とDock
-- `screenshots/playground-admin.png` / `playground-editor.png`：公式ブラウザ版の管理・保存画面
+## 推奨リリース前確認
 
-公開画面のスクリーンショットはログイン中ですが、デモ管理者の「サイトを見るときにツールバーを表示」を無効にしています。管理画面への導線はフッターにあります。画面・データはすべて架空デモです。
+- 実機iPhone / AndroidでTOP、ナビ、問い合わせを目視
+- macOS Safari最新版でTOP、主要下層、管理画面への導線を目視
+- CMSでTOPコピー変更 → 更新 → 公開画面確認
+- 新規投稿 → TOP / News一覧への反映
+- 画像差し替え → 公開画面確認
+- Lighthouseを参考値として確認
+- OGPデバッガー等、本番公開先でのSNSカード確認
 
 ## 再現手順
 
-1. `npm ci && npm run build && npm run validate && npm start` を実行する。
-2. READMEのLaunchリンクを新しいブラウザ環境でも開く。
-3. 公開ページ一覧を順に確認し、PC・スマートフォン幅に変更する。
-4. お知らせと固定ページにテスト段落を追加して保存し、公開画面を再読み込みする。
-5. 画像ブロックの「置換」からテストPNGをアップロードし、表示を確認する。
-6. お知らせのアイキャッチ・カテゴリを設定し、一覧・詳細の表示を確認する。
-7. テスト入力のみでフォームの必須・不正メール・同意・完了を試す。
-8. 資料PDF、誤/正パスワード、存在しないURLを確認する。
+```sh
+npm ci
+npm run build
+npm run validate
+npx playwright install chromium firefox webkit
+npm run quality
+```
 
-## 検証範囲と留意点
-
-- Safari / Firefox / 実機スマートフォン、スクリーンリーダー、全WCAG項目の網羅試験、負荷試験は未実施。
-- デモ投稿3件のためページ送りの複数ページ状態は未検証。core Query Paginationを使用し、6件/ページで構成。
-- 最新WordPressは将来変わるため、依存やWordPressの更新時には再確認する。
-- 起動時に未使用の標準テーマの翻訳取得警告が出る場合がある。本テーマ、日本語コア管理画面、デモ初期化の完了は確認済み。
-- 公開先は `rew552/wordpress-corporate-portfolio01`。GitHub公式Markdown変換APIによる自己完結リンクの保持は確認済み。公開URLからの起動・CMS編集まで確認済み（2026-10-17）。現在の自己完結Launchリンクは公開URLに依存しない。
+公開先は `rew552/wordpress-corporate-portfolio01`。Playgroundの公開サイト用・管理画面用Blueprint URLをそれぞれ生成する。
