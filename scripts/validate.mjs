@@ -57,4 +57,15 @@ assert(plugin.includes('portfolio-demo-bar'));
 assert(plugin.includes('yohaku_demo_guide'));
 assert((await read('theme/yohaku/assets/favicon.svg')).includes('<svg'));
 assert((await read('theme/yohaku/assets/og-image.svg')).includes('1200'));
-console.log('PASS: Blueprint schema, short public/admin Launch links, CMS demo affordances, visual assets, and required documentation.');
+
+/* Issue #4 visual-system regression guards. */
+for (const primitive of ['section-shell','section-header','split-grid','content-measure','wide-content']) {
+ assert(css.includes(`.${primitive}`),`Missing layout primitive: ${primitive}`);
+ assert(home.includes(primitive),`Home does not use layout primitive: ${primitive}`);
+}
+assert(!/max-width\s*:[^;{}]*ch\b/i.test(css),'Do not use ch for Japanese max-width');
+assert(home.indexOf('02 / OUR APPROACH') < home.indexOf('06 / CMS DEMO'),'CMS demo must stay after the corporate story');
+assert(home.includes('news-featured') && home.includes('news-compact'),'Editorial News layout missing');
+assert(home.includes('DEMO CASE'),'Demo case section missing');
+
+console.log('PASS: Blueprint schema, Playground artifacts, CMS affordances, Issue #4 layout primitives, CJK typography guards, visual assets, and required documentation.');

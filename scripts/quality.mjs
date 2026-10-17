@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';
 
 const base = 'http://127.0.0.1:9400';
-const routes = ['/', '/services/', '/contact/', '/news/', '/definitely-not-found/'];
+const routes = ['/', '/about/', '/services/', '/contact/', '/news/', '/definitely-not-found/'];
 const browserTypes = [['chromium', chromium], ['firefox', firefox], ['webkit', webkit]];
 
 const formatViolations = (violations) => violations.map((violation) => {
@@ -37,15 +37,20 @@ for (const [name, type] of browserTypes) {
       assert.equal(blocking.length, 0, `${name} ${route}: accessibility violations\n${formatViolations(blocking)}`);
     }
     if (name === 'chromium') {
-      await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
-      await page.setViewportSize({ width: 1440, height: 1000 });
-      await page.screenshot({ path: 'screenshots/home-desktop.png', fullPage: true });
-      for (const width of [375, 390, 768, 1024, 1440]) {
-        await page.setViewportSize({ width, height: 900 });
+      const screenshots = new Map([
+        [390, 'screenshots/home-mobile.png'],
+        [768, 'screenshots/home-tablet.png'],
+        [1440, 'screenshots/home-desktop.png'],
+        [1536, 'screenshots/home-wide.png'],
+      ]);
+      for (const width of [375, 390, 768, 1024, 1280, 1440, 1536]) {
+        await page.setViewportSize({ width, height: 1000 });
         await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
+        await page.locator('main').waitFor();
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
         assert(overflow <= 1, `chromium ${width}px: horizontal overflow ${overflow}px`);
-        if (width === 390) await page.screenshot({ path: 'screenshots/home-mobile.png', fullPage: true });
+        const screenshot = screenshots.get(width);
+        if (screenshot) await page.screenshot({ path: screenshot, fullPage: true });
       }
     }
     await context.close();
@@ -54,4 +59,4 @@ for (const [name, type] of browserTypes) {
   }
 }
 
-console.log('PASS: Chromium / Firefox / WebKit, 375–1440px responsive checks, and axe serious/critical accessibility scan.');
+console.log('PASS: Chromium / Firefox / WebKit, 375–1536px responsive checks, desktop/tablet/mobile visual snapshots, and axe serious/critical accessibility scan.');

@@ -1,13 +1,45 @@
 # 設計メモ
 
 ## デザイン
-深いグリーン `#163d35`、オフホワイト `#f7f8f2`、ライム `#d9ec9b`。最大幅1200px、本文760px。日本語の行間と余白を広くとる。自作のSVG・PNG・PDFを使い、外部写真やフォント配信に依存しない。実在オフィスの写真や実績写真を装わない。
+
+深いグリーン `#163d35`、オフホワイト `#f7f8f2`、ライム `#d9ec9b` を基調にする。色だけにブランド表現を依存せず、**タイポグラフィ、12カラム相当のグリッド、罫線、セクション番号、余白、画像トリミング**を一貫したルールとして使う。自作のSVG・PNG・PDFを使い、外部写真やフォント配信に依存しない。実在オフィスの写真や実績写真を装わない。
+
+### レイアウトプリミティブ
+
+WordPressの `theme.json` に `contentSize: 760px / wideSize: 1240px` を持たせ、Blockの `alignwide` とlayout属性を幅管理の正本にする。CSSでセクションごとに `max-width: ... !important` を上書きしない。
+
+再利用する主要クラス:
+
+- `section-shell`: セクションの縦余白と境界
+- `section-header`: 見出し5 / 説明7を基本とする編集的なグリッド
+- `split-grid`: 2カラムの基本グリッド
+- `content-measure`: 長文を読みやすい幅へ制限
+- `wide-content`: wide領域を使うコンテンツ
+- `number-label` / `eyebrow`: セクション番号・メタ情報の視覚言語
+
+### タイポグラフィ
+
+日本語の `max-width` に `ch` を使わない。`rem` / `em` / grid spanで幅を決め、本文は `line-break: strict`、見出しだけ `text-wrap: balance` を使う。主要リード文は広めのmeasureを確保し、1文字だけが次行に落ちる狭い固定幅を作らない。
+
+役割は次の通り。
+
+- Heading: 構造と視線の起点。大きさよりグリッド上の位置を優先
+- Lead: セクションの要点。18–23px程度、2–3行を目安
+- Body: 16px / 約1.9行間
+- Meta / Eyebrow: 10–11px、字間を広くして階層を補助
+- Number: `01 / 02 / 03` をHero、Services、About、Process等で共通化
+
+### セクションリズム
+
+TOPは `Hero → Approach → Services → Demo Case → News → CMS Demo → CTA` とし、Hero直後に企業の価値・考え方を続ける。CMSデモは上部のPortfolio Demo Barで存在を知らせ、詳細は企業サイトの物語を中断しない後半へ置く。
+
+Servicesは均質な白カード3枚ではなく、番号・キーワード・説明・outcomeを横方向に読むindex型へ変更。Newsは最新1件を大きく扱い、残り2件をcompact listにする。下層はAbout / Services / Contactごとに専用レイアウトを持たせ、文章の縦積みだけにしない。
 
 ## コンテンツモデル
 固定ページ9件（TOP / 紹介 / サービス / 会社 / お知らせ用 / 問い合わせ / 資料 / 保護 / プライバシー）、標準投稿3件、カテゴリ2件、メディアPNG1件。PDFはテーマ内に同梱し、実運用ではメディアへの置換を想定。CPTが必要な独立データ要件がないため追加しない。
 
 ## テーマ・CMS
-Block Theme。theme.json v3で配色・幅・文字・エディター設定を共有。header/footerはtemplate partからpatternを参照。pattern内のURLはhome_urlでPlaygroundのスコープに合わせる。Navigationはモバイルでオーバーレイへ切り替える。TOPを含む本文はpost-contentから表示し、標準ブロックで編集可能。サービスカードは再利用可能なpatternも用意。Query Loopは標準投稿を日付降順で表示。一覧はmain queryを継承し、検索・カテゴリ・ページ送りに対応。TOPのみ3件の独立クエリ。
+Block Theme。theme.json v3で配色・幅・文字・エディター設定を共有。header/footerはtemplate partからpatternを参照。pattern内のURLはhome_urlでPlaygroundのスコープに合わせる。Navigationはモバイルでオーバーレイへ切り替える。TOPを含む本文はpost-contentから表示し、標準ブロックで編集可能。サービスカードは再利用可能なpatternも用意。Query Loopは標準投稿を日付降順で表示。一覧はmain queryを継承し、検索・カテゴリ・ページ送りに対応。TOPでは最新1件と続く2件を別Query Loopで編集的に見せる。
 
 ## フォーム
 専用プラグインにショートコードとスクリプトを分離。外部プラグインより小さく、依存とデータ取り扱いを説明しやすい。ブラウザ標準制約検証を使い、submitをキャンセルして完了通知にフォーカスする。JS無効時は送信ボタンを無効化。入力欄にnameを付けず、fetch / storage / mail / DB保存処理を持たない。テーマ変更後もフォーム機能を維持できる。実受付には別実装が必要。

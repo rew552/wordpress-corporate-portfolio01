@@ -61,11 +61,22 @@ wp_update_attachment_metadata($media, wp_generate_attachment_metadata($media, $u
 update_post_meta($media, '_wp_attachment_image_alt', '仕事の仕組みを整えるイメージのオリジナル図版');
 $replace = function ($text) use ($asset, $home, $admin, $media) { return strtr($text, ['{{ASSET}}'=>$asset, '{{HOME}}'=>$home, '{{ADMIN}}'=>$admin, '{{MEDIA}}'=>wp_get_attachment_url($media)]); };
 $pages = ['home'=>'ホーム','about'=>'私たちについて','services'=>'サービス','company'=>'会社概要','news'=>'お知らせ','contact'=>'お問い合わせ','resources'=>'資料ダウンロード','partners'=>'パートナー向け資料','privacy'=>'プライバシーポリシー'];
+$page_excerpts = [
+    'home' => '業務の流れを見直し、必要なデジタルだけを取り入れる。仕事に余白をつくるための架空の業務改善パートナーです。',
+    'about' => '現場の声を起点に、よく聴き、小さく試し、自分たちで続けられる仕組みをつくる。余白ワークスの考え方をご紹介します。',
+    'services' => '業務の整理、仕組みの導入、定着の伴走。現状整理から運用までを段階に合わせて支援する3つのサービスです。',
+    'company' => '自主制作ポートフォリオとして設定した、架空企業・余白ワークスの基本情報をご紹介します。',
+    'news' => '架空企業・余白ワークスのお知らせです。WordPressの投稿機能とQuery Loopのデモとして更新できます。',
+    'contact' => '相談内容がまとまっていない段階からでも。入力から完了状態まで試せる、保存・送信を行わないデモフォームです。',
+    'resources' => '架空サービスの資料ダウンロード導線と、WordPressで管理するコンテンツ設計のデモです。',
+    'partners' => 'パートナー向け情報を想定したパスワード保護ページのデモです。',
+    'privacy' => '自主制作ポートフォリオにおけるデータ取り扱いと、デモフォームの仕様をご案内します。',
+];
 $ids = [];
 foreach ($pages as $slug=>$title) {
     $existing = get_page_by_path($slug);
     if ($existing) { $ids[$slug] = $existing->ID; continue; }
-    $data = ['post_type'=>'page','post_author'=>1,'post_status'=>'publish','post_name'=>$slug,'post_title'=>$title,'post_content'=>$replace(file_get_contents($source . '/content/' . $slug . '.html')),'post_excerpt'=>'架空企業・余白ワークスの自主制作ポートフォリオ。' . $title . 'をご紹介します。'];
+    $data = ['post_type'=>'page','post_author'=>1,'post_status'=>'publish','post_name'=>$slug,'post_title'=>$title,'post_content'=>$replace(file_get_contents($source . '/content/' . $slug . '.html')),'post_excerpt'=>$page_excerpts[$slug] ?? ('架空企業・余白ワークスの自主制作ポートフォリオ。' . $title . 'をご紹介します。')];
     if ($slug === 'partners') { $data['post_password'] = 'yohaku-demo'; }
     $id = wp_insert_post($data, true);
     if (is_wp_error($id)) { throw new RuntimeException($id->get_error_message()); }
