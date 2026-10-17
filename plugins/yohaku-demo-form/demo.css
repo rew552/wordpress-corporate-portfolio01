@@ -1,1 +1,27 @@
-.portfolio-demo-bar{position:relative;z-index:50;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:14px 22px;padding:10px clamp(20px,4vw,64px);background:#0d2b25;color:#fff;border-bottom:1px solid rgba(217,236,155,.3);font-size:12px;line-height:1.4}.portfolio-demo-bar__label{font-weight:800;letter-spacing:.16em;color:#d9ec9b;white-space:nowrap}.portfolio-demo-bar__message{margin:0;color:#f7f8f2;text-wrap:pretty}.portfolio-demo-bar a{color:#fff;text-decoration:none}.portfolio-demo-bar__link{font-weight:650;text-underline-offset:4px}.portfolio-demo-bar__link:hover{text-decoration:underline}.portfolio-demo-bar__button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:36px;padding:8px 14px;border-radius:999px;background:#d9ec9b;color:#163d35!important;font-weight:800;white-space:nowrap;transition:transform .18s ease,box-shadow .18s ease}.portfolio-demo-bar__button:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.14)}.portfolio-demo-bar a:focus-visible{outline:3px solid #fff;outline-offset:3px}.yohaku-demo-dashboard__lead{font-size:14px;line-height:1.75;margin:4px 0 16px}.yohaku-demo-dashboard__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.yohaku-demo-dashboard__grid a{display:flex;flex-direction:column;gap:5px;padding:14px;border:1px solid #dcdcde;border-radius:6px;background:#fff;text-decoration:none}.yohaku-demo-dashboard__grid a:hover{border-color:#163d35}.yohaku-demo-dashboard__grid strong{color:#163d35}.yohaku-demo-dashboard__grid span{color:#646970;font-size:12px;line-height:1.55}.yohaku-demo-dashboard__actions{margin:16px 0 0}.yohaku-demo-dashboard .button-primary{background:#163d35;border-color:#163d35}.yohaku-demo-dashboard .button-primary:hover{background:#0d2b25;border-color:#0d2b25}@media(max-width:760px){.portfolio-demo-bar{grid-template-columns:1fr auto;gap:8px 12px;padding-top:9px;padding-bottom:9px}.portfolio-demo-bar__label{grid-column:1}.portfolio-demo-bar__message{grid-column:1/-1;grid-row:2;font-size:11px}.portfolio-demo-bar__link{display:none}.portfolio-demo-bar__button{grid-column:2;grid-row:1;min-height:34px;padding:7px 12px}.yohaku-demo-dashboard__grid{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){.portfolio-demo-bar__button{transition:none}.portfolio-demo-bar__button:hover{transform:none}}
+.portfolio-demo-bar{position:relative;z-index:50;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:14px 22px;padding:10px clamp(20px,4vw,64px);background:#0d2b25;color:#fff;border-bottom:1px solid rgba(217,236,155,.3);font-size:12px;line-height:1.4}
+.portfolio-demo-bar__label{font-weight:800;letter-spacing:.16em;color:#d9ec9b;white-space:nowrap}
+.portfolio-demo-bar__message{margin:0;color:#f7f8f2;text-wrap:pretty}
+.portfolio-demo-bar a{color:#fff;text-decoration:none}
+.portfolio-demo-bar__link{font-weight:650;text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
+.portfolio-demo-bar__link:hover{text-decoration:underline}
+.portfolio-demo-bar__button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:8px 14px;border-radius:999px;background:#d9ec9b;color:#163d35!important;font-weight:800;white-space:nowrap;transition:transform .18s ease,box-shadow .18s ease}
+.portfolio-demo-bar__button:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.14)}
+.portfolio-demo-bar a:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.yohaku-demo-dashboard__lead{font-size:14px;line-height:1.75;margin:4px 0 16px}
+.yohaku-demo-dashboard__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.yohaku-demo-dashboard__grid a{display:flex;flex-direction:column;gap:5px;padding:14px;border:1px solid #dcdcde;border-radius:6px;background:#fff;text-decoration:none}
+.yohaku-demo-dashboard__grid a:hover{border-color:#163d35}
+.yohaku-demo-dashboard__grid strong{color:#163d35}
+.yohaku-demo-dashboard__grid span{color:#646970;font-size:12px;line-height:1.55}
+.yohaku-demo-dashboard__actions{margin:16px 0 0}
+.yohaku-demo-dashboard .button-primary{background:#163d35;border-color:#163d35}
+.yohaku-demo-dashboard .button-primary:hover{background:#0d2b25;border-color:#0d2b25}
+@media(max-width:767px){
+ .portfolio-demo-bar{grid-template-columns:1fr auto;gap:8px 12px;padding-top:9px;padding-bottom:9px}
+ .portfolio-demo-bar__label{grid-column:1}
+ .portfolio-demo-bar__message{grid-column:1/-1;grid-row:2;font-size:11px}
+ .portfolio-demo-bar__link{display:none}
+ .portfolio-demo-bar__button{grid-column:2;grid-row:1;min-height:44px;padding:8px 13px}
+ .yohaku-demo-dashboard__grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){.portfolio-demo-bar__button{transition:none}.portfolio-demo-bar__button:hover{transform:none}}
