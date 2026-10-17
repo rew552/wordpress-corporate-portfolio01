@@ -44,7 +44,7 @@ if (!$navigation_posts) {
     if (is_wp_error($navigation_id)) { throw new RuntimeException($navigation_id->get_error_message()); }
 }
 
-if (get_option('yohaku_seed_version') === '1.0.0') { echo "Already seeded.\n"; return; }
+if (get_option('yohaku_seed_version') === '1.1.0') { echo "Already seeded.\n"; return; }
 update_option('timezone_string', 'Asia/Tokyo');
 update_option('show_avatars', 0);
 update_user_meta(1, 'show_admin_bar_front', 'false');
@@ -60,6 +60,16 @@ if (is_wp_error($media)) { throw new RuntimeException($media->get_error_message(
 wp_update_attachment_metadata($media, wp_generate_attachment_metadata($media, $upload['file']));
 update_post_meta($media, '_wp_attachment_image_alt', '仕事の仕組みを整えるイメージのオリジナル図版');
 $replace = function ($text) use ($asset, $home, $admin, $media) { return strtr($text, ['{{ASSET}}'=>$asset, '{{HOME}}'=>$home, '{{ADMIN}}'=>$admin, '{{MEDIA}}'=>wp_get_attachment_url($media)]); };
+$protect_structure = function ($text) {
+    foreach (['section-header', 'service-row', 'case-grid', 'process-grid'] as $class_name) {
+        $text = str_replace(
+            '"className":"' . $class_name . '","layout"',
+            '"className":"' . $class_name . '","lock":{"move":true,"remove":true},"layout"',
+            $text
+        );
+    }
+    return $text;
+};
 $pages = ['home'=>'ホーム','about'=>'私たちについて','services'=>'サービス','company'=>'会社概要','news'=>'お知らせ','contact'=>'お問い合わせ','resources'=>'資料ダウンロード','partners'=>'パートナー向け資料','privacy'=>'プライバシーポリシー'];
 $page_excerpts = [
     'home' => '業務の流れを見直し、必要なデジタルだけを取り入れる。仕事に余白をつくるための架空の業務改善パートナーです。',
@@ -76,7 +86,8 @@ $ids = [];
 foreach ($pages as $slug=>$title) {
     $existing = get_page_by_path($slug);
     if ($existing) { $ids[$slug] = $existing->ID; continue; }
-    $data = ['post_type'=>'page','post_author'=>1,'post_status'=>'publish','post_name'=>$slug,'post_title'=>$title,'post_content'=>$replace(file_get_contents($source . '/content/' . $slug . '.html')),'post_excerpt'=>$page_excerpts[$slug] ?? ('架空企業・余白ワークスの自主制作ポートフォリオ。' . $title . 'をご紹介します。')];
+    $source_content = file_get_contents($source . '/content/' . $slug . '.html');
+    $data = ['post_type'=>'page','post_author'=>1,'post_status'=>'publish','post_name'=>$slug,'post_title'=>$title,'post_content'=>$protect_structure($replace($source_content)),'post_excerpt'=>$page_excerpts[$slug] ?? ('架空企業・余白ワークスの自主制作ポートフォリオ。' . $title . 'をご紹介します。')];
     if ($slug === 'partners') { $data['post_password'] = 'yohaku-demo'; }
     $id = wp_insert_post($data, true);
     if (is_wp_error($id)) { throw new RuntimeException($id->get_error_message()); }
@@ -110,5 +121,5 @@ foreach (['hello-world','sample-page','privacy-policy'] as $slug) {
     if ($default) { wp_delete_post($default->ID, true); }
 }
 flush_rewrite_rules();
-update_option('yohaku_seed_version','1.0.0');
+update_option('yohaku_seed_version','1.1.0');
 echo "Yohaku demo seeded.\n";
