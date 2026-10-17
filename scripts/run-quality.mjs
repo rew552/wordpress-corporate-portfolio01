@@ -1,10 +1,9 @@
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 
-const base = 'http://127.0.0.1:9400/';
 const detached = process.platform !== 'win32';
 const server = spawn('npm', ['run', 'start'], {
-  stdio: 'inherit',
+  stdio: ['ignore', 'pipe', 'pipe'],
   detached,
   shell: process.platform === 'win32',
 });
@@ -22,26 +21,42 @@ const stopServer = () => {
 process.on('SIGINT', () => { stopServer(); process.exit(130); });
 process.on('SIGTERM', () => { stopServer(); process.exit(143); });
 
-try {
-  let ready = false;
-  for (let attempt = 1; attempt <= 90; attempt++) {
-    if (server.exitCode !== null) {
-      throw new Error(`Playground server exited before becoming ready (code ${server.exitCode}).`);
-    }
-    try {
-      const response = await fetch(base, { redirect: 'follow', signal: AbortSignal.timeout(3000) });
-      const html = response.ok ? await response.text() : '';
-      if (response.status === 200 && /<h1\b/i.test(html) && html.includes('仕事を整える')) {
-        ready = true;
-        console.log('Playground ready: rendered front page detected.');
-        break;
-      }
-    } catch {
-      // WordPress/PHP runtimes and the Blueprint are initialized asynchronously on first start.
-    }
-    await delay(2000);
+const readyPattern = /Ready! WordPress is running on http:\/\/127\.0\.0\.1:9400/;
+let output = '';
+let resolveReady;
+let rejectReady;
+const ready = new Promise((resolve, reject) => {
+  resolveReady = resolve;
+  rejectReady = reject;
+});
+
+const forward = (stream, target) => {
+  stream.on('data', (chunk) => {
+    target.write(chunk);
+    output = (output + chunk.toString()).slice(-8192);
+    if (readyPattern.test(output)) resolveReady();
+  });
+};
+
+forward(server.stdout, process.stdout);
+forward(server.stderr, process.stderr);
+server.once('error', rejectReady);
+server.once('exit', (code) => {
+  if (!readyPattern.test(output)) {
+    rejectReady(new Error(`Playground server exited before becoming ready (code ${code}).`));
   }
-  if (!ready) throw new Error('Timed out waiting for the rendered Playground front page.');
+});
+
+try {
+  await Promise.race([
+    ready,
+    delay(120000).then(() => {
+      throw new Error('Timed out waiting for wp-playground-cli readiness.');
+    }),
+  ]);
+
+  console.log('Playground ready: wp-playground-cli reported the running WordPress URL.');
+  await delay(1500);
 
   const tests = spawn('npm', ['run', 'quality:browser'], {
     stdio: 'inherit',
