@@ -39,7 +39,7 @@ const waitForPage = async (page, route) => {
   assert(overflow <= 1, `${route}: horizontal overflow ${overflow}px`);
 };
 
-const isVisible = async (locator) => locator.count() > 0 && locator.first().isVisible();
+const isVisible = async (locator) => (await locator.count()) > 0 && await locator.first().isVisible();
 
 const getNavigationState = async (page) => page.evaluate(() => {
   const describe = (element) => {
