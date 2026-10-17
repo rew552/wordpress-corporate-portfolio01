@@ -29,18 +29,19 @@ try {
       throw new Error(`Playground server exited before becoming ready (code ${server.exitCode}).`);
     }
     try {
-      const response = await fetch(base, { redirect: 'manual', signal: AbortSignal.timeout(3000) });
-      if (response.status >= 200 && response.status < 500) {
+      const response = await fetch(base, { redirect: 'follow', signal: AbortSignal.timeout(3000) });
+      const html = response.ok ? await response.text() : '';
+      if (response.status === 200 && /<h1\b/i.test(html) && html.includes('仕事を整える')) {
         ready = true;
-        console.log(`Playground ready: HTTP ${response.status}`);
+        console.log('Playground ready: rendered front page detected.');
         break;
       }
     } catch {
-      // WordPress/PHP runtimes are downloaded on first start, so retries are expected.
+      // WordPress/PHP runtimes and the Blueprint are initialized asynchronously on first start.
     }
     await delay(2000);
   }
-  if (!ready) throw new Error('Timed out waiting for the local Playground server.');
+  if (!ready) throw new Error('Timed out waiting for the rendered Playground front page.');
 
   const tests = spawn('npm', ['run', 'quality:browser'], {
     stdio: 'inherit',
