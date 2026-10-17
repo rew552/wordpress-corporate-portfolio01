@@ -1,0 +1,76 @@
+/* Issue #9: shared container, header composition and editorial spacing system. */
+:root{
+ --yohaku-container-max:1440px;
+ --yohaku-section-space:clamp(88px,8vw,120px);
+}
+
+/* The WordPress alignwide primitive is the shared horizontal container. */
+.site-header,.hero,.section-shell.alignwide,.site-footer{width:100%}
+
+/* Header: three stable regions instead of a two-sided space-between layout. */
+.site-header{
+ display:grid;
+ grid-template-columns:minmax(280px,1fr) max-content max-content;
+ align-items:center;
+ column-gap:clamp(24px,3vw,44px);
+ row-gap:12px;
+ padding-block:22px;
+}
+.header-brand{min-width:0;gap:16px}
+.brand,.brand-subtitle{white-space:nowrap}
+.header-navigation{justify-self:end;min-width:0}
+.header-navigation .wp-block-navigation__container{gap:clamp(18px,1.8vw,28px)}
+.header-cta{justify-self:end;margin:0}
+.header-cta .wp-block-button__link{padding-inline:18px}
+
+/* Editorial rhythm: generous section separation, denser content inside each section. */
+.section-shell{padding-block:var(--yohaku-section-space)}
+.hero{padding-block:clamp(88px,8vw,116px) clamp(96px,9vw,132px)}
+.section-header{margin-bottom:clamp(44px,4vw,64px)}
+.news-head{margin-bottom:clamp(36px,3vw,48px)}
+.site-footer{padding-block:clamp(72px,7vw,104px) 32px}
+
+/* CMS demo: reserve space for the action column and keep the copy readable. */
+.cms-demo-grid{
+ grid-template-columns:minmax(0,2fr) minmax(0,3fr);
+ gap:clamp(48px,5vw,80px);
+}
+.cms-demo-list{min-width:0}
+.cms-demo-item{
+ grid-template-columns:52px minmax(0,1fr) minmax(116px,max-content);
+ gap:16px 24px;
+ padding:22px 0;
+}
+.cms-demo-item>p{min-width:0}
+.cms-demo-item>p:last-child{justify-self:end;text-align:right}
+.cms-demo-item a{white-space:nowrap}
+
+@media(min-width:768px) and (max-width:1023px){
+ :root{--yohaku-section-space:clamp(76px,9vw,92px)}
+ .site-header{
+  grid-template-columns:minmax(0,1fr) auto auto;
+  column-gap:16px;
+  padding-block:18px;
+ }
+ .header-navigation{justify-self:end}
+ .hero{padding-block:72px clamp(84px,10vw,104px)}
+ .section-header{margin-bottom:clamp(40px,5vw,52px)}
+ .cms-demo-grid{grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:32px}
+ .cms-demo-item{grid-template-columns:44px minmax(0,1fr) minmax(108px,max-content);gap:14px 18px;padding:20px 0}
+ .site-footer{padding-block:72px 30px}
+}
+
+@media(max-width:767px){
+ :root{--yohaku-section-space:clamp(58px,16vw,72px)}
+ .site-header{grid-template-columns:minmax(0,1fr) auto;column-gap:14px;padding-block:16px}
+ .header-brand{gap:10px}
+ .header-navigation{justify-self:end}
+ .wp-block-buttons.header-cta{display:none!important}
+ .hero{padding-block:60px 72px}
+ .section-header{margin-bottom:36px}
+ .cms-demo-grid{grid-template-columns:1fr;gap:34px}
+ .cms-demo-item{grid-template-columns:42px minmax(0,1fr);gap:8px 14px;padding:18px 0}
+ .cms-demo-item>p:last-child{grid-column:2;justify-self:start;text-align:left}
+ .cms-demo-item a{white-space:normal}
+ .site-footer{padding-block:58px 26px}
+}
