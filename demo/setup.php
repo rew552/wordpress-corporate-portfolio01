@@ -3,6 +3,37 @@
 require_once '/wordpress/wp-load.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
 update_option('yohaku_demo_mode', 1);
+
+$home = untrailingslashit(home_url());
+$existing_navigation = get_page_by_path('primary-navigation', OBJECT, 'wp_navigation');
+if (!$existing_navigation) {
+    $navigation_links = [
+        ['私たちについて', $home . '/about/'],
+        ['サービス', $home . '/services/'],
+        ['お知らせ', $home . '/news/'],
+        ['会社概要', $home . '/company/'],
+        ['お問い合わせ', $home . '/contact/'],
+    ];
+    $navigation_content = '';
+    foreach ($navigation_links as [$label, $url]) {
+        $navigation_content .= '<!-- wp:navigation-link ' . wp_json_encode([
+            'label' => $label,
+            'type' => 'custom',
+            'url' => $url,
+            'kind' => 'custom',
+            'isTopLevelLink' => true,
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . ' /-->' . "\n";
+    }
+    $navigation_id = wp_insert_post([
+        'post_type' => 'wp_navigation',
+        'post_status' => 'publish',
+        'post_name' => 'primary-navigation',
+        'post_title' => 'メインナビゲーション',
+        'post_content' => $navigation_content,
+    ], true);
+    if (is_wp_error($navigation_id)) { throw new RuntimeException($navigation_id->get_error_message()); }
+}
+
 if (get_option('yohaku_seed_version') === '1.0.0') { echo "Already seeded.\n"; return; }
 update_option('timezone_string', 'Asia/Tokyo');
 update_option('show_avatars', 0);
@@ -11,7 +42,6 @@ update_option('default_comment_status', 'closed');
 update_option('default_ping_status', 'closed');
 $source = '/wordpress/wp-content/yohaku-demo';
 $asset = get_theme_file_uri('assets');
-$home = untrailingslashit(home_url());
 $admin = trailingslashit(admin_url());
 $upload = wp_upload_bits('yohaku-workspace.png', null, file_get_contents(get_theme_file_path('assets/news.png')));
 if (!empty($upload['error'])) { throw new RuntimeException($upload['error']); }
