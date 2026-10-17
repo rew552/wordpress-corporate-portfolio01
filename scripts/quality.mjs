@@ -149,11 +149,11 @@ const runResponsiveChecks = async (page) => {
         const left = (selector) => document.querySelector(selector)?.getBoundingClientRect().left ?? null;
         return {
           demo: left('.portfolio-demo-bar__label'),
-          header: left('.site-header'),
+          header: left('.header-brand'),
           hero: left('.hero'),
           section: left('.services-overview'),
           cms: left('.cms-demo'),
-          footer: left('.site-footer'),
+          footer: left('.footer-cta'),
         };
       });
       const reference = alignment.hero;
