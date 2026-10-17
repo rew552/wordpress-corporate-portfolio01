@@ -7,8 +7,8 @@
 ### `npm run validate`
 
 - WordPress Playground Blueprint公式Schema
-- 公開サイトLaunch / 管理画面Launchの復号・生成物一致
-- 圧縮Launchと可読Blueprintのファイル・バイナリ一致
+- 公開サイトLaunch / 管理画面LaunchのBlueprint URLと生成物の整合性
+- 圧縮Launch Blueprintと可読Blueprintのファイル・バイナリ一致
 - `theme.json` v3
 - Portfolio Demo Bar / Dashboard Guide / CMSデモセクションの存在
 - favicon / OGPアセットの存在
@@ -23,7 +23,7 @@ Playgroundをローカル起動し、以下を自動確認する。
 - HTTPステータス
 - `main` と単一 `h1`
 - 横スクロールの発生有無
-- axe WCAG 2 A / AA・2.1 A / AAの serious / critical 違反
+- axe WCAG 2 A / AA・2.1 A / AAのserious / critical違反
 - Chromiumで 375 / 390 / 768 / 1024 / 1440px
 - 1440px / 390px のTOPスクリーンショット更新
 
@@ -69,4 +69,4 @@ npx playwright install chromium firefox webkit
 npm run quality
 ```
 
-公開先は `rew552/wordpress-corporate-portfolio01`。Playgroundの自己完結Launchリンクは公開サイト用と管理画面用の2種類を生成する。
+公開先は `rew552/wordpress-corporate-portfolio01`。Playgroundの公開サイト用・管理画面用Blueprint URLをそれぞれ生成する。

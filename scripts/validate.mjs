@@ -17,17 +17,17 @@ const launch = readme.match(/\[公開サイトを体験する →\]\(([^)]+)\)/)
 const adminLaunch = readme.match(/\[CMS管理画面を試す ↗\]\(([^)]+)\)/)?.[1];
 assert(launch,'Public Launch link missing');
 assert(adminLaunch,'Admin Launch link missing');
-for (const value of [launch,adminLaunch]) {
+const rawBase='https://raw.githubusercontent.com/rew552/wordpress-corporate-portfolio01/main/demo/';
+for (const [value,file] of [[launch,'launch-blueprint.json'],[adminLaunch,'admin-launch-blueprint.json']]) {
  const url = new URL(value);
  assert.equal(url.origin,'https://playground.wordpress.net');
- assert(value.length<=32000,'GitHub link budget exceeded');
+ assert.equal(url.searchParams.get('blueprint-url'),rawBase+file);
+ assert(value.length<512,'Launch link should stay short enough for GitHub Markdown');
 }
 const launchBlueprint = JSON.parse(await read('demo/launch-blueprint.json'));
 const adminLaunchBlueprint = JSON.parse(await read('demo/admin-launch-blueprint.json'));
 assert(validate(launchBlueprint),JSON.stringify(validate.errors,null,2));
 assert(validate(adminLaunchBlueprint),JSON.stringify(validate.errors,null,2));
-assert.deepEqual(JSON.parse(decodeURIComponent(new URL(launch).hash.slice(1))),launchBlueprint);
-assert.deepEqual(JSON.parse(decodeURIComponent(new URL(adminLaunch).hash.slice(1))),adminLaunchBlueprint);
 assert.equal(launchBlueprint.landingPage,'/');
 assert.equal(adminLaunchBlueprint.landingPage,'/wp-admin/');
 assert.deepEqual(adminLaunchBlueprint.steps,launchBlueprint.steps);
@@ -46,7 +46,6 @@ for(const path of ['docs/requirements.md','docs/design.md','docs/test-checklist.
 assert(readme.includes('自主制作'));
 assert(readme.includes('screenshots/playground-admin.png'));
 assert(readme.includes('管理画面から文章・画像・お知らせ・ナビゲーションを更新'));
-assert(!launch.includes('OWNER'));
 const home = await read('demo/content/home.html');
 const css = await read('theme/yohaku/assets/site.css');
 const plugin = await read('plugins/yohaku-demo-form/yohaku-demo-form.php');
@@ -58,4 +57,4 @@ assert(plugin.includes('portfolio-demo-bar'));
 assert(plugin.includes('yohaku_demo_guide'));
 assert((await read('theme/yohaku/assets/favicon.svg')).includes('<svg'));
 assert((await read('theme/yohaku/assets/og-image.svg')).includes('1200'));
-console.log('PASS: Blueprint schema, public/admin Launch links, CMS demo affordances, visual assets, and required documentation.');
+console.log('PASS: Blueprint schema, short public/admin Launch links, CMS demo affordances, visual assets, and required documentation.');

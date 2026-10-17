@@ -45,12 +45,12 @@ const launchBlueprint = {...blueprint,steps:[blueprint.steps[0],{step:'runPHP',c
 const adminLaunchBlueprint = {...launchBlueprint,landingPage:'/wp-admin/'};
 await writeFile(resolve(root,'demo/launch-blueprint.json'),JSON.stringify(launchBlueprint,null,2)+'\n');
 await writeFile(resolve(root,'demo/admin-launch-blueprint.json'),JSON.stringify(adminLaunchBlueprint,null,2)+'\n');
-const encodeLaunch = (value) => 'https://playground.wordpress.net/#'+encodeURIComponent(JSON.stringify(value)).replace(/[!'()*]/g,c=>'%'+c.charCodeAt(0).toString(16).toUpperCase());
-const launch=encodeLaunch(launchBlueprint);
-const adminLaunch=encodeLaunch(adminLaunchBlueprint);
-if(launch.length>32000 || adminLaunch.length>32000) throw new Error('Launch URL exceeds the verified GitHub link budget.');
+const rawBase='https://raw.githubusercontent.com/rew552/wordpress-corporate-portfolio01/main/demo/';
+const makeLaunch=(file)=>{const url=new URL('https://playground.wordpress.net/');url.searchParams.set('blueprint-url',rawBase+file);return url.toString();};
+const launch=makeLaunch('launch-blueprint.json');
+const adminLaunch=makeLaunch('admin-launch-blueprint.json');
 await mkdir(resolve(root,'demo'),{recursive:true});
 await writeFile(resolve(root,'demo/launch.html'),'<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Launch Yohaku Works</title><style>body{font:18px/1.9 sans-serif;max-width:720px;margin:10vh auto;padding:24px;background:#f7f8f2;color:#163d35}a{color:inherit;font-weight:700}.actions{display:flex;gap:12px;flex-wrap:wrap}.actions a{border:1px solid #163d35;border-radius:4px;padding:10px 14px;text-decoration:none}.actions a:first-child{background:#163d35;color:white}</style><h1>余白ワークス</h1><p>自主制作 / 架空企業のWordPressデモ</p><div class="actions"><a href="'+launch+'">公開サイトを見る →</a><a href="'+adminLaunch+'">管理画面を試す ↗</a></div><p>ブラウザ上に専用環境を作成します。管理者として自動ログインします。</p></html>');
 const readme=await read(resolve(root,'README.template.md')).then(b=>b.toString());
 await writeFile(resolve(root,'README.md'),readme.replace('{{LAUNCH_URL}}',launch).replace('{{ADMIN_LAUNCH_URL}}',adminLaunch));
-console.log('Built standalone Blueprint and public/admin launch links. '+Buffer.byteLength(launch)+' / '+Buffer.byteLength(adminLaunch)+' URL bytes.');
+console.log('Built canonical Blueprint plus short public/admin Playground launch links.');
