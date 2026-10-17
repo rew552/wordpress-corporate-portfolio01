@@ -48,7 +48,16 @@ assert(readme.includes('screenshots/playground-admin.png'));
 assert(readme.includes('管理画面から文章・画像・お知らせ・ナビゲーションを更新'));
 const home = await read('demo/content/home.html');
 const css = await read('theme/yohaku/assets/site.css');
+const qualityCss = await read('theme/yohaku/assets/quality-polish.css');
+const functions = await read('theme/yohaku/functions.php');
 const plugin = await read('plugins/yohaku-demo-form/yohaku-demo-form.php');
+const demoCss = await read('plugins/yohaku-demo-form/demo.css');
+const company = await read('demo/content/company.html');
+const resources = await read('demo/content/resources.html');
+const single = await read('theme/yohaku/templates/single.html');
+const servicePattern = await read('theme/yohaku/patterns/services.php');
+const qualityScript = await read('scripts/quality.mjs');
+const workflow = await read('.github/workflows/issue-1-build.yml');
 assert(home.includes('id="cms-demo"'));
 assert(home.includes('{{ADMIN}}site-editor.php'));
 assert(css.includes('text-wrap:balance'));
@@ -68,4 +77,23 @@ assert(home.indexOf('02 / OUR APPROACH') < home.indexOf('06 / CMS DEMO'),'CMS de
 assert(home.includes('news-featured') && home.includes('news-compact'),'Editorial News layout missing');
 assert(home.includes('DEMO CASE'),'Demo case section missing');
 
-console.log('PASS: Blueprint schema, Playground artifacts, CMS affordances, Issue #4 layout primitives, CJK typography guards, visual assets, and required documentation.');
+/* Issue #6 finishing-quality regression guards. */
+assert(qualityCss.includes('overflow-wrap:normal'),'Issue #6 must neutralize global anywhere wrapping');
+assert(qualityCss.includes('@media(max-width:1023px)') && qualityCss.includes('@media(max-width:767px)'),'Unified tablet/mobile breakpoints missing');
+assert(!demoCss.includes('@media(max-width:760px)'),'Demo Bar must not keep the legacy 760px breakpoint');
+assert(demoCss.includes('@media(max-width:767px)'),'Demo Bar must share the mobile breakpoint');
+assert(qualityCss.includes('.skip-link') && functions.includes('本文へスキップ'),'Skip link implementation missing');
+assert(functions.includes('id="main-content"'),'Stable main landmark target missing');
+assert(qualityCss.includes('aria-current="page"'),'Current navigation state style missing');
+assert(servicePattern.includes('service-row__title-link'),'Service title link target missing');
+assert(servicePattern.includes('"lock":{"move":true,"remove":true}'),'Service pattern structure lock missing');
+assert(company.includes('company-profile__row') && company.includes('company-stance'),'Editorial Company layout missing');
+assert(resources.includes('resource-card') && resources.includes('PASSWORD PROTECTED / DEMO'),'Resource card layout missing');
+assert(single.includes('post-meta') && single.includes('post-body') && single.includes('post-navigation'),'Single post editorial layout missing');
+assert(qualityScript.includes('599, 600, 601') && qualityScript.includes('781, 782, 783') && qualityScript.includes('1023, 1024'),'Breakpoint boundary coverage missing');
+assert(qualityScript.includes('axeWidths = [390, 820, 1440]'),'Mobile/tablet/desktop axe coverage missing');
+assert(qualityScript.includes('visual-baseline.json') && qualityScript.includes('createHash'),'Visual screenshot regression guard missing');
+assert(!workflow.includes('Commit refreshed screenshots'),'CI must not auto-accept screenshot baselines');
+assert(workflow.includes('visual-regression-actual'),'Visual regression evidence artifact missing');
+
+console.log('PASS: Blueprint schema, Playground artifacts, CMS affordances, Issue #4 layout primitives, Issue #6 responsive/a11y/CMS/visual-regression guards, visual assets, and required documentation.');
