@@ -85,6 +85,7 @@ h1,h2,h3{text-wrap:wrap;letter-spacing:0}
  .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item{font-size:20px}
  .site-header{gap:18px}
  .header-actions{margin-left:auto;gap:12px}
+ .header-cta{display:flex}
  .section-header,.split-grid,.hero-grid,.cms-demo-grid,.page-header-grid,.about-story-grid,.values-head,.contact-layout,.footer-main{grid-template-columns:1fr}
  .section-header__copy,.page-header .wp-block-post-excerpt{justify-self:start}
  .contact-guide{position:static}
@@ -120,4 +121,5 @@ h1,h2,h3{text-wrap:wrap;letter-spacing:0}
  .company-profile__row{grid-template-columns:1fr;gap:8px}
  .post-hero h1{max-width:none}
 }
+@media(min-width:1024px){.brand-subtitle{display:block}}
 @media(prefers-reduced-motion:reduce){.skip-link{transition:none}}
