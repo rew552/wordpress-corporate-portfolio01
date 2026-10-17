@@ -1,6 +1,6 @@
 # テスト記録・再確認チェックリスト
 
-最終更新：2026-10-17（日本時間）
+最終更新：2026-10-18（日本時間）
 
 ## 自動検証
 
@@ -13,21 +13,38 @@
 - Portfolio Demo Bar / Dashboard Guide / CMSデモセクションの存在
 - favicon / OGPアセットの存在
 - READMEのCMS訴求・管理画面スクリーンショット
+- `section-shell / section-header / split-grid / content-measure / wide-content` の定義とTOPでの利用
+- 日本語向け `max-width` に `ch` が再導入されていないこと
+- TOPで Approach が CMS Demo より先に配置されていること
+- Newsのfeatured / compact editorial layoutとDemo Caseの存在
 
 ### `npm run quality`
 
 Playgroundをローカル起動し、以下を自動確認する。
 
 - Chromium / Firefox / WebKit
-- TOP / Services / Contact / News / 404
+- TOP / About / Services / Contact / News / 404
 - HTTPステータス
 - `main` と単一 `h1`
 - 横スクロールの発生有無
 - axe WCAG 2 A / AA・2.1 A / AAのserious / critical違反
-- Chromiumで 375 / 390 / 768 / 1024 / 1440px
-- 1440px / 390px のTOPスクリーンショット更新
+- Chromiumで 375 / 390 / 768 / 1024 / 1280 / 1440 / 1536px
+- 390px / 768px / 1440px / 1536px のTOPスクリーンショット更新
 
 WebKitはSafari相当エンジンの回帰試験であり、macOS / iOS実機Safariそのものを保証するものではない。
+
+## ビジュアルレビュー
+
+Issue #4以降は、機械的なoverflow検査だけでなく、生成された以下のスクリーンショットをPRで比較する。
+
+| 幅 | 画像 | 主な確認 |
+|---|---|---|
+| 390px | `home-mobile.png` | 見出し改行、縦積み順、CTA、モバイルNavigation |
+| 768px | `home-tablet.png` | 1→2カラム切替、Services / Newsの情報密度 |
+| 1440px | `home-desktop.png` | セクション基準線、Approach 5/7 grid、全体のリズム |
+| 1536px | `home-wide.png` | wide layoutの余白、中央見出しの浮き、過度な行長 |
+
+1280pxは自動overflow対象とし、1440 / 1536pxとあわせてDesktopレビューの基準幅にする。
 
 ## 既存機能の手動確認実績
 
@@ -53,6 +70,7 @@ Issue #1以降は、見た目の変更による基本回帰を `npm run quality`
 
 - 実機iPhone / AndroidでTOP、ナビ、問い合わせを目視
 - macOS Safari最新版でTOP、主要下層、管理画面への導線を目視
+- 1280 / 1440 / 1536pxでApproach・Services・Newsの基準線と日本語改行を目視
 - CMSでTOPコピー変更 → 更新 → 公開画面確認
 - 新規投稿 → TOP / News一覧への反映
 - 画像差し替え → 公開画面確認
