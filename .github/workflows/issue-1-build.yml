@@ -52,3 +52,5 @@ jobs:
             git commit -m "test: refresh portfolio screenshots"
             git push
           fi
+
+# Keep generated Playground artifacts in sync even when browser QA fails.
