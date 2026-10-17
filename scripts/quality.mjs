@@ -41,6 +41,33 @@ const waitForPage = async (page, route) => {
 
 const isVisible = async (locator) => locator.count() > 0 && locator.first().isVisible();
 
+const getNavigationState = async (page) => page.evaluate(() => {
+  const describe = (element) => {
+    if (!element) return null;
+    const style = getComputedStyle(element);
+    const rect = element.getBoundingClientRect();
+    return {
+      tag: element.tagName,
+      className: element.className,
+      display: style.display,
+      visibility: style.visibility,
+      opacity: style.opacity,
+      width: rect.width,
+      height: rect.height,
+    };
+  };
+  const nav = document.querySelector('.wp-block-navigation');
+  const button = document.querySelector('.wp-block-navigation__responsive-container-open');
+  const container = document.querySelector('.wp-block-navigation__responsive-container');
+  return {
+    nav: describe(nav),
+    button: describe(button),
+    container: describe(container),
+    html: nav?.outerHTML.slice(0, 5000) ?? null,
+    stylesheets: [...document.styleSheets].map((sheet) => sheet.href).filter(Boolean),
+  };
+});
+
 const runResponsiveChecks = async (page) => {
   for (const width of breakpointWidths) {
     await page.setViewportSize({ width, height: 1000 });
@@ -50,11 +77,15 @@ const runResponsiveChecks = async (page) => {
     const demoLink = page.locator('.portfolio-demo-bar__link');
     const headerCta = page.locator('.header-cta');
     const serviceRow = page.locator('.service-row').first();
+    const navButtonVisible = await isVisible(navOpenButton);
 
     if (width <= 1023) {
-      assert(await isVisible(navOpenButton), `${width}px: overlay navigation button must be visible`);
+      if (!navButtonVisible) {
+        const navState = await getNavigationState(page);
+        assert.fail(`${width}px: overlay navigation button must be visible\n${JSON.stringify(navState, null, 2)}`);
+      }
     } else {
-      assert(!(await isVisible(navOpenButton)), `${width}px: overlay navigation button must be hidden`);
+      assert(!navButtonVisible, `${width}px: overlay navigation button must be hidden`);
     }
 
     if (width <= 767) {
