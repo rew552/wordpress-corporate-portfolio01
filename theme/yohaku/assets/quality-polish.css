@@ -16,7 +16,8 @@ h1,h2,h3{text-wrap:wrap;letter-spacing:0}
 .service-row h3,.case-step h3,.value-row h3,.service-detail h2,.service-detail__body h3,.footer-nav h3{letter-spacing:0;text-wrap:wrap}
 .brand-subtitle,.hero-visual figcaption,.hero-meta p,.copyright{font-size:11px}
 .hero-visual figcaption,.hero-meta p,.copyright,.brand-subtitle{color:var(--yohaku-muted-strong)}
-.demo-note,.case-note{font-size:12px;color:var(--yohaku-muted-strong)}
+.demo-note{font-size:12px;color:var(--yohaku-muted-strong)}
+.case-note{font-size:12px;color:#c6d7ca}
 .eyebrow,.number-label,.service-row__number,.service-row__keyword{font-size:11px}
 
 .skip-link{
