@@ -1,5 +1,5 @@
 .portfolio-demo-bar{--yohaku-demo-gutter:clamp(20px,4vw,64px);position:relative;z-index:50;background:#0d2b25;color:#fff;border-bottom:1px solid rgba(217,236,155,.3);font-size:12px;line-height:1.4}
-.portfolio-demo-bar__inner{box-sizing:border-box;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:14px 22px;width:min(100%,calc(1440px + (2 * var(--yohaku-demo-gutter))));margin-inline:auto;padding:10px var(--yohaku-demo-gutter)}
+.portfolio-demo-bar__inner{box-sizing:border-box;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:14px 22px;width:min(100%,calc(1440px + var(--yohaku-demo-gutter) + var(--yohaku-demo-gutter)));margin-inline:auto;padding:10px var(--yohaku-demo-gutter)}
 .portfolio-demo-bar__label{font-weight:800;letter-spacing:.16em;color:#d9ec9b;white-space:nowrap}
 .portfolio-demo-bar__message{margin:0;color:#f7f8f2;text-wrap:pretty}
 .portfolio-demo-bar a{color:#fff;text-decoration:none}
