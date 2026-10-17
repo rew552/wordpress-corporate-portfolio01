@@ -26,7 +26,7 @@
         {
           "slug": "sans",
           "name": "System Sans",
-          "fontFamily": "\"Hiragino Kaku Gothic ProN\", \"Yu Gothic\", Meiryo, sans-serif"
+          "fontFamily": "system-ui, -apple-system, BlinkMacSystemFont, \"Hiragino Sans\", \"Yu Gothic Medium\", \"Yu Gothic\", Meiryo, sans-serif"
         }
       ],
       "fontSizes": [
@@ -74,7 +74,7 @@
         "typography": {
           "fontWeight": "600",
           "lineHeight": "1.35",
-          "letterSpacing": "-0.025em"
+          "letterSpacing": "0"
         }
       },
       "button": {
