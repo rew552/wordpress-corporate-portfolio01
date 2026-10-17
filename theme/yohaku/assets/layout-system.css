@@ -14,6 +14,9 @@
  margin-inline:auto;
  padding-inline:var(--yohaku-page-gutter);
 }
+/* The constrained footer wrapper receives root padding from WordPress; the footer
+ * owns the shared gutter itself, so remove the duplicate outer inset. */
+.footer-wrap{padding-inline:0!important}
 
 /* Header: three stable regions instead of a two-sided space-between layout. */
 .site-header{
