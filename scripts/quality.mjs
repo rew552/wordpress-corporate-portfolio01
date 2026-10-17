@@ -8,6 +8,7 @@ const base = 'http://127.0.0.1:9400';
 const routes = ['/', '/about/', '/services/', '/company/', '/resources/', '/contact/', '/news/', '/site-open/', '/definitely-not-found/'];
 const browserTypes = [['chromium', chromium], ['firefox', firefox], ['webkit', webkit]];
 const breakpointWidths = [375, 390, 599, 600, 601, 760, 761, 767, 768, 781, 782, 783, 820, 900, 960, 1023, 1024, 1280, 1440, 1536];
+const alignmentWidths = new Set([375, 390, 768, 820, 1024, 1280, 1440, 1536]);
 const axeWidths = [390, 820, 1440];
 const axeRoutes = ['/', '/services/', '/company/', '/resources/', '/contact/', '/news/', '/site-open/'];
 const visualCases = [
@@ -125,8 +126,45 @@ const runResponsiveChecks = async (page) => {
     const serviceTracks = await serviceRow.evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(/\s+/).filter(Boolean).length);
     const expectedTracks = width <= 767 ? 2 : width <= 1023 ? 3 : 4;
     assert.equal(serviceTracks, expectedTracks, `${width}px: service row should have ${expectedTracks} grid tracks, got ${serviceTracks}`);
+
+    const headerTracks = await page.locator('.site-header').evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(/\s+/).filter(Boolean).length);
+    const expectedHeaderTracks = width <= 767 ? 2 : 3;
+    assert.equal(headerTracks, expectedHeaderTracks, `${width}px: header should have ${expectedHeaderTracks} grid tracks, got ${headerTracks}`);
+
+    const cmsTracks = await page.locator('.cms-demo-grid').evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(/\s+/).filter(Boolean).length);
+    assert.equal(cmsTracks, width <= 767 ? 1 : 2, `${width}px: CMS demo grid has an unexpected track count`);
+
+    const cmsActionGeometry = await page.locator('.cms-demo-item').evaluateAll((items) => items.map((item) => {
+      const itemRect = item.getBoundingClientRect();
+      const linkRect = item.querySelector('a').getBoundingClientRect();
+      return { itemLeft: itemRect.left, itemRight: itemRect.right, linkLeft: linkRect.left, linkRight: linkRect.right };
+    }));
+    for (const geometry of cmsActionGeometry) {
+      assert(geometry.linkLeft >= geometry.itemLeft - 1, `${width}px: CMS action overflows the row on the left`);
+      assert(geometry.linkRight <= geometry.itemRight + 1, `${width}px: CMS action overflows the row on the right`);
+    }
+
+    if (alignmentWidths.has(width)) {
+      const alignment = await page.evaluate(() => {
+        const left = (selector) => document.querySelector(selector)?.getBoundingClientRect().left ?? null;
+        return {
+          demo: left('.portfolio-demo-bar__label'),
+          header: left('.site-header'),
+          hero: left('.hero'),
+          section: left('.services-overview'),
+          cms: left('.cms-demo'),
+          footer: left('.site-footer'),
+        };
+      });
+      const reference = alignment.hero;
+      assert(reference !== null, `${width}px: hero alignment reference missing`);
+      for (const [name, value] of Object.entries(alignment)) {
+        assert(value !== null, `${width}px: ${name} alignment target missing`);
+        assert(Math.abs(value - reference) <= 2, `${width}px: ${name} left edge ${value}px differs from shared container ${reference}px`);
+      }
+    }
   }
-  console.log('PASS: breakpoint boundary checks.');
+  console.log('PASS: breakpoint, shared-container and CMS layout checks.');
 };
 
 const runAxeChecks = async (page) => {
@@ -197,4 +235,4 @@ for (const [name, type] of browserTypes) {
   }
 }
 
-console.log('PASS: cross-browser routes, breakpoint ±1px checks, mobile/tablet/desktop axe scans, and CI visual regression checks.');
+console.log('PASS: cross-browser routes, breakpoint ±1px checks, shared-container alignment, CMS action fit, mobile/tablet/desktop axe scans, and CI visual regression checks.');
