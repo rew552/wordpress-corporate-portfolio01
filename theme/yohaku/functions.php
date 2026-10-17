@@ -5,12 +5,57 @@ if (!defined('ABSPATH')) { exit; }
 add_action('after_setup_theme', function () {
     add_theme_support('editor-styles');
     add_editor_style('assets/site.css');
+    add_editor_style('assets/quality-polish.css');
     load_theme_textdomain('yohaku', get_template_directory() . '/languages');
 });
 
 add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('yohaku-site', get_theme_file_uri('assets/site.css'), [], wp_get_theme()->get('Version'));
+    $version = wp_get_theme()->get('Version');
+    wp_enqueue_style('yohaku-site', get_theme_file_uri('assets/site.css'), [], $version);
+    wp_enqueue_style('yohaku-quality-polish', get_theme_file_uri('assets/quality-polish.css'), ['yohaku-site'], $version);
 });
+
+add_action('wp_body_open', function () {
+    echo '<a class="skip-link" href="#main-content">' . esc_html__('本文へスキップ', 'yohaku') . '</a>';
+});
+
+/**
+ * Add a stable main landmark target and tighten a few presentation-only block details.
+ * The source content stays editable; these changes only improve rendered semantics.
+ */
+add_filter('render_block', function ($block_content, $block) {
+    $block_name = $block['blockName'] ?? '';
+    $attrs = $block['attrs'] ?? [];
+
+    if ($block_name === 'core/group' && ($attrs['tagName'] ?? '') === 'main' && !str_contains($block_content, 'id="main-content"')) {
+        $block_content = preg_replace('/<main\b/', '<main id="main-content"', $block_content, 1);
+    }
+
+    if ($block_name === 'core/group' && str_contains((string)($attrs['className'] ?? ''), 'service-row')) {
+        if (!str_contains($block_content, 'service-row__title-link') && preg_match('/<p class="service-row__arrow"><a href="([^"]+)"[^>]*>→<\/a><\/p>/', $block_content, $match)) {
+            $href = esc_url($match[1]);
+            $block_content = preg_replace(
+                '/<h3([^>]*)>(.*?)<\/h3>/',
+                '<h3$1><a class="service-row__title-link" href="' . $href . '">$2</a></h3>',
+                $block_content,
+                1
+            );
+            $block_content = preg_replace(
+                '/<p class="service-row__arrow"><a href="[^"]+"[^>]*>→<\/a><\/p>/',
+                '<p class="service-row__arrow" aria-hidden="true"><span>→</span></p>',
+                $block_content,
+                1
+            );
+        }
+    }
+
+    if ($block_name === 'core/image') {
+        $block_content = str_replace('Y O H A K U / W O R K S P A C E', 'YOHAKU / WORKSPACE', $block_content);
+        $block_content = str_replace('Y O H A K U / W O R K S', 'YOHAKU / WORKS', $block_content);
+    }
+
+    return $block_content;
+}, 10, 2);
 
 add_action('wp_head', function () {
     $description = '';
