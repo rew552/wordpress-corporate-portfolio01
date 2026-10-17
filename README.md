@@ -1,64 +1,104 @@
-# wordpress-corporate-portfolio01
+# Yohaku Works — WordPress Corporate Portfolio
 
-**余白ワークス — 仕事を整え、人が活きる余白をつくる。**
+**「見た目」だけでなく、更新しやすさまで設計した企業サイトの自主制作ポートフォリオです。**
 
-WordPress案件への応募を想定した自主制作コーポレートサイトです。企業・サービス・記事はすべて架空です。実在企業の受託実績や顧客実績を示すものではありません。
+架空の地域企業「余白ワークス」を題材に、WordPressの標準機能を中心として、公開サイト・CMS編集・レスポンシブ・アクセシビリティまで一体で設計しました。実在企業の受託実績や顧客実績を示すものではありません。
 
-[**Launch in WordPress Playground →**](https://playground.wordpress.net/#%7B%22%24schema%22%3A%22https%3A%2F%2Fplayground.wordpress.net%2Fblueprint-schema.json%22%2C%22meta%22%3A%7B%22title%22%3A%22Yohaku%20Works%20-%20WordPress%20Corporate%20Portfolio%22%2C%22author%22%3A%22Portfolio%20project%22%2C%22description%22%3A%22%E8%87%AA%E4%B8%BB%E5%88%B6%E4%BD%9C%E3%83%BB%E6%9E%B6%E7%A9%BA%E4%BC%81%E6%A5%AD%E3%80%82%E6%A8%99%E6%BA%96%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E3%83%86%E3%83%BC%E3%83%9E%E3%81%A8%E7%B7%A8%E9%9B%86%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%87%E3%83%A2%E3%80%82%22%7D%2C%22preferredVersions%22%3A%7B%22php%22%3A%228.3%22%2C%22wp%22%3A%22latest%22%7D%2C%22landingPage%22%3A%22%2F%22%2C%22login%22%3Atrue%2C%22steps%22%3A%5B%7B%22step%22%3A%22setSiteLanguage%22%2C%22language%22%3A%22ja%22%7D%2C%7B%22step%22%3A%22runPHP%22%2C%22code%22%3A%22%3C%3Fphp%20%24payload%20%3D%20json_decode%28gzuncompress%28base64_decode%28%27eNrtffl329ax8L%2BCp%2BZ9smtRBLhIpGzrfeAqSiIp7iIjHx0QgEhQIEAD4CY%2FnyNKTuJ4qVM3e5xmaRbHSeS0SVs3znLO96c8mpL8U%2F%2BF78y9AAkuWqzGSdvnnvcc6uIuc2fmzsydO3fupbE1QeTVsZlLY1qRL%2FOqtSkXmfWqlVFVXlOtqqDxk6yqjs2M%2FfpSXm5YVGFDkAozeVnheMWSlxuXi1pZvKSyiiyKljxfZGqCrMyoZVnWipfzMte8VGaUgiDNkJeZSxrf0CxVieMVUZB4i7y2pvLajLPSuMzMFOUar%2BAaHM%2FKCqMJsmTRigK7LvGqOmNDtdZktqpaaoIq5EV%2BIl%2FVNFkaKBSkSlUbKINuGYUfbK%2FyIs8O1L0kVzWAbsZeaRCqLAoc8SuHcypvmzqrfzHDLZQLl8pMw1IXOK04Q5Hkf54t8kKhqM0wVU2%2BXOQZjlcm6xVLXpTZdYvGlysio%2FGWCqNol%2FIMu15Q5KrEzfxqbXrNtWY720WspsnlGaoHAjfNrXHOy5NAEQvu1jywzUVWGv8hlCuyojGSdlZHOgBxtsJwHBDN5qg0CPJsgamgn5cn8wojcZfWZEkDuvIzNlulcRb9WcdzmCbJsyKvabxiUSsMC51Mki6%2BrDclmEF6zUiyxF%2FuzVdiakIBfTENQ9kHhpkiyZFtVldZWdIYQeKVSz2oOb4sWyRZ481dUpXGSEjPsrIoKzO%2Fctqmppy8jr4yI0g6W1o0uTJDmhEnSJaiAVateHmyyCtyH6bJfkwb2AUCECThcgGM0IjoTYmVxWpZUtEkpshK4ywjCgXJImh8WZ1heUnjlV6PeusiZZofKzLlyin7VKUx4ZikavUJ6OX0WcSNOrTUpHMQA5ZJ0sGXDV6gXAhAjEQ0RGVGkrVTk3yTzyty%2FbRplg4EpQm%2FTsCvaTTbpO2y0dBMh%2BNwEDXdBarL6FOVxiCpAERYlFVGJGCZ6UtDYTihqs5QdsC3o%2Ff%2FZ01LkBPUisg0ZxD2%2B3taEwosUxnkSJgtYmVEmBkFYB9iHZ5FzQyCT0%2Bh5XQIa%2BgQA4uNWsm4P6JoGyK0DQhtr9Un7C4gs5lVBxAHWOh1NZrjMMVVXqkJLG9hGYXrlzxrazqkZih5kndyzNl%2BpAMXGNOHkQ1ZB0jvH4Eo2s2CBZanaRaUaxAiomImxxDAxChesw%2FVYo6UMnmQeObZU1N2zu40aA24MCbocFUaA%2FOfQlITJF8XHr0h5%2BZZd17%2FWLRd6vWnlzHDRT1qYT22uioK0nofdLhbAzoM6%2BVJQdIU2cLKlaZ5vq5RS7TCFLrqwpjYFNIDBPDWIdzb13akNLKBNKrVJ5y2HpMiCUCQemMQ37ykGSMbTOtCTGuuASgz8YfTMVTBpEOZvMgTGqcLhBnyKKXZpSiSgNSwZDtyqJk1QVE1C1sURO4SRpfN9Z%2FD3HV4N%2FCvIcVYWRSZisrPGD8uT0p8XbWIgtpF1wx5Fv60qFpT5HXN2q1EiMKl484bK35z46JtwvyXfZCPdGJODbbThDI%2F0ZtYRVY1i8YrZXVQBwzIzv4WfIPllYo2tOJ74%2FQawEqoYDGGRR0o8DVZ1kwM7ehptkMZGjez1BWm0rfKeDfP8fa%2Bvg8QpY5BGIZEzkAvQyYWmigsXaRjBk2YPrQdoD9YN2djHQZx0VeMGoTbAXNlemqktYJaTfW3GrXGbdP6GnfAGjdXHtbIaCH1E7pnylmQaOsyJIkZq1v7YpVXmpYKUxAkbC2ahAFWccjqW5OVsrGfsOuCpvuBEJk8L17q0%2F1n%2B1lscMWadZLJuES94W0EGEjPa80Kf54t8ux6Xm5cOD1hqmVsLMxleFdxyWSPwLAzglTkFaFnMKJ1YmLDelHQ%2BK6od9tZu3OEXnY53NOuQb0MU%2Buft2lirv55GRBfMlm61BQ5YvID8zYEn0nvo981XtEElhF126kscJzIGwAgLh8EAau7S31YwfPGOBihn7uyvos9kE3IBhlGxQBVz7JVRZWVmYosgKU9DMkMJ6ggnLlLMtioWnNm0mk04vg1pioi4aGUYdshsF0hLvJrmnmbaMA6JFrOmhn%2F7KDYQz2rVZblVfWSWWaP6mkER5Bu%2B5RzmJUV%2FmJVUHhuUMboFRHwrkNEtcozCltcXUW8cOlATjSz84jWOq0PN7kM6h6wC1R4tSJLqlDDyhVtCCcF1VLmpapFrvA9m9zeD8QTdUKMaof2aGb5TfYNgGcH3SAlbdE9BARjnrCmMJJaYRS%2BuyUwo7EfG4aJx3OCJiu4VxVprAqoEyTdu2oPS1Hi%2F5Z5TmBOmYS%2Bi6o0Tl%2Fq8xX02UDk5YGeHL3CAzQfxuywnrB397v6DsukfJy2AQV8wJZOkyuIHY017DZvaga0%2FMBGxrxcdOu%2BW%2BTqWnb9OMBaxTVo9w1aqQ5XH6l1ZOAts6CCKLCoGsOu85xFlixlOS%2BI%2FOnZwQaX1kS%2BYckzqqAiXWBGx8H2DmoEVJ%2BBf0ZaPXgWQJXLOgNUFH6NV1SLwnNVlucsZRm5ZPCfpy%2BNdNQhL9XlFcn6ayIjcDyB%2BU5gREJHv0ooPPhLiDp8FiQV%2FqMVcU1k1yJNbxi9OqdOEr%2B2rkg9b8vsgGFgoLzHK2DeDrLKEDLVCYMrjvcJmRWmD8AfE2ZkDndzCEgm83G2jyLH3ETN%2FvrgzleksYnRLti6rKyD64SfVGuFsZmxc2qtQDTKoqSeXxkralplxmqt1%2BuTdfukrBSsNpIkrWqtsDJG1AS%2B7pEb51fGSIIkphwkMeUmV8Zmz3H8mjp7DgQVowRhzQHlBO78ylidEcWVMaJhO78yRq2MEU39x%2Bw5VZMrBPxjQZLq%2FMoY2mWw3MqYVf%2BK3aJ6y%2F6qjCM%2FzZCoqrV%2F3NFwFERGVQ1AyKMA4d1rFLd2LEBYO%2BfIc6MBWRNEsNkRAGqR4eQ6jLfG%2BxS5kkB%2FE1xDh4drQvdO1D%2Fn42sC0hZQNrUyRqyJssxZdGPi%2FMrYJGXHQ%2BIhZs9ZMQkqjFYk1gRRPL8yVlXEU78C%2FJ%2BG7s%2BvjIVJgixOOcjalJucIzdQB%2BYGv8pzbD4%2F1avtcJGLQGX7FFmz20e34fk1G%2B802rhhCLuTrNndrkU3STimRrRBgCGCdCGjSBc0pBw1u8smWuyUg3C6TC1RJduUkyBrDopE1W2UTbRTDoudRDhT5HUe4MFu724RXhyARtsw7O4pZs0NJDUh1mEGyeYmRRdpoUiSmJ4ipqYIN2mhbCQx5SLszpqNog4ClSQcblK0TZMWN0nYp0mCIkmLzUkSlG1qA%2BhpYM%2FOrjEMLtB4xUAOZpbTIzu1u0mCsk%2FVbI5FknBS0%2BbuWDsz7aIGmkGDKduUaHMC8KghKnKS5qZM3u2Ytg%2FjyDblYB2UgRQnRTjttiLlqlFO15yT2gg7nS7C6XCjIgdVtFCuEUxidzhdjrzRCeDBPuUUKaeLsDlrFOUULZTTZbE7R%2FGXi2c5vtt0CtA5LVJ2F2Gz1dykaKHsLovNPaKli3Lnp9e6LacdhIOyixTpJChXbUq0UKQToC2ThM0mTlMEZas5Rcs0ZaFsI3pzklO8swuHnXQSDpejaCNrdlvRYiOPnrTLBtQSp4B6BDVtcVmcbgtlH9FwbXptiue6fOi0EU5ySnQBnIRz2mKbsky7%2BofEFacdqKIDuK0M1ahp%2FEffAjEk5%2BACwbTnRVGoqDzBglxyTMFqYGFdOEDQEwqU2qbhFxS6TfzjdEzbneyIydixKMUwOuzThMNpLzodomWKsE9dtNhsBGW3OGyEPp8DAXDaDweAc3F5lhnAicNtAxl00eYiABGEDTjU3i8wDAAH8DHd6xtU60DHTspNOGzOixbKZXHZCaeFmnKULU6CopwXHVMWO0U4HBanu2xxOAib66LFDtSwOCiLw9U3OhwEIiYZGH1qxOiFHrLd05zTAcqkD11OWxddtmnKQBdSKghddviMNg%2BwQzy%2FMqbIGqPxp2wk4bQ5CNs0dXqYBk4naXRqt5MjOnWO7tTuJJyw0O3kiE4dLme3U2pUp%2FbRnVrssO6chJ3Se7UW%2BslNEQ7KUXROixY34bQDeQiKtNjdRJ%2BwY23M1DQ7JF6d01Oi20nYbTWXba6vAd5FDeojB%2BGcttUokirbKYubqlHkdB9xnc5pJ%2BLgkUuNFRRWNJA81UWyG%2FG5weZd7kZ%2B%2B0EmdEwRbnvR5ipbKIeFctRs%2FcxlrMnB8bEqBKNudoSZuFaVsKE%2BWSlWwD78r0qxAgb9r4kkVCQqCq%2FykoYMFEKWxOYk4ePLMmHsAQhRqPEqIUgEQ6h8hVEYjScqYrUgSNiMF9aIU%2F%2FB8WuCxHOnxmlPYolOzo2fPk1cIviGoJ0lLq9IDMetMgiOU%2BPMmsYrqyqvVSurCNbxCcKAkjh1mri0IhEEQUAT9HlVrVbADj413rfrHT99tlcRf1lFX06ND0QndGuKMmP0CW4uToa9x6lxjKnxCaLAa6vGEfwqJyg8q8lK89RpYpIYt4qMVKgyBX3gy%2FCPeVb1yiovXazyVX5VZRWhoqmjp2Wuh6HFw1sAWgMGBCKEXqxWFWHEfCaI5y9MQFfd2qdOW2YLvHZqPM0rqiBL46cPghI2G6NBA0IK6qoqSIWqyCinThP%2F5%2F8Q%2FwEbstUKo6p1WeFWDa%2FRqdPdZvC%2F5zgezxp6PE8UGXVV9%2BKfOk38lzEpU9kMQK8pQnkVulVP1SurqqYIlVVGFFc1pqCewn%2BqRVnRWJnj1VPQCQJmTeBF7tQ4%2Bq3vFHXEwYZO4LlVOV%2FiWW1VADBPn54gHOQEMd5lA2OuZqARt7JFmRg%2FV%2BY1hpCYMiw6Uw1Y0Xiw8ytj48QkwavsKqNpykA%2Fk8T4ytgsVFgZW1mRVsbQAoAxL%2BsEGVqjEO2hWvFucRL24bBO%2F8NiIeqVmQoDp%2BMScWllTBWrhZWxmZUxY2mjBitjlwmrxTJ7YL96kMnx%2B8UNDu0Xte2CPChZViTi10RS0ER%2Bhmhv%2Fbm99VF7%2B2p7%2B7X29nZ768f29neoQkKsFmaI%2FrlAeUhSeUXjlRlCkqHAuiL91%2ByKZACOPCAANgt7jghT5hHspt33ytjEypjGFLrfOKGGykSmKVe1lbGZSytj4LxGH1lZUjUF%2FH3cytjly4TFMnuOE2oE6h72vH2uF6JvnNkjgDJ5AZ4qUH3jdIHSXRYHN9YrDDU5qoWpAeiDgsJUisOTR2dbwEXQW6Xbl148%2B%2Bj7t%2Fbe%2Br69fb%2B9%2FV17635762%2FnrBXcr7WvY8SDw%2BOhXmcfPXxt789X2q0f21u3d1%2F7pt262t5sncsrs4%2B%2B%2FbbdurH7zcN262Z767o%2B2tbtduujdutWe%2Bt6e3PryQYcmmA30mh4kqZPs%2Fsv3Xv04GHn6l8efX%2Bnvf0uTBevhq3P2tv32lv3CCux%2B%2Fu%2F7H327aPvWrsff3koVFZOqPW%2B9sjVA%2FgfICFG6TmGKCr82vkVvKKxWARhB5vZolzm0Y9xq%2B5oVa2ga4j%2Fml0Zm4XFDtP7HaImMwuEOG53rFyuMFLT1Nuj797e%2B%2BiH3U%2B29j9pPWlvCq%2FKVaUfuv2vX9p9%2Fa329mZ765P29tft7S8RsC%2Bjvv9FkI7OJljNjPPWtc5rt9qtK51Xrra3brVb7zwpriqKUGNYM%2Bbb22%2B0tz9DcvuV9tZfEZreRcwKv4%2FVP8OVBQn9MvX6Unv7w72dD%2FZeeXHv1YeP3%2F2Q%2BJ8X3%2FhHsD%2Fqk3rs9ds9Zh9ev6ZPs%2F%2FvMyKLlBSRAV8r8T%2BbrxJ9a3pzCy%2Fc9vZD8wJobz%2Fcv%2Fvmo2%2Bvt1v326232q2%2FtVuf4IXebn0KJUdIoP7ZYUl%2FxJeDVbVuBRxTVb8Jqnp7c6Sq1s2Dk6tq07kT0oDoYBh9gUOEg5UinHqgr6WqqglrTS82x3Cf4AK35HmtzvMSqgS1M0hLz8CuGyvsY6pSA7hh%2Ff4TaGtTt2gwDbCP%2BuZrvLgyNkNOHKhKrUdxht5x74QSOobQaZFphnmpirrDh1EY94rALEJgBPrQ3v4AccDX7e1riIn%2FhJTzX9vbn7a3vz4ZZYwVhtEyBB%2BK%2FMCYxVAQK2N7n7barffarQ%2Farc%2BRvr7Sbn2yMjZBIIcqrnO4SGPyctUkJKHlugAohKZsVdXksoHO44FkXthPBMmwlvwJgGld23vv4%2FbWy%2B3WO08EDJwo%2FpSAmDX0EwEypOx%2FEqQM6MEnhGhAsR4JkbV%2FnUHxCeQynBOvQRzAoaLZQTra22%2BjxfhgWCJ3%2BzhMKB9PLINHZGir0i08tvRDR8KHSVjc5VH7J9Pp6FPdP%2FWNc5y9jR7eO2w4dD%2FMOkgHYSWW6KCfiESTRCCaiviOs%2BEAMASpYFYIFB6lSA3Dr9fGduDubz5st95ot3a6vNJu3QBLbf%2BT60iOXm9vXWu3fmi33mlv%2FQ4ZIW%2BAoAU7pEj1IDNAOHTnlYovtls3Oh%2B9vPvON%2B3Wa%2B2tG0hmX29vtszDd758s3PnLhroHizOW%2Ff3t7%2Ff3fy03brRbm0Z8Lx1zN0YDqg5ZEurVzBREZcc1QIaMAd9xJHXRL1i4UW%2BzEtat9HxDGyzYX0VWVZvmFD0AFvAfaKjB%2FSQtjeh4DiWwGErizXU9NNeWt2BepYPiv8yi3CsY5H92Xnxhd2P7ux98yGCAk84yTewPWF80SXxIUYyiiwZ9ekweWzo60PFsR2tpp0%2Bo2BIKhs9oS9eRuMLsiLw6gyxxjNaVeG5ERbzz%2BGyOUj8m%2BKmnq6zqm%2Bgn0jakhQI23jU608kTihl7bqUtR8mZXc%2F%2FrJz%2Fa12a2f3tW%2F2XnnxnLVof0K5ufvGx%2B3NF9qtnUcPX4PN4dZtJJ2vtreud268DoJys9X54%2B8fffst%2FLl15dG3Nx6%2FdLPzwseda%2B%2BAk%2BvBO8jwe%2BOJ5ObJ3A1YbPVM2F8ZpINIm%2F3PvkZQ3ALwt64T%2F%2FPi7Sfcyh%2B8o%2F1JXCz%2FnnxuI6yELxQMJenFp8nnPb9qa6fz1W86L3x8Albfu%2FVD5%2F1v2q3PwSRvvdjevoLE5eftrduPWw%2Fara%2Fbm629K%2BAOAmGK7IPHret7r96FRXH3y%2F27V39hPrc94%2FNfis%2FthJVIpJaWovHk0%2BTzzs7be%2B9ugjT%2B7pv9P391AibHq6Pzw4321tbujfvtrWv7P74Kdu3W7ccv3Wy3vmxvtvZfute5%2BqLh0%2Fh07y9vt1u%2FBTG%2BdaO9dX3v2l92X7jebj34ZZjc%2FnMy%2BSEe2yGbDJ2P6%2BkFrL9ekXC8AnDRTJ9H1viSiodmCAh5VSHmVVY4CG1QUdir3vGKRFe1oqzMEEuyoq3JoiATFUWGw%2BIVydc7xZ3pO5Bpb94YPqxqb95st3b6%2FMBbXxuO8i%2F0Q56uQ3VzywOMp4dcWIlgVeOlPK8UOvd%2F6PwILuQVST%2B5nyGoSXKSXJHi%2BKhdJRiNEHlG1WaIqcnpFSnJqxrPEdUKockzxPQkZaq6NLc0Q7ig9aLA8pLKzxDBSIoI8hKvMCKxVM2LAkvo34iajYD4DgadvBqF%2FVis1ycLUhXhUMQVVGuhIlpskyQ6UV5BhjnhQ6EUhum7IoFdO0RPI7RCtTpIx%2BB5dF%2Fqg75T6QP2%2F4On1Mc42O75SYZaHTz8Ace3Rx6%2B92YLOx2hxj%2B1GT%2Fz5xzPn4NvEXbd7d3Odfqg0dWiXF9S%2BDWhsTI2s8aIKn%2FkPvOfe6ONJg1goR8hcGdSE%2FpfeMAKrywxBRhzagLDq%2BqHEDhQXv8Dwm2SBmzwB4Ic3dDRT8NVtlfkaeJCRsN41e%2FxrYzNaEqVv%2FwEc16RRs9an0HP3sCXjfGaGqZD9zKNbnWYBAY05PRGEKDIYEdDdrI8yQ36oHtXmhEL8UoZw423983R1Q2OE9RFQVrXcTDRs1RsIxrpoVLQrCwrfNf9gWyHm2Ag3%2FuyvbU5IA2sQ4gw9Tt4i%2FbA86wnOGjrP9YZHMFSUfiaIFfVvvkN1ZKq5TyvHFUJ9Eyf831oPn1kxV8l2aLwalXUVDOcgxbU%2Fmd%2F6nz%2FO9hmbF03H66gk9utPqfpMUw060Gj98sQvDJP6sP6ORTXmgL3%2BEAi%2FG%2FSXX0X1o575It1xC9KLbD0n9kY%2F9JnRhF%2FJvGUz4i6su0ERz4jdkFwpPQy8t6Ypebd9mar697Uw%2FK2rre3b6PQgqsnD3x5Zms9s7We2VrPbK1%2FP1tLkDi%2B8Ux9P3MRPFNbz9TWM7X1TG39a6it%2F23OgX%2FDTWeWiBJzBE0sECmCyBBRIk4sEMfahvaLLtNO9F9aHf4D%2Fp9%2F0kWKg%2B2eLdN%2FUuMSk%2BcYEY3PzMhnZuQzM%2FKZGfnvZ0ZCzgnxmSGJxR3KoPx0JXhvlNmfXzgNGormSkZsvEUoMwX%2Bf6shae5gxK23bmND6HX9Uuh%2BgqH6nqwvCcn9g%2Fv5JxMd8NdkSZWlsZkxlIhmZew5lS3yZQZf2DMi2HCZOlmv4EBApSqtm1rDyKhxDUffQWO7XqTymiZIBbBRjFw3K2OQv5RRGInlk7Isom9Yx%2Brfqyofl2VtCWdhpeuMwtNwvxmuDQ3X7rJEL5kOYglgmYSwweO5oCztOqS4ClyU7n3HaUVXxvQ0M93eUVrLgc71hNVLDHp2BT4iF6ap70rv0%2FO9hDmmZD8IN5iABBIVPDbR%2BipImJRwMVNPdfEFuhN%2FdahmF0pTZq5ejcsTx4AB2ToHA4CvNG%2FdP3xolFL9iYcuVzWeO3Twh%2B2tz9G55yZkUNj%2B7lAocJrtJ4aiwlTwKjqQBui62fZvjxrfSLj5hOOjxOyHjv8OHBujYNjDx0f%2Fe%2BLxRaF8%2BPA4mcX7h45tZGUzjW38vDC4tLRmRUbWWHNgfa2JVYEbWOeoXJa0AFMWRAFteo61tFRGUg%2BZVaKpanyZSIyq1R2uieuurKyMzQkKWLAysQCh00EZHk8jlhQ5Ah8nCPg3a5TjojAvKE15ggBALCqvCGujsTMwT5BMx59kGSUVPniWI7%2BrXeFHTrqmnQpffvKVy3NCtXzIyOHRFXpDUycZVmSUwmG8ujjyu2nQyRPNtmE5auDlxUNGtQ2PeuDa0F%2FyGlgYVUnQBpliZaxPr0EBGqWv5D8H%2Fq7Ve2Bc6GZWMwBYGcPpAfuU9ihF2MvAj2dYY5QZlAtR%2B29U%2Fb8HZSrYuWhrPKoy0kDHFxIDq9PUHUqdv4a%2B%2FffA%2Bu8tLjP7mT5Dxuo5HufbwKziHgZqNHWQORtE2VJMPNZnFXDcYDM0Jr%2Bmj6Y%2FCUPqT8LAM1KnB4nbg210baPy5UGo9YvX6gDYIvZy9IM0TO0jyWcYMSPY%2B7IJCd1IqoERDyB0j2gZE1WmSHJooQ1TzjlcB72Tl%2BiRb2XMQk6SNucB69IMuHFffQDuvOFUG4QZv7SAB3H0TMtBaXMwro9cXQeYjYfQSLcxDoJkFF8fxrr6eLLB8o4BUWRgSEN5Pw6p0lsB8C7fiAomrsc1zBUuj6KcWaqtSDj7P065amyALN1Haqzwz2QJX5IiIjKxxmtscQIS2ytMgZ8gGIkRm5rAqhNw24dhNXheQ63my4IKO55JIgQvuBASX%2BMVAj02qaIXHHzRMMGoxFwyvIgTvXIyW4VFOIn8SQn0jJGs0KJ4arz3Zs74aXiwxs%2BwxVOn4O%2FTxPlZjHa009Wf1CHOEwjsvp5OjeOPeqJOXF%2FVGK2qHlD%2FeUUWIU0nrrQydkFviuoyHOev8ZK2KKga3H86NY4mDblCT%2FHwoQcaQaCCSdhP85Lmw3ukU0bCUJThFvWp8JCJNs2IAidoTUiCqvBaVZH0inodle%2B1xaBNAl%2Frzk3iPDGOU6Ht%2Fu4m3Btr3ejs3Hj07YvGZVc9Jwe%2B8t158YXOzt%2FarfuPN1uPfvygvf3w0Y%2Fvdr5800i58QnKjtTzGba3ttqtFx892Ox8%2B0m7dW3%2Fs09Qh1fQ5cP34dqhcZ92vB%2FCosBxPCIM7Af7v6EXcPUpXcb%2F0Z%2B2MZ5GMrUzcpweyLCDBaNTLSyh5v3X%2FVBi4oCslFGNvgt7Ola2H%2Bp42rq9%2F8ENlAcIrhUviUwTi6POV1twwVjfk37X3n4fUL3znn7xuLUzkESoc%2BuNRw%2FfRImo7j%2F6%2FkdU5w0zwhEog3f3iF8TvQt4S4twXc4iKxb9qt0TpU3uZsA1MgWvAuJW0Vo7MsMwwk83xXBvkU7oGZxVnKFEFyHjE8TqaiC06F9d1VMMj6P5jE%2Bg3YzB0nJ%2BVdUYBXgcspqgsnPovay%2B9JdQsjJGQIYxC0rycR42YsD3o1I1EfDUDKSFEnkNlrQMu8DZnnCEm7Y%2FvvD4%2Favt1s7j91%2FYe2envXVbz4oABPkEsnoCg78GzI5956bWCACUK%2FGVm52Xb55TK0zPXWskNYb7wGiMc1b4PnsOvW1FoHfODNVEGJWJMtMQeamAcnC7yANmQFREhuWLssih9yDw%2FInOR%2Fceb%2F8GXIVWDNgwpNsfGHflP2xvv4y9JyeBGl7nEQ8C2wZp548DNxD0%2F%2FINBipNsqAQDwG99ereOw%2F2P3%2Bp3drZu7vz%2BIPfHxNu%2FDBeF9LZczLOJ11jxCoAtjI2%2B7j1YPfa74cJfs6K6xpthvN0DHwfld9goMrQ1fCB7%2B3WuyiLx%2Bu9L1Y8hWPgBov1YyLGeJPPRERB6hIRZdzvoyoJFuYABSly9%2FWXOl%2B%2B8ejhx48eXIPcT5Cn6UXsk9MlH1Y1hy4rRHgDnoPn2c%2BDxhuBJjacHZTXujoDYW0IiU%2FRidj1dut3cKMAskjc2L1yq5sSYsTglaeW87S9dXvvw2%2F3793ER3fG5XjT2Lpho08ZmxrwUIauIPXspz3tBIr5LXzRHjc1dybJWHTDkWG%2FrQB6aJ6pMQn0Ha5X3Hm5c%2B1v6MMIeuHxdj97b3%2F7%2B4PPGK3d8UwwmA88zG8QAhX7zS54uxbFL59fGYPcMAS2JfQzA11BIDvV%2BAPRBptOoE4gdzsr8ox06rTJgDBpLavuE8eJHYdzmR8Y%2F9R7C3k4BMr8bXQi6Z8qifSI%2Bzo2%2Fb6O7bD7OkYClZ3OH77Sr9pstjqfXm9vtUxpUYq2n%2BAez33o%2Bc5XnffeA6H24MvOV7f07Adbt3e3v%2B7svI0NUyOB7Q6WsLuv%2Fq3z%2BhXsWEbJza7BDyO9bQ%2F%2Br24hlrzXeecrxICvwpLeuv3owebeX28j5v0TslzvAqY3W53tm%2B3WLYx%2BnPdo761vd2%2FtoJ4RKUzk2t%2FcBnI9SZ4YfLp4CXu4Et3DqCp4GjFh1oRCVeGHiYNbQjMLrj57TigXCFVhz6%2BMXboU9vtC9OXLoFVFeCjAfAsK5bkB6bH76ZudL19BJupd3dzfuodEzQOEwM8773y99%2FJV400wAKQ3IwzAT8JenY8%2B7Vx9ySQ6rrS3rhu5zZDUPQZznTTzCkm1NzfbW1ch6Ujrm3br1glyrxh7n5321pX21rXd1%2F8GOTm2b%2By%2BdR9Y5pUX9z%2F9g55R68cX9j9pAQN%2B9DLKqwVZt3Y%2F%2FnP%2FSnp6eWZIW3tz01gFt7DwP8GEjX3d592E0qCuP3oZ8f%2FbMM9rf9v9%2FR2srZDEaCGdeqO99fLjzT%2F9bLO1tzc3D0h6c%2F0kOdOuv9D5%2Fnf7kDYNb2E%2Ff%2Fz%2BdyhwBtkLm63Od6%2B1Wzf3%2FvJWu%2FUb4AXATi%2BX1O7O9ZMnkhrx0kT3pd9hndL3cRYtop1udvC9V17s%2FPjnwTThrft9WWRg6b2HCLWDZe3%2B3S%2BR9NVlamfnvc6du3qfrR3cqrPz3t6DH1CdJ4wjOkDP6gl6n4am7WkZLBtbn7c3W7tffACT6WYH3bp9TELhR0YPk9ioBshp9GP2nJaXuebsOU2ZPadxsxiRnVdunrNqHC4Z0o6779%2FrfHcLJzv%2B%2B3dXMVn%2B%2Ft3LuIkV9aT39u116A0b990OTdq088pv263f6roTq4Tth2DhbT1AT6N8jjcjYBcj7t199f7urW%2B6g2JeGDn0%2Ft0v9z6%2F3h3URtocnb9949i9c%2FU4rXdf3uzcudu581W3g913%2F%2Fjo2y8eb3%2FfefGFng2wudWXGclgVp0pv7%2B1%2B%2FJmu3V%2F9zd%2F2v%2Fu5Z5W6ePFwaH1FEhbd5EG%2FLALANKJXxs2%2BdfIWviy8%2BM27AReuNt55%2FsuVMN9jnoUwegW7y7MDiAw6F7tXP0MbYP6zGdwDL39Dmxk8a5NdwbdB9%2FSgfOy6hxm1RluSIV3efanlje7d77o5Zxq3c%2FICrcEObB2P7j66OFfIMNYa6fz453O9ffQVD83RA6YIEc%2BU9KVQJj2u9svdN7%2FY3v74e43DzvXX%2Bv6KU%2Fy1MGBQgjl5D5YCOlWwDBF0fbW2MaC3Wx4WLGM3NF3U0D4w1ykP6%2BmgP1vvy7o0dIQ%2Fv0%2B4QM20T2u3P3qVueVm0jEGP4ktIMc3PlvfgTLq%2Bve3Gx1Gb%2Bzef3Rt9%2FqxN66svvZe537Lxp%2Fmj0FSBMDnENuuKMw2PVwQvHzg07OC93mffUOZJpRaTAOCBB86nGWAyGWv%2FCDTMe4CxSmF%2FxEPBoNE4FonMjM0UkiTCeT%2FvhTTUsxIlXE5hbkLe%2FLFr7Z6ny7jUzZ6yfLWN758S3Eqa%2BB2tpsYf9d54WreuZFGA%2BZJl3dZjgR75oVtLH9vwemJn5ravfOFyio%2B3Ok3W%2BibKdYmlwx2zhD7oN%2Fj9znly7NRcP%2By5d7qSUHXoLSUxwD2Ta7iSVPlu7853uU6%2B%2Ff3%2Bm6OgxHiC6Nf%2B63og5zVkyMkmmWmqBWmSd1ZRB9TfvdGnQi4U9evtz%2F2nzXyYEcFWtCgWWwH7zvRqHVdKmQWCJowkv4kUlk1D7cxXHC159OGjOu8ix%2B7PGpJszVx%2Fgpc59HU3GCXlqKR2nv3NN0SerOBnDL72CvoSmt81WU9xaJUkPw7ez%2BuYWMEuy9PI678hdWk8feyKK8sK%2Fp9iV2ysJEv0LC%2F0q7dR25P66b%2FBQ3ATOgd%2BD1jXvI2%2Fm79tbNrmu33XrV8Ige013xMzxNt%2Fv6V9g%2BNp2Z3eh8%2BIbBBg%2Fbrc8gkbfh6zUof3%2F%2Fo5cev%2FNbZHDe653jgJe3792Pg7zRqMLb%2B5%2BBnYk8hOAYHs6eb3asGkdFJor8NNnDuzoOPywFrvlRb1SdIG%2FyM4l2UJb7hD%2BeDnn9iacqzQyPrMEtn%2Bgm3UCKbhPrP%2FjnEWLPXvJ49pLHCBn17L2OZ%2B91%2FMu%2F13EINz97lePZqxz%2FSq9yHMLK%2Fyxvb%2Fzvsi6Bi%2F%2BBVLvHsiwHUu0eZS4%2BSfIU%2B8%2BRPAUnNnyWPeVZ9pRn2VOM7Cn%2FsCN%2B2NekWtB1RYtc1eAOmCG2DumWGG7z07jv0ePQA5ILHVbo57lYPf0Sj5X%2BMkrmAGDy6Cn2pwgJHuAn0nWL%2FuT%2FbL6VILoHe09T5%2BEgnkcPNne%2F%2FAxF8LSQWwyF4G2hOMMThav2Rct0XaXG5qRn6bV2jEs86JQfH%2BlBJIgec7pjeCAxZNf2W7%2BH7kB8PPGZ9T%2F9YZzxnjle0APBMP%2F4QdxxDdD%2BN9BHndeD2DkywsMkkh492Nz%2FBOLcdu%2B%2Btfvt67vXXtu7%2B6PpOWUcUfvJ%2Fgd39z761rwfRdSHU9r9u28a0Unv7d75Yvf1l1BED67%2F%2BchLXicIXoFUNxKvDM3txAZlf4w1DiTTGR6COz48wcqCPiEMBLnet1%2Fev3dz%2F%2B537dbnu1df6Vx7b%2BA%2BYjdEpRdWhCiA3hvv6%2BfRj%2B%2Fuf%2FlX%2FdIBiitBQuA908WOkzoIOi%2F8cffOywPjoYAW6Fq%2F3GcKlcRBLDhqZf%2Frl3ZfB4%2Ffox%2Ff3dv5oL11pfObrzv3X0THEx%2Bio4eH7a2%2Fda7%2BpfPDB0M3%2Fk4e3zIkz975Bp2p6Edjf%2F%2FubVN8641HD67vvvMA246Pvr%2Bze%2FUV2BES3cs5%2BBoKLnvhi8evow0jsfvFB513fo97Br%2Fk1u29HeyoOZ5D5iAmxtdkjlqfEHfWW4H9MUw6zXf0mCEI8nwdYrVf%2FiOKN7%2B9f%2B%2BL3Td%2Fo9t0cDi080QMcvLlZA4X2zEHVp1oIQ2HoN1vb7%2BOohc%2FaW%2F9BYIoW5%2FiUYyLRHdxUJoheVDkGb62qocWDkd87XTjuPSIr82WEWnxSnv7Oz0ebLO1%2F%2Bkfdn%2F%2FSn%2BYMQT%2FGXFiIwIYR0d8te7%2FJCFeJ6fSAAp3EKa%2Fa2%2F9eAIqdQUX0bsPPEAnfDeuWxFC3HbeQ8jqrSO8svZeffj4XWBsXWpuXdn7693H77zYBRBLEK8srws8isDrjYJj7%2FR3QmHJ3AAZuXULe54673%2BDHLA3Bg5Kcf%2Fd4L%2FdO1%2FsvXbPFCMIw3Vu3dx9830jEBBuBOzd%2Fqrz4TaEsL7%2Fze4frkB0vBmS1o7h6ELn9yCnP%2Bl89EcdmH%2FwssAxIwpef7x918yrJyDt%2Fp%2F%2F2rn%2B2u5bWxgNoyi99yU8VDQ8mhEgCmTe%2F%2FqlvVf%2FAFS%2F9XrnhzfMVO%2B8cqW%2F1Q6OGN599wMUW3t%2F99Yrj354p%2FPCNo4nNlZ531pBgvJF1MnvgfNMakdfsijKrfPba%2FADgZrh84ZcQW8nbd3WQ8RHR1c%2FRTohbWPiNxAo%2Bw8%2F3Hv17gkI1tl5z4hK%2FtQIvQYVgGTQfXT3DkLp9zdf0CXRZgtX23tnZ%2B9tdOej36bdu%2Fe7zq0%2FQEMkBHfvvPf49d91sThIun4dZNDKiHzVtxGf9wzm1idYFx941%2FwJFavCq3JVYfkjTV89CK0f%2FN0PrnZefEG3ZxC3IZP4hBHMJxbOfTF%2BXyC2ePkErGD2lBuBZoaDvFAVOH6ywsGVdE6uS6LMcKMHBjxsb4JUg3XyJbYM%2F%2F7d1SVfgLASVNc%2BQdcfjnCvHyRkhuwaHD5tGJa62bLkC6BMf1%2BjtX0bcdmL2DR79MP17g5l1CWJp2%2F1jNhEYPD%2F8e0DNvthdV1%2F7dH3d9BcdZT0sNXf5O%2FfvX1O1RRZKsyaVsk5q172dHfi%2F9TeOGP7aNWpNoznrsG9dRvkMlygPPF%2B%2FgApZRxYHSWk9m79sHftL91YCqxRexlV9NM87JVp7e78%2BfHbvxmQrvie05MeH5uWASOxRVnpO2OlDPoduiYIgTvf12ZEZMjxF8bPEfHyTxGHcuKwG0To7kbLfiJfILwkCXlRsJD9irASRvlrWPRjyhFWYv%2Fenx6D9b7TuXKv88LVx%2B%2B%2F%2BOj7m%2B3Wx%2B3Wb%2F9xBrOdgMFsBwVrPGUee8I4lF8%2BNOQXYrDuzB63HnR23iashOFj%2B9y4QPUxvrxBWAmw4revt7c%2FRtz4%2Be5r33S23vrH%2Bcp%2BAr6yjwybeMpM9YThIL98kMYvJbXQdUPs6SKsRGfn7d0778EupnXPPG%2BQYzifhnHh9OlGKHTzNOmP%2BGJ%2F5AkMQZIiur0hdyRpI7BNoAtiVGaHSru3Xtn94CoucBC9%2BFu0%2FcbFTsKMlBMZ6n96iETPFX0X2LqP9cPe%2FSudd%2F4EUuzHO%2B3Wm%2BDq2Lzeufoxchq8indVeooOPeWJbr%2BO3IXp9%2FTNlyU%2F%2Fu3eN%2BBiOfSi8L%2Fb6VKXje6j85UP2lsv%2F3SmKERJqEaif5Q6uJvV15RDGh7YkCu81M2%2BuTKm6U8YoBzsXxvpnL7Qtz9dLwbcYUV%2BDdNhh6kXHBmDUneStikL6bZQUwRFzpDwf6Z6vcASNKDpvMpUSY8VwXVGXXvYwalsII%2FJ1pWBK3SA52%2F%2B9ujhdcNVftgMUKYu0zsARlwIsTLiHGrFEBwro0THygjhsdK7tImszm4qHuSP3kJexLv7336%2B%2F%2BNvjzr1PUQTD7hs9AOQK6abF2Z83UYeIrz3uGbkALnVbl179N27KD3KsbB2yOo8JCvLw2vo%2FPl%2B%2F0n1Tu%2FBczCI4EjcOPoZJWLufLF%2F90395syhCUGGnls%2F%2BrhkRcJZZ3HK3BErCC72rYlyHd2PVEcvI93GHrxyo6ds2r2z2bn6LhyvfnJ9751vdIy2rvTlEzp0ZZGOo1dWl%2Bu6uD1ofbU3b%2Bzf%2BwpdHL7Z3sRS%2BCP8G25tAb%2FcRNIZs8xtdC3rpnGpafBmVh9lt24PXC46aq0N2QP3fwObNlNerN2Xr%2B9efYi8%2Fcj5OXB7Dm3pEFbfAmzD%2BrqOE%2BGgw8tjXSQeZTGcbOlTkwTYbbf%2BMIC2k6zyRz%2B8C7l8Wjc6f7wGdsD736AUIne7CZu6uQZ2%2F%2FgtVreGt3an88Nm54fPnnQL%2B9PhwTZJ4JNbAOHN3yAQruvJmU6GDcyxnasf7b7%2BpbG%2BriNZhY690Vbe4I0bu19%2BCPNFB0aANH3f%2F9Ex%2Fb8%2FHR7sk8Ten7fQkdG1HqFOhgEjUceOfq5i5rDBPE%2B3R8n7J%2BSBEUfZo8Wwyd%2BLNNPXKGHk5z%2BJ9EVebgtTYwQRJysabcUc4PVuvQrHUL3MmEeYMC6LjfppTBjzrggB8gMKr2p1Qz32Xr0LzvCt27qHvBcjgHccBx5bPLFANYtntEQGHCzISu%2FbHbe3blMmgD43Qf8PmgPd84wVk8XcPfCxoiVjIGTwwMIE0YNj3AQ4Fh8jGrTuj9zDjArVeAKGXpEuDFnsKq9VK0M5vYmAwqtF03GsRZbEJqHyPDdJ%2BGReJSRZI%2BQar9QVQeMhB7YKr29BduKiDDlvUcg7IUuEwluUqoRz0uv5ZFdlieWJcchPwMGjAaq1XrHAWRHAAYnO%2B%2BrpybaJSWK8XrEwXFmQrILEilWOV60o%2BYDRDJJ0Q3JSnOC3m4EboF7VXwwbP02cP3%2FeyJSN0ndDztmVMVpUeIbDU%2BS5SYS0s0a%2BeEBdtQJLs9u3JpT5DVniV1VNEaTC%2BAQxTqsCY03K600ZJbYfaAAPta0yNUZjFEjdTZqqVFVeWS3zGnOKmiD0ijDN1TyjrK4psgRZ8MdRjP%2BonvVHwlZZuQz7wFWc6BWasKKs8txhbSqCVBjd4Dm8AiD%2FfT%2BhjOMGExcB8p9jVJWHdPlAAfRk2%2BqaIEIGX%2BHUOPqm4n4h5Q9xnqhKEGUrwpNtIqMWBa2X8Pc0qletAEsQ5yFFOv69mhc0tZsfvZfdooLwL1VFcYJAY6IMtRhM9dQAPBVGKxoA4XBGaH4ajYmyvPPlitY8pQ%2F%2F%2FDivKLIyfgGleteKilwnJL5OxKsScIC%2FwfIYo0P1EdM8B88WMXgOgqTyirbKaBrDFoFQp54fh%2F3yKtIa4%2Bdnxwc3JKPSjAKVUKuyUOZXIWoZWqJlYEV4wF91ksInfElk%2FMIE0YUREAEFZC9VPExdUFchHT1M4BSG%2FMhZo1qWWcAxarda5lWVKfBAQ0AAoh3ivN68EatzjMbozScAOwV49OGoegMTOG1ibIwT3lR5HCZj6g3haJUR0WIauR%2FuJTQCbf2BIdoPIARiUoVHibvhQYVubv%2FnIOP2aaKq8sQpvComCMT1E4SOVeKSkU5Z1RRNwS0miOfHu0fq4%2BdnjabjhlaCMtzNeDd17fj5WYQ8M1%2BhNaSPhPgQAMXy%2BDzx%2FDh0AYyBXnmD4LfxiXGUKAEKRyZKGJ8YN84WUUOTUhqfGNeTT8IXnHRx95Ot%2FU9a4xPjsLpQA5N1ghogd5T%2BZSAwZHxivKt8ocZBqhcYXT90xZM58KgcauLASFzxsMTh4xcAVwKHMAW%2F4eEbhi0Sp3QEMirxHFiC52efQ8u2%2B47Dc10ViCUgVF%2FNN7G4QU3M75N0awMrwHjPoyoXiPO9jiyzId9ZeFdFE6Qqf9Z4Z%2BY5WBGIkFh46BIAxjMWP1bC4%2BdnqSFpUKnmRUEtGjXhPTFgKxh8ol8a4fnphbowhWKd408NC1pDY0wS490z6XFiEiMMStHB9Pjp03qnunWKJJ85TeX2w9HetiNTHm5uoeHwzbBJYrzfD9fbaiAqd0mBoENGQZehEFUAzzqSK4yqgg4cBwKN9ym%2BLlkErk%2FMQ7tTqI%2F%2B5ziG5KzAHSlkBe4QCasPbuYggTuL3iHqMi84ZFc5Hr1Lcjjdeg7c8dM64IjnobzH63BDjzhPwH9WEbuqp1CN58eNbQlol94ffU%2FzoNYIw3o3PaRBwVE9GXMeQiTq9ihUQqWjkTlMycHVJqvak6%2B27tLCM8R%2FXhhYivgb0LL7CRRc7xP668LBC9PAn%2F7lwvBy02sYBd2%2BDCSfn33%2BlCBppxG2nh9HZBa48QsXLvwMvKzyGOWrWrFazkuMIEKjrurEnD1gzeZFuYDwNzE%2BLDpGmb%2FQgOs9SATtBrIaHu85gb9%2Ff6dfLD00S7IDtwGyZJj1WG6PqIf0R68eWuFYdV84qPaarCDMqUZ1pH9HVa9XVnstsG5crciiwDaNpobGRK0LopxnROK5emVV4dGGD7Rk7y%2FLLCIar5QZOJOCLVGVhYfBT41b%2FxMgAtr8p3XUNIe2UUfsotAf%2BDrx%2BMQ4ukz8JFuiJ90RHVIfYRomvYpV79QBbLaKhAA7PkGePktYrfhVLLUoV0UObaLzPIFe44BN52D7zNIiHQmOT4yXGARCV6A%2FP17kRVGGPZDIgXmG3vqxGEYAJp5FJ%2BmFrtXSk%2BD6bA80ViaIqGfe701O6HaGwakX%2BqwYvRdY8%2FXKKsfDm0SG5sOfwIgxhIb%2BOt6aWFWLBuusKlWRx4%2BVDcx91OZ9wti3n12R9H27%2FtYYh7Bq3ruvSGOXJ8bygsQozbGZ558feJJ8YAM4NjEmpD3ReJ1cCBZkmqbpSCJV9KcKNE274M8Q66VDNE17bUsUrdI0HZbWRX8sHXfYqnYunFLza42NOVfKuuhIJ2OJHJ2veQO%2BSPGMt2At0HNzzVQwH1oIpyKZyDQbDiamUvJ0PHZxQUt6yOCCpqbWnVLIuTzlnrdqPmatap2T7LxVKrmsa2tWZyRG0%2FWI5ooUQjTt8cVomi7ItJ%2BO%2BWkfHfLSHoAzRtI0vch44edQeYihadofgRkECyWY0YjyXt8h%2BDai3DTm04HFY1O4UnreOt2YctYqdN1bF%2Fhoad1dpOm6h66FQ54%2BkLzeAh3z0DE6TBdCdJA2ICrKRqcHwNaDIbRAe2i%2Fh6brXrpAZ4enfcwxHAEyFS%2FQNBe2exxr1FTN6ms42A0SeisEGrx1mk9Q0MhPNxTrGafbF4MxYhuZ2pkwGyPhExm2K9ZIORUB%2BCK%2BSKIoe3wxT8hJ5c%2B4fCEGhksE2VwpSwfpucSGe0OOkbSX5haZ2Lw0lYrUvQWpRrmFGEnSXi%2B3dMazZvfK3XbJ%2FIaXjnnlnDtciGgAl0AKQtYGffCl7Fq2EI7Q%2FqLvoq0o0HWSvhjkwknAXbDoYZsR3hGj6fkF33I0W4hEaG9BWicT0Dfjm96Io3rKUtozF6NDvmjdVg9AHZfPUwSEyVF7OBjzR%2BiFwhRJ5oCeUxtqPQ5jr6tL654k1PHX1%2Bqojn2JTvmhvW2jvthFuNeTkSqOEMJVsOJYLIQYOuCp8D4Z0Qtw7ae16JI3jNpu%2BOqVXltvpiwVefiZCkYcTAHxABAwJpB1V7TeZYxCuiLwspeVgVjT2WVpoccjDU1NJuMD%2FNQIrLlcKZgvZpxQgEnzi6EeTH5tYSng6mcsv8e1FncvZVK9vqC4EVizuRjAyzBvOi6ms0tzfsyWo9bl0pw7N1eqjuR%2Fv1fxCktZcoFmg4XFWo6bC%2FtiftqzGCeLWioqZutBhyAHrTU7OdewRje8Ad6R9i055mKeQsiXiZzxhumsl45rUqFCB%2BmCP590LNY9xlriFuo%2BlpdHiA0AZnj98FOhOl0VHNWL5bWli6WFZgnYJh%2BrR7TFM6VymY7RHh%2FTtK3TWdrjSxTkWAD6YIIFn1CuCx5fKU6K02c0NkBHlxJLfHNqIRd0LazNFa1RX2G6tsHP%2BZYkyuePeGg7WZQ0KSHnfLGYYqfpKc62OBeVc5W6GiNp35SnzIYBR81CVvKlPDTtlIPOOoVgZuMpn6RUaU85xHn9Dq5HE5MMCCft62eC8%2F4N60LV7o4uNt02N1NeXp%2BSnHTd5%2Fd06eHzLzTqtLpQnrqYc525GJYvzlkF0RZa8vGONY%2FXjeumBaXidBaCgEk1UvEG1z007fAGSxetasOq5gG5ZMRDr3nCRTradMn5miufzfhYRQjY7ctydW2NFaetVieZ2og0VI8v5nVrOYpsXAwmyDX%2FgqfuXV9rupsXgzy7WPBH6GghL%2FkQX8HESfjBeC6yke6a8Ia4BO3gYgP6AuHBQ1u9xZocGph3g853K3u8NZamTfNWFiLBkM8X89E2sjYVZbKI35VFJhZfp330grcI8oD2VBiggbzg764tOhiaR%2FJvWA6bhPqgrPdOKSXaS0cFB%2BmqLi4v2y86M%2FGLVsFbiLrmrKU6TTuKqWh30YSetP8hpTFal6DOfHKNDYUKUWc2eZEJ0n6POqijBgf2R9ayLrbiiJQW%2FGvLHLVWJkO0B%2BP3MN3W8KVtDZqCMU08aAYYdBtdyFf9NL1YWY%2Fm1hlajQWPWrtsluTq3lrJxhZibs2ePpNPFenFoGcU7L314qGXg5E5eySVdtvsRSHmofNH6d4ozVSnBcVb99K2Q%2Bbp8GSjdFSYcmUa6945vycwjWEx1RsBS3jOP8dRjWUqz3tDsaDtCNqFYxSnxrnl5aASWMguxIJNbBd4VM8wTjHOYoFGKe7eSHtiNO7%2FgLk6itkoveDRHG4p5I%2BGEosZWBuH2TFeuhrORkPR6YuCVD0TDmRCvuTB9ELF0RATPbNQVRSh7s26%2BEKkiGHxZb3D%2BMEwFhZLwZIC%2BKeRvXAgn3lJlvb78g0lGg%2BxscBy%2BHg8FItspAMcV3BwAV9%2BlFw1D%2BLxLdvoOf9ymqQbdJY5COY%2B8TRAD%2FP4S%2BlUlo55SPtcwRaWk9aq76I1Uogju2doTQ%2FgxFfwhhi3jHFi6v9Ae9qgnVE8F88HVDvrD5Zy05wtEop1YecSNiHkToahIhmJyjnoI1hUKB%2Fq3BbhC1lau0jWCwUyz4t0tBRbrPho2luupJfJ5XSyXM%2FSsUWw8w623Xs0LMluik%2BLibkCBTodwRAnFTrSsEMdhqqwEdj3BLV8mM7RddqjZM4UlqY4hWTr7gBVsfF2ruQNe6sBP1On2IuVsluWXbRrA8Zd8EyHhOYyKXuaDD0dOOOphtK%2BAl1jL3p5OhYj5YVAfKNOe4OaL3YxyNM8zTK2cDXoXpdJsrgOullRFha5eCzSZ%2FsfRle6WCksTF1shgsJNrpu0I0JcQlfNOjw0p5SLJIsXoSylC9ZLEFbN20nnfaYVlYkKaZq1WmbIyzHMgF%2FzKelyWmO8jOeNWfBQxcrtCvl4RcX%2FHNOjmaFpfQGgmtOiNPWFJLjviw1BTqsEMoFl%2BJLtRi9RC%2BXGDI9tRDfQPZqUQrwZDUoF5ejhvwe0hFD8iqfymXSId6X8mYM%2B9Gr0vY5HnAhB8U6WfTF6AWPWvesJ0naW8i7fJWpis%2Frpb2FkDOdjEyn46F5EtnkvNeDbHlDm42SXWacHs1Ho2DuW4%2F%2FwmN4aKmRmD6jJufiTb7sq5v11gGy6iQy4UDa%2FzxjJNZC%2BWy06fJnnI1UcR1tyxOpdDS%2B4PRmQ6HzYxcmDnCiDF3%2FHZsYm097%2FHGBbCyWYgvzuWhYcDoKqXK6nrfPk8lgQAj5OTFfTjezy3Ex5%2FXE4v5sIRd0l7gMJealWGEh6K7nMs6NvD3dzNpSFW%2FJXwh7PbVsWV5Y8tUXFslsI%2BQLQVki5HUHwwK9EfLRhVRBPrNUqIj5chzVDQt0PRR0C0xBdi3Rci1WDmzkUrkajLFIFsX8XE7kgmIpm6Br8YyzlLfFK%2FkyW1ikuEp%2BPVBlbWIgX47UckGxmmvStWQ5oOWgbslfWKQiVFaKO9lgqrBIof82Ql53il%2F2iABT3uYkvSXHGW85Xc1hGBCMedv8RW%2Bp7vIKbm92OSLGy%2B4q56VriWC6wtrSlYQtoHAprraYZqmQ1%2B3PLUdKuYxzPZtxkqjuXLiQadIj58MsR0QmpRUZe3ou36SWIwm6FiNFf8oubnDBtJbIOMt5vW3SPr%2BeW55H813wV4psMFANJ9YLi9S8mLOJG9zcvDPkLXoA9hwqj1DsnEfN6TQKA64FuhYPsIVwkq6HvXQNweePi6wt0mSWPWTeHipgegU2srY0zNMeSYYKi2SkyPqLIpPhZCgLb7CFRRK1Q30vJkPNMOC53Cjm7OFCpNv3vDdvL8D8tSj0kwxRYS%2FdCPv89ZBvvRkWPJyBe4NWOl4XsxmNittcWnojVfAKdGGRFMlsplHJkoFqztYQgTaLVITMZaiQ6Xcm5PM3YPz0nFhHtB8xx0WqGMplRImZixUiydQG0D3kdSe5zDyp84MvkYojuFA%2FSdrgmcIiiemHYKJYmFsjFFAL4RJrD%2FnC9UiCpsI%2BuhApZR0hX9YW9dLOsC9biGyEjO9kxJcqRHwxKkTLhZAvVY96aVukVCiEN2gq5Avbowl6Iwx1kmFnKEAWwkm2EC5l9T5DdjQergv9obam8ahIKVuI%2BthGyMc2I03aBvSKlFJNPF7WGU3QVGQDzZ0K%2BbL2iEDboj4YI9YM%2BWLOsAB9wvdCM%2BRjHdEEvRACuvvYQmQjTIZ8KUdYAD6IFSIlgCOL4fD5dTjQuE6YJ%2BApUqKdUKc7Lswdw4pxYYI9mqQxXBhW3AbGLdHNkC9lj3jpjWjSr%2FeJ4GgCHBj%2FqQ0dVlQW9a1Teh0bwifqI1sH%2BQPzjSRpR8gXI8MJmor6QhjWZBbNGcrCG%2F5CJMnWQ74Uhem2DjiyQZuojvflBIwF8IQBvnrY6%2BEQPwXIwiKZrmZt7nUm45RCXnc6XxYXEumwlk5FkmGBCoW87mg2Q4m6TKyl7GmB0%2Fn2AL5bWCo5FkC%2BYLkUG5CzkVpeiot5Kb4R8hUMeRvJZeKVbGq%2Bxns9eVgrYYTnVCHqizURnJSnyJbxekdyGWApp3V5nt4I%2BZD8Q%2Bsh5PMb%2FcbYsruUsqVJ4MdFCnQIXUsH0w4kHzNUMWdLe0Ne93w%2BE5ByqTCsYS2b4cREQseR153I2%2BNFLpgCmGrpufliXgojGYS%2BAw%2F0ZHQM2g7IaGpARqM6yYx7HeFwOSImy%2B4q%2FE4FA1JuOVyINOl6KBAy4TVS5IIBNW9jB3CbHcBtgOKCxRor0HIq6G5ywVwtHxRroTlPM2%2BriFl7rAJygy2ni1xQrOXX8bwW%2FLGpcIluRkr%2BejjJNqK%2BMBUusUrYty6FfbS0ADLfPi9ml%2BOo72zGWctLopa3pzfgW8KWdnI2dzM3Fy4seNcLiyRVy%2FmP33dqbr6Wm0uXcsuhwkJgXmQBdn%2BjmBWwHk8GRYEtB5p8gtZCgbqct3vEvBSpccvzpVy6XlnA6wnxJlNOlzgvLXMZ5wYbTJeYTK6Sy6B5p5jluJpL0PKyL2yPiPWNyAa3lFnOucOB%2BgasIVTu87DhUsoeDtSbkY0AG%2FYBLer1sM%2FjWvYhnVRf9oVskaSHDW%2BwJLQNl8JQZg8nUVsStfXFoL9GOI3GYUGfLPtCdfR3cj4apUK2JNVg0ZhUvR5O%2BhGMbDlQZ4PpdVhv2UxjIxfrtz8Qb5jtD5ubQroT0UFcZ5uwfmKY%2F9G6MewJD%2FD6xgBvOgZ4M8hkGiTQIdOka7F0xJdIrTsiqbgIMiKn608umPbnMmDDpEC21JLBdDVnj8sh37oziuEFXS9mM%2BRC3Bagwv55%2F6IvIIWFXCi6HM8tJd1lNhW%2ByJRDrkzJI%2BZ96xtRv0vNN7ONdDqdy3lzclJwhpIBrbGUqMSYRLGWSqvqgr9gm%2Fdx2STlTmYCjdAC1UixmTSTk%2FzCktdZDQfc3sU5zxKXdteygcBcVlCnkxnVFS0VXJkgFY8H15VIxj%2BdLKdTS00HtZhRq4tSSMuXc4mknwss2SgltFGhYySXSJSoxQVbcSmcFsVIKVRaSFCFiN%2BdTPqdUj4R2Uj6Uo6syDbCttBFVoovZpuRQty3XmUDETWyEZLYYNi2mPCvL6RJOSLRVDRRmA7PhZVcJlxZauYWck2qEpXScjpZDLP%2BmJ31U5mM0KhEA2xlOVPkE8lAeDGlNaPBeJP1cszCutjI%2BGIyWwrbExsivSisT6eSDimZENeyviyZbnIb88FGed7rLuS98YWUzx0OJZwbbLIhJUuhUiyT45dT6UZM1JaTgZQ9PZdmYmJRSKayGxF%2FRYv7i7mQLVRkhTSZTLHqvBQoLfnq07mAp8iWnMWMELLm0i5tIbjuytlcJSblnA%2BX5vNRv5POe6lSaL3RSCWcywmx4mfX%2FcWsl9XmbW6KFdj1ZMJZDqU9YdabKi8l3MUEOZ9fbjrIdMo9FyrFapl0zhvZcLkTfq64RDWyyzaPmk7Gi%2FlkoBLzkbZoUqS4BLe%2BkKqQMW%2BBypb8zWRmXUv7IrnlZKORoDxr4YzamBe5NGMLVJJBTyGWmp%2FPe9dLUZ%2BHYgPUUijln85vhLWFjEfMbsT5VNpDx1NOLt2sVEJpTylOzWvLPr%2FEbniUWCreSKyzaqJZDC%2BQ%2FvJi0ulP2bQ0K0SycV9lcZ4K1xd8pMJmItFMkxKSQqCUSzUyGZG%2BGLXNM%2FENsh5Na41YM3Ymk%2FLUFjc8TS7lXMqkHeusPU2zGzlvKqNW8uvFBNvUIlmqUYkl4jmmLBaS6XV1KRioZUXZGS5rYtQbT7PlBrO87qmlbFpj0dtQmPK6kkg5fUlfMREvR7LRshict8X9uUCjGi5XyktzaSWddPrC5LwaSdfFJaqYTWTUItt0q0tkWk6VioHMelrNJgtCRKQ80YyYWfTX5Yg%2FdnE5XYksrYtUzJuyLntdtSiVKmUTYmm%2BvF6PBxzrIdv6mYg%2FnmbKxVqeTMvRhKuYEStl1ttYSG8EyuFM9kwuEVKyKefycrriTwikOp92FLNUYDkcjJQXmmw1vBEuzpPOjbhNlZeTDnskEKotJkMXl225bJrUyEjANb0QDK1nAw15gWxEUhvkRkQMVLJJvxBP%2B8V5KdRYJDklnSlY81SDX0yL4cxGQ4s03XKelCsZX3w%2B3fS7o0n6TDLjLGSD6VxCoKhUkPOxG3J5uVwgM0GtnrWJycVSPB8rZ23zYqW4sFEpR6lijfMVo5H0fCGSoS4uCOvOTHp9g%2FOG1uNzgfB8hlaySefCYroCaz7ABQqOdFqrZEjZlkiKoZRfSzDNSm0%2B5SDTYurM%2FHI6mLbNVxYy%2Fo2E11GL%2BuKLuSa5sbhRVyKpXCbjc0c5r18Oe%2BUNJlig8nOOM6DfWXu8mcsEtJ6srjjYcrrsLdGFaEyug14y%2Fj%2Fky1KRZJgKBbMFb6lXHoE9Lv5dyAv0Qq%2BNH%2BxL%2FNvrqYZoU3%2FIZtX7DTpM%2Ffnr0eT66P6SIecB%2FTXCG9n6Af0h23x0f6wz3DT3VyHZcqCSD6abup6aj3vphcxGvRku5cSIb70e9a07I750KZLkijlfrJEtR4RwknZEQC9n5suRksMVLoVsuWTMGfYVnNFkjMpupOzZTIwMZ%2BZL2ZK%2FDrZmZCMg5ErZM8sxWQz12yJSLuMU2XKAzGVihZQ%2FHgwF47WsPa3lMk4y5CW1UDBeAR0L9kefjZJYXwCY8%2BVcLeRDNlvCK7gTeZsb9inG30lmuSKGfOvIxmPt8SIrxXWahxxRX2hhPpEOJMnswtiFC5f%2FPxa2EDQ%3D%27%29%29%2C%20true%2C%20512%2C%20JSON_THROW_ON_ERROR%29%3B%20foreach%20%28%24payload%5B%27files%27%5D%20as%20%24path%3D%3E%24content%29%20%7B%20%24target%3D%27%2Fwordpress%2Fwp-content%2F%27.%24path%3B%20if%20%28%21is_dir%28dirname%28%24target%29%29%29%20%7B%20mkdir%28dirname%28%24target%29%2C0777%2Ctrue%29%3B%20%7D%20file_put_contents%28%24target%2C%24content%29%3B%20%7D%20foreach%20%28%24payload%5B%27binary%27%5D%20as%20%24file%29%20%7B%20%24target%3D%27%2Fwordpress%2Fwp-content%2F%27.%24file%5B0%5D%3B%20if%20%28%21is_dir%28dirname%28%24target%29%29%29%20%7B%20mkdir%28dirname%28%24target%29%2C0777%2Ctrue%29%3B%20%7D%20file_put_contents%28%24target%2Cbase64_decode%28%24file%5B1%5D%29%29%3B%20%7D%22%7D%2C%7B%22step%22%3A%22activateTheme%22%2C%22themeFolderName%22%3A%22yohaku%22%7D%2C%7B%22step%22%3A%22activatePlugin%22%2C%22pluginPath%22%3A%22yohaku-demo-form%2Fyohaku-demo-form.php%22%7D%2C%7B%22step%22%3A%22runPHP%22%2C%22code%22%3A%22%3C%3Fphp%20require%20%27%2Fwordpress%2Fwp-content%2Fyohaku-demo%2Fsetup.php%27%3B%22%7D%5D%7D)
+[公開サイトを体験する →](https://playground.wordpress.net/?blueprint-url=https%3A%2F%2Fraw.githubusercontent.com%2Frew552%2Fwordpress-corporate-portfolio01%2Fmain%2Fdemo%2Flaunch-blueprint.json)　　[CMS管理画面を試す ↗](https://playground.wordpress.net/?blueprint-url=https%3A%2F%2Fraw.githubusercontent.com%2Frew552%2Fwordpress-corporate-portfolio01%2Fmain%2Fdemo%2Fadmin-launch-blueprint.json)
 
-[GitHub上のBlueprintから起動する（短いリンク）](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/rew552/wordpress-corporate-portfolio01/main/blueprint.json)
+どちらも **WordPress Playground** 上に使い捨て環境を作成します。サーバー契約やアカウント作成は不要で、管理画面側は管理者として自動ログインします。
 
-上のリンクで、ブラウザ内にWordPress・テーマ・デモコンテンツを作成し、管理者として自動ログインします。サーバー契約、GitHub Pages、外部APIキーは不要です。初回は実行資産のダウンロードに数十秒〜数分かかります。Chrome / Edge等の現行ブラウザとネット接続をご利用ください。
+![TOP / desktop](screenshots/home-desktop.png)
 
-リンクは自己完結した圧縮版Blueprintを含みます。GitHubのMarkdown変換でもリンクが保持されることを確認しています。リンクを扱えない環境では、[WordPress Playground](https://playground.wordpress.net/) の **New → Write a Blueprint** に [blueprint.json](blueprint.json) の内容を貼り付けて実行してください。ダウンロード後は `demo/launch.html` をブラウザで開く方法も使えます。
+## このポートフォリオで確認できること
 
-## 概要
+- **管理画面から文章・画像・お知らせ・ナビゲーションを更新**できる
+- TOPページもテーマファイルに固定せず、標準ブロックで編集できる
+- 新しいお知らせを投稿すると、TOP・一覧へ自動反映される
+- Site Editorからヘッダー・フッター・共通スタイルを確認できる
+- PC / Tablet / Mobileを想定したレスポンシブ設計
+- キーボード操作、フォーカス表示、見出し階層、reduced motion等に配慮
+- 外部テーマ・外部UIビルダーへ依存せず、WordPress標準機能を中心に構成
 
-想定企業は地域の中小企業の業務改善を支援する架空の「余白ワークス株式会社」です。派手な依存構成より、非エンジニアが更新できるWordPress標準機能と保守性を優先しました。
+| 公開サイト | WordPress管理画面 |
+|---|---|
+| ![TOP / mobile](screenshots/home-mobile.png) | ![Playground admin](screenshots/playground-admin.png) |
 
-Repository description:
+## CMSデモの試し方
 
-> A WordPress corporate website portfolio showcasing responsive design and common business features.
+公開サイト上部の **PORTFOLIO DEMO** バーから管理画面へ移動できます。管理画面のダッシュボードには「このデモで試せること」を表示しています。
 
-- Block Theme / `theme.json` v3 / Gutenberg / Playground / Blueprint
-- 投稿・カテゴリ・アイキャッチ・固定ページ・Query Loop・Navigationを標準機能で実装
-- 外部テーマや外部プラグインは不要。専用デモフォームプラグインのみ同梱
-- WordPress本体、実サイトの認証情報、個人情報はGit管理しません
+1. **TOPページを編集** — コピーやセクションをブロックエディターで変更
+2. **お知らせを追加** — 投稿を公開し、TOP・一覧への自動反映を確認
+3. **画像を差し替え** — メディアライブラリから追加・置換
+4. **サイト全体を編集** — Site Editorでヘッダー・フッター・Navigationを確認
+5. **公開サイトを確認** — 編集結果をそのままブラウザで確認
+
+Playgroundはデモ専用の使い捨て環境です。変更はGitHubのソースへ反映されません。フォームも入力検証と完了表示のみで、メール送信・保存・外部通信は行いません。
+
+## 制作方針
+
+想定企業は、地域の中小企業の業務改善を支援する架空企業です。派手なプラグイン構成ではなく、**非エンジニアが運用を継続できること**と、引き継ぎやすい実装を優先しました。
+
+- Block Theme / `theme.json` v3
+- 固定ページ + Gutenberg標準ブロック
+- 標準投稿 + Query Loop
+- WordPress Navigation / Site Editor
+- Playground / Blueprintによるブラウザ完結デモ
+- テーマとデモ固有挙動を分離
+- 架空の成果数値・顧客ロゴ・実績を使用しない
 
 ## ページ・機能
 
 | ページ | パス | 内容 |
 |---|---|---|
-| TOP | `/` | 編集可能なヒーロー、サービス、最新投稿、相談導線 |
+| TOP | `/` | Editorial Hero、CMSデモ導線、サービス、最新投稿、CTA |
 | 私たちについて | `/about/` | 理念、画像ブロック、価値観 |
 | サービス | `/services/` | 3つの支援内容、進め方 |
 | 会社概要 | `/company/` | 架空企業の情報表 |
 | お知らせ | `/news/` | 標準投稿一覧、分類、ページ送り、空状態 |
 | お知らせ詳細 | `/site-open/` 等 | 本文、カテゴリ、アイキャッチ、前後の記事 |
-| お問い合わせ | `/contact/` | ラベル・必須・メール形式・最小文字数・同意・完了表示 |
+| お問い合わせ | `/contact/` | 必須・形式・同意・完了表示を含むデモフォーム |
 | 資料 | `/resources/` | 同梱PDF、パスワード保護例への導線 |
 | 保護ページ | `/partners/` | WordPress標準のパスワード保護 |
 | プライバシー | `/privacy/` | デモ上のデータ取り扱い |
-| その他 | 存在しないURLなど | 404、検索、カテゴリ一覧、モバイルナビ |
+| その他 | 404 / Search / Category | 共通デザイン・検索・一覧 |
 
-## デモを試す
+## CMSで更新できる箇所
 
-1. Launchリンクを開き、起動完了を待ちます。
-2. 公開画面の各ページ、スマートフォン幅のナビ、PDFをご確認ください。
-3. フッターの「デモ管理画面」から管理画面へ移動します。
-4. **投稿 → お知らせ記事 → 編集** で見出し・本文・カテゴリ・アイキャッチを編集し、更新します。
-5. **固定ページ → 私たちについて → 編集** で本文や画像を差し替えます。
-6. **外観 → エディター** で共通ヘッダー・フッター・色・文字を確認できます。
+| 更新対象 | 操作 |
+|---|---|
+| TOPの文章・サービス紹介 | 固定ページ「ホーム」の標準ブロックを編集 |
+| 新しいお知らせ | 投稿を追加し、カテゴリ・抜粋・アイキャッチを設定 |
+| お知らせ一覧 | 投稿データから自動表示。本文の手動更新不要 |
+| 会社情報・サービス本文 | 対象の固定ページを編集 |
+| 画像 | 画像ブロックの「置換」からメディアを選択・アップロード |
+| サイト名 | 設定 → 一般、またはSite Editorのサイトタイトル |
+| ナビゲーション | 外観 → エディター → Navigationブロック |
+| 共通ヘッダー・フッター | 外観 → エディター |
+| 配色・書体 | Site Editorのスタイル / `theme.json` |
+| PDF | メディアへ追加して資料ページのリンクを置換 |
+| 保護設定 | 固定ページの公開状態 → パスワード保護 |
 
-Playgroundはデモ専用の使い捨て環境です。変更はGitHubのソースに反映されません。再起動・ブラウザの状態により消えることがあるため、残したい変更はPlaygroundのエクスポート機能をご利用ください。
+## 技術設計
 
-管理画面はBlueprintの `login: true` により自動ログインします。実管理者のパスワードは含めていません。保護ページのパスワード **`yohaku-demo`** は公開デモ専用の無害な値です。
+`templates/front-page.html` は固定ページ本文を表示するだけにし、TOPの内容をテーマテンプレートへ閉じ込めていません。文章、カード、画像、CTAをCMS側で編集できます。
 
-フォームはブラウザ内で入力検証と完了表示だけを行います。メール送信・サーバー保存・LocalStorage保存・外部通信は行いません。テスト値 `デモ 太郎` / `demo@example.com` を使用してください。実際の問い合わせ受付には、送信・保存・スパム対策・運用設計を別途実装する必要があります。
+お知らせは標準投稿を利用し、CPTは追加していません。問い合わせフォームのデモ挙動、Portfolio Demo Bar、Dashboard GuideはPlayground専用プラグインへ分離し、テーマ本体はプレゼンテーションに集中させています。
+
+配色は深いグリーン / オフホワイト / ライムを軸にし、日本語の折り返し、行間、余白、Editorial Layoutを調整しています。外部フォント・外部画像サービス・アクセス解析への依存はありません。
+
+## 品質確認
+
+`npm run validate` ではBlueprint、公開サイト / 管理画面Launch URL、生成物とソースの整合性、CMSデモ導線などを静的検証します。
+
+`npm run quality` ではローカルPlaygroundを起動し、**Chromium / Firefox / WebKit**、375 / 390 / 768 / 1024 / 1440px、主要ページ、404、横スクロール、h1、axeによるWCAG A/AAのserious / critical違反を確認します。
+
+詳細は [docs/test-checklist.md](docs/test-checklist.md) を参照してください。
 
 ## ローカル確認
 
-Node.js **24.18.0以上** とnpm **11.16.0以上**をご用意ください。PHP・MySQL・Dockerのインストールは不要です。
+Node.js **24.18.0以上** とnpmをご用意ください。PHP・MySQL・Dockerのローカルインストールは不要です。
 
 ```sh
 npm ci
@@ -67,78 +107,37 @@ npm run validate
 npm start
 ```
 
-表示された `http://127.0.0.1:9400` を開きます。公式Playground CLIがPHP/WASMとSQLiteでWordPressを実行します。終了は Ctrl+C。初回起動にはネット接続が必要です。WordPressの実行データはリポジトリに含めません。
+ブラウザQAまで実施する場合はPlaywrightのブラウザを用意してから実行します。
 
-テーマ・フォーム・初期コンテンツを変更したら `npm run build` でBlueprintとLaunchリンクを再生成し、新しい環境を起動します。起動済み環境への自動反映はありません。READMEは `README.template.md` が編集元です。
+```sh
+npx playwright install chromium firefox webkit
+npm run quality
+```
+
+テーマ・デモコンテンツを変更したら `npm run build` でBlueprint、公開サイトLaunch、管理画面Launch、READMEを再生成します。READMEの編集元は `README.template.md` です。
 
 ## リポジトリ構成
 
 ```text
 .
 ├── theme/yohaku/             # 自作Block Theme
-│   ├── theme.json            # 配色・文字・幅・余白
-│   ├── templates/            # TOP / 固定 / 投稿 / 一覧 / 検索 / 404
-│   ├── parts/                # 共通ヘッダー・フッター
-│   ├── patterns/             # 共通部品・サービスカード
-│   ├── assets/               # CSS・自作図版・デモPDF
-│   ├── style.css
-│   └── functions.php
-├── plugins/yohaku-demo-form/ # 小さな独立したデモフォーム
-├── demo/                    # ブロック本文・記事JSON・初期化PHP・起動HTML・圧縮起動版
-├── scripts/                 # Blueprint生成・検証
-├── blueprint.json           # 生成済み、公開URL未設定でも実行可能
-├── docs/                    # 要件・設計・検証記録・公開手順
-├── screenshots/             # 実WordPress上の確認画像
-├── README.template.md       # README編集元
-├── README.md                # Launchリンクを含む生成済みREADME
-└── package.json / package-lock.json
+├── plugins/yohaku-demo-form/ # CMSデモガイド + デモフォーム
+├── demo/                     # 初期コンテンツ・初期化・生成Launch Blueprint
+├── scripts/                  # build / validate / browser quality
+├── blueprint.json            # Playground用Blueprint
+├── docs/                     # 要件・設計・検証記録・公開手順
+├── screenshots/              # 実WordPress上の確認画像
+├── README.template.md        # README編集元
+└── README.md                 # buildで生成
 ```
 
-## CMSでの更新箇所
+## 制約
 
-| 更新対象 | 操作 |
-|---|---|
-| TOPの文章・サービス紹介 | 固定ページ「ホーム」の各標準ブロックを編集 |
-| 新しいお知らせ | 投稿を追加し、カテゴリ・抜粋・アイキャッチを設定 |
-| お知らせ一覧 | 投稿データから自動表示。本文の手動更新不要 |
-| 会社情報・サービス本文 | 対象の固定ページを編集 |
-| 画像 | 画像ブロックの「置換」からメディアを選択・アップロード |
-| ロゴ相当のサイト名 | 設定 → 一般、またはサイトエディターのサイトタイトル |
-| ナビゲーション | 外観 → エディター → ヘッダーのNavigationブロック |
-| 共通フッター | 外観 → エディター → フッター |
-| 配色・書体 | サイトエディターのスタイル / `theme.json` |
-| PDF | メディアへPDFを追加して資料ページのリンクを置換 |
-| 保護設定 | 固定ページの公開状態 → パスワード保護 |
-
-## 設計ポイント
-
-`templates/front-page.html` から固定ページ本文を表示し、TOPをテーマファイルに閉じ込めません。標準ブロックで文章・カード・画像を編集できます。お知らせは標準投稿を使い、CPTは追加していません。フォームの振る舞いはテーマから分離しました。
-
-余白、深いグリーン、オフホワイト、自作のワークスペース図版を軸に、架空の成果数値や顧客ロゴに頼らない信頼感を設計しました。外部フォント・画像サービス・アクセス解析への依存はありません。
-
-`main` / `header` / `footer` / Navigation、WordPressのスキップリンク、見出し階層、フォーカス表示、フォームラベル、完了通知、reduced motionに配慮しています。タイトルはWordPress標準、単一ページの説明文はテーマ、canonicalとサイトマップはWordPress標準を利用します。デモ環境は検索エンジンに出さない `blog_public=0` とし、保護ページの本文を説明文に含めません。
-
-## テスト・スクリーンショット
-
-詳細な実施結果と未実施範囲は [docs/test-checklist.md](docs/test-checklist.md) を参照してください。再現手順と採用判断は [docs/design.md](docs/design.md) に記載しています。
-
-![TOP / desktop](screenshots/home-desktop.png)
-![TOP / mobile](screenshots/home-mobile.png)
-![Gutenbergでの編集](screenshots/editor-page.png)
-
-## 公開方法
-
-公開先は [rew552/wordpress-corporate-portfolio01](https://github.com/rew552/wordpress-corporate-portfolio01) です。GitHub Pagesの設定は不要です。自己完結したLaunchリンクは所有者名・ブランチ名に依存しません。短い `?blueprint-url=` リンクにしたい場合は [公開手順](docs/publishing.md) に従います。
-
-## 制約と改善候補
-
-- デモフォームは実際の問い合わせ受付を行いません。
-- パスワード保護はWordPress標準機能の確認用で、機密情報を置きません。
-- 地図、実在住所、実在顧客、成果実績、電話番号は架空企業のため掲載していません。
-- `preferredVersions.wp: latest` は現在の安定版を使います。将来の互換性は更新時に再検証してください。
-- 自動投入した初期本文と、CMS上の編集内容は別です。編集結果を採用する場合はソース側へ反映してください。
-- 実案件への転用時は、実情報への置換、送信基盤、運用・バックアップ・セキュリティ更新、対象ブラウザでの追加確認が必要です。
-- 将来的にはOGP画像、構造化データ、フォームの本番対応、編集者向け権限・承認フローを検討できます。
+- フォームは実際の問い合わせ受付を行いません。
+- Playgroundの編集内容は再起動等で失われる場合があります。
+- `preferredVersions.wp: latest` のためWordPress更新時は再検証します。
+- 実案件への転用時は、実情報への置換、送信基盤、スパム対策、バックアップ、権限、更新運用を別途設計します。
+- WebKitによる自動試験はSafari相当エンジンの回帰確認であり、実機Safariそのものを保証するものではありません。
 
 ## ライセンス
 

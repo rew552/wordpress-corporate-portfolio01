@@ -1,8 +1,9 @@
-name: Issue 1 build and quality
+name: Build and quality
 on:
   push:
     branches:
-      - fix/issue-1-portfolio-quality
+      - 'fix/**'
+      - 'feat/**'
 permissions:
   contents: write
 jobs:
@@ -13,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: fix/issue-1-portfolio-quality
+          ref: ${{ github.ref_name }}
       - uses: actions/setup-node@v4
         with:
           node-version: '24.19.0'
@@ -26,16 +27,30 @@ jobs:
         run: npm run build
       - name: Validate
         run: npm run validate
-      - name: Browser quality
-        run: npm run quality
-      - name: Commit generated artifacts
+      - name: Commit generated Playground artifacts
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package.json package-lock.json blueprint.json README.md demo/launch.html demo/launch-blueprint.json demo/admin-launch-blueprint.json screenshots/home-desktop.png screenshots/home-mobile.png
+          git add package.json package-lock.json blueprint.json README.md demo/launch.html demo/launch-blueprint.json demo/admin-launch-blueprint.json
           if git diff --cached --quiet; then
-            echo "No generated changes"
+            echo "No generated Playground changes"
           else
             git commit -m "build: regenerate Playground artifacts"
             git push
           fi
+      - name: Browser quality
+        run: npm run quality
+      - name: Commit refreshed screenshots
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add screenshots/home-desktop.png screenshots/home-mobile.png
+          if git diff --cached --quiet; then
+            echo "No screenshot changes"
+          else
+            git commit -m "test: refresh portfolio screenshots"
+            git push
+          fi
+
+# Keep generated Playground artifacts in sync even when browser QA fails.
