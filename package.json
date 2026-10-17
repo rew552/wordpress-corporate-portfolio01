@@ -1,0 +1,21 @@
+{
+  "name": "wordpress-corporate-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A WordPress corporate website portfolio showcasing responsive design and common business features.",
+  "engines": {
+    "node": ">=24.18.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "wp-playground-cli server --blueprint=blueprint.json --port=9400",
+    "validate": "node scripts/validate.mjs"
+  },
+  "devDependencies": {
+    "@wp-playground/cli": "3.1.58",
+    "ajv": "8.20.0"
+  },
+  "overrides": {
+    "qs": "6.16.0"
+  }
+}

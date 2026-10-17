@@ -1,0 +1,136 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "useRootPaddingAwareAlignments": true,
+    "layout": {
+      "contentSize": "760px",
+      "wideSize": "1200px"
+    },
+    "color": {
+      "defaultPalette": false,
+      "palette": [
+        {
+          "slug": "forest",
+          "name": "フォレスト",
+          "color": "#163d35"
+        },
+        {
+          "slug": "ink",
+          "name": "インク",
+          "color": "#193c35"
+        },
+        {
+          "slug": "muted",
+          "name": "セカンダリー",
+          "color": "#52665e"
+        },
+        {
+          "slug": "paper",
+          "name": "ペーパー",
+          "color": "#f7f8f2"
+        },
+        {
+          "slug": "white",
+          "name": "ホワイト",
+          "color": "#ffffff"
+        },
+        {
+          "slug": "lime",
+          "name": "ライム",
+          "color": "#d9ec9b"
+        }
+      ]
+    },
+    "typography": {
+      "fluid": true,
+      "fontFamilies": [
+        {
+          "slug": "sans",
+          "name": "System Sans",
+          "fontFamily": "\"Hiragino Kaku Gothic ProN\", \"Yu Gothic\", Meiryo, sans-serif"
+        }
+      ],
+      "fontSizes": [
+        {
+          "slug": "small",
+          "name": "Small",
+          "size": "0.875rem"
+        },
+        {
+          "slug": "medium",
+          "name": "Medium",
+          "size": "1rem"
+        },
+        {
+          "slug": "large",
+          "name": "Large",
+          "size": "1.5rem"
+        },
+        {
+          "slug": "x-large",
+          "name": "XL",
+          "size": "2.5rem"
+        }
+      ]
+    },
+    "spacing": {
+      "units": [
+        "px",
+        "rem",
+        "%",
+        "vw"
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var:preset|color|paper",
+      "text": "var:preset|color|ink"
+    },
+    "typography": {
+      "fontFamily": "var:preset|font-family|sans",
+      "fontSize": "1rem",
+      "lineHeight": "1.9"
+    },
+    "spacing": {
+      "blockGap": "1.5rem",
+      "padding": {
+        "left": "clamp(20px,4vw,64px)",
+        "right": "clamp(20px,4vw,64px)"
+      }
+    },
+    "elements": {
+      "link": {
+        "color": {
+          "text": "var:preset|color|forest"
+        }
+      },
+      "heading": {
+        "typography": {
+          "fontWeight": "600",
+          "lineHeight": "1.5",
+          "letterSpacing": "-0.025em"
+        }
+      },
+      "button": {
+        "border": {
+          "radius": "4px"
+        },
+        "color": {
+          "background": "var:preset|color|forest",
+          "text": "var:preset|color|white"
+        },
+        "spacing": {
+          "padding": {
+            "top": "14px",
+            "bottom": "14px",
+            "left": "26px",
+            "right": "26px"
+          }
+        }
+      }
+    }
+  }
+}

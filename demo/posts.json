@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "site-open",
+    "title": "コーポレートサイトを公開しました",
+    "date": "2026-09-16 10:00:00",
+    "category": "お知らせ",
+    "excerpt": "余白ワークスの考え方やサービスをご紹介するサイトを公開しました。",
+    "content": "<!-- wp:heading {\"level\":2} --><h2 class=\"wp-block-heading\">仕事の仕組みを、もっと身近に。</h2><!-- /wp:heading -->\n<!-- wp:paragraph --><p>サービスの内容や私たちの考え方を、分かりやすくお伝えするサイトを公開しました。</p><!-- /wp:paragraph -->\n<!-- wp:paragraph --><p>今後は業務整理のヒントなどを更新する想定です。本記事は自主制作のための架空のお知らせです。</p><!-- /wp:paragraph -->\n"
+  },
+  {
+    "slug": "workflow-notes",
+    "title": "業務を整理するとき、最初に見直したい3つのこと",
+    "date": "2026-09-04 10:00:00",
+    "category": "仕事のヒント",
+    "excerpt": "「誰が」「いつ」「何を」行うかをそろえるところから、業務整理を始めます。",
+    "content": "<!-- wp:paragraph --><p>毎日の小さな手戻りは、仕事の流れを見直すきっかけになります。</p><!-- /wp:paragraph -->\n<!-- wp:heading {\"level\":2} --><h2 class=\"wp-block-heading\">1. 入口をそろえる</h2><!-- /wp:heading -->\n<!-- wp:paragraph --><p>依頼が届く場所と必要な情報を決め、確認の往復を減らします。</p><!-- /wp:paragraph -->\n<!-- wp:heading {\"level\":2} --><h2 class=\"wp-block-heading\">2. 担当を明らかにする</h2><!-- /wp:heading -->\n<!-- wp:paragraph --><p>誰が判断するかを共有し、仕事が止まる場所を見つけます。</p><!-- /wp:paragraph -->\n<!-- wp:heading {\"level\":2} --><h2 class=\"wp-block-heading\">3. 終わりを決める</h2><!-- /wp:heading -->\n<!-- wp:paragraph --><p>完了の条件をそろえ、引き継ぎを分かりやすくします。</p><!-- /wp:paragraph -->\n<!-- wp:paragraph --><p>本記事は自主制作デモ用のサンプルです。</p><!-- /wp:paragraph -->\n"
+  },
+  {
+    "slug": "guide-available",
+    "title": "サービスガイドをご用意しました",
+    "date": "2026-08-21 10:00:00",
+    "category": "お知らせ",
+    "excerpt": "支援内容をまとめたデモ用PDFを資料ページからご覧いただけます。",
+    "content": "<!-- wp:paragraph --><p>業務整理、仕組みの導入、定着の伴走を1ページにまとめました。</p><!-- /wp:paragraph -->\n<!-- wp:paragraph --><p><a href=\"{{HOME}}/resources/\">資料ダウンロードページへ →</a></p><!-- /wp:paragraph -->\n<!-- wp:paragraph --><p>本記事とPDFは架空サービスの自主制作デモです。</p><!-- /wp:paragraph -->\n"
+  }
+]
