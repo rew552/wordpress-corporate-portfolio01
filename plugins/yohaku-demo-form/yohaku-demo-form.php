@@ -1,11 +1,68 @@
 <?php
 /**
- * Plugin Name: Yohaku Demo Form
- * Description: 保存・送信を行わないPlayground専用フォーム。実運用の問い合わせ受付には使用しません。
- * Version: 1.0.0
+ * Plugin Name: Yohaku Portfolio Demo
+ * Description: WordPress Playground向けのCMS体験ガイドと、保存・送信を行わないデモフォームを提供します。
+ * Version: 1.1.0
  * License: GPL-2.0-or-later
  */
 if (!defined('ABSPATH')) { exit; }
+
+function yohaku_demo_is_enabled() {
+    return (bool) get_option('yohaku_demo_mode');
+}
+
+add_action('wp_enqueue_scripts', function () {
+    if (!yohaku_demo_is_enabled()) { return; }
+    wp_enqueue_style('yohaku-portfolio-demo', plugins_url('demo.css', __FILE__), [], '1.1.0');
+});
+
+add_action('admin_enqueue_scripts', function () {
+    if (!yohaku_demo_is_enabled()) { return; }
+    wp_enqueue_style('yohaku-portfolio-demo-admin', plugins_url('demo.css', __FILE__), [], '1.1.0');
+});
+
+add_action('wp_body_open', function () {
+    if (!yohaku_demo_is_enabled()) { return; }
+    ?>
+    <aside class="portfolio-demo-bar" aria-label="ポートフォリオデモ">
+        <div class="portfolio-demo-bar__label">PORTFOLIO DEMO</div>
+        <p class="portfolio-demo-bar__message">このサイトはWordPressの管理画面から実際に編集できます。</p>
+        <a class="portfolio-demo-bar__link" href="<?php echo esc_url(home_url('/#cms-demo')); ?>">編集できる箇所を見る</a>
+        <a class="portfolio-demo-bar__button" href="<?php echo esc_url(admin_url()); ?>">管理画面を試す <span aria-hidden="true">↗</span></a>
+    </aside>
+    <?php
+}, 1);
+
+add_action('wp_dashboard_setup', function () {
+    if (!yohaku_demo_is_enabled()) { return; }
+    wp_add_dashboard_widget('yohaku_demo_guide', 'このデモで試せること', function () {
+        $front_id = (int) get_option('page_on_front');
+        $front_edit = $front_id ? get_edit_post_link($front_id, '') : admin_url('edit.php?post_type=page');
+        ?>
+        <div class="yohaku-demo-dashboard">
+            <p class="yohaku-demo-dashboard__lead">公開サイトを見るだけでなく、文章・画像・投稿・共通デザインまで編集できます。変更はこのPlayground環境だけに反映されます。</p>
+            <div class="yohaku-demo-dashboard__grid">
+                <a href="<?php echo esc_url($front_edit); ?>"><strong>TOPページを編集</strong><span>コピーやセクションをブロックエディターで変更</span></a>
+                <a href="<?php echo esc_url(admin_url('post-new.php')); ?>"><strong>お知らせを追加</strong><span>投稿すると一覧へ自動反映</span></a>
+                <a href="<?php echo esc_url(admin_url('upload.php')); ?>"><strong>画像を差し替え</strong><span>メディアから画像を追加・置換</span></a>
+                <a href="<?php echo esc_url(admin_url('site-editor.php')); ?>"><strong>サイト全体を編集</strong><span>ヘッダー・フッター・スタイルを確認</span></a>
+            </div>
+            <p class="yohaku-demo-dashboard__actions"><a class="button button-primary" href="<?php echo esc_url(home_url('/')); ?>">公開サイトを確認する ↗</a></p>
+        </div>
+        <?php
+    });
+});
+
+add_action('admin_bar_menu', function ($admin_bar) {
+    if (!yohaku_demo_is_enabled() || !is_admin()) { return; }
+    $admin_bar->add_node([
+        'id' => 'yohaku-view-site',
+        'title' => '公開サイトを確認',
+        'href' => home_url('/'),
+        'meta' => ['target' => '_blank', 'rel' => 'noopener'],
+    ]);
+}, 90);
+
 add_shortcode('yohaku_demo_form', function () {
     wp_enqueue_script('yohaku-demo-form', plugins_url('form.js', __FILE__), [], '1.0.0', true);
     ob_start(); ?>
