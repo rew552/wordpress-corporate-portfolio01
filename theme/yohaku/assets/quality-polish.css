@@ -85,7 +85,7 @@ h1,h2,h3{text-wrap:wrap;letter-spacing:0}
  .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item{font-size:20px}
  .site-header{gap:18px}
  .header-actions{margin-left:auto;gap:12px}
- .header-cta{display:flex}
+ .wp-block-buttons.header-cta{display:flex!important}
  .section-header,.split-grid,.hero-grid,.cms-demo-grid,.page-header-grid,.about-story-grid,.values-head,.contact-layout,.footer-main{grid-template-columns:1fr}
  .section-header__copy,.page-header .wp-block-post-excerpt{justify-self:start}
  .contact-guide{position:static}
@@ -105,7 +105,7 @@ h1,h2,h3{text-wrap:wrap;letter-spacing:0}
  .footer-cta{grid-template-columns:1fr;align-items:start}
 }
 @media(max-width:767px){
- .header-cta{display:none}
+ .wp-block-buttons.header-cta{display:none!important}
  .section-shell{padding-block:62px}
  .hero{padding-block:58px 72px}
  .hero h1{font-size:clamp(40px,11vw,56px)}
