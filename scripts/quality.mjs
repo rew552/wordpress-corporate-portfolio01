@@ -10,8 +10,8 @@ const browserTypes = [['chromium', chromium], ['firefox', firefox], ['webkit', w
 const formatViolations = (violations) => violations.map((violation) => {
   const nodes = violation.nodes.slice(0, 6).map((node) => {
     const target = node.target.join(' > ');
-    const detail = node.failureSummary || node.html;
-    return `  - ${target}\n    ${detail}`;
+    const detail = node.failureSummary || '';
+    return `  - ${target}\n    ${detail}\n    HTML: ${node.html}`;
   }).join('\n');
   return `${violation.id} (${violation.impact}) — ${violation.help}\n${nodes}`;
 }).join('\n');
