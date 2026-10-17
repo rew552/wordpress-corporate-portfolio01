@@ -1,11 +1,19 @@
 /* Issue #9: shared container, header composition and editorial spacing system. */
 :root{
  --yohaku-container-max:1440px;
+ --yohaku-page-gutter:clamp(20px,4vw,64px);
  --yohaku-section-space:clamp(88px,8vw,120px);
 }
 
-/* The WordPress alignwide primitive is the shared horizontal container. */
-.site-header,.hero,.section-shell.alignwide,.site-footer{width:100%}
+/* Header/footer template parts sit outside the root-padded main flow, so recreate
+ * the same 1440px content container + fluid gutter explicitly. */
+.site-header,.site-footer{
+ box-sizing:border-box;
+ width:min(100%,calc(var(--yohaku-container-max) + var(--yohaku-page-gutter) + var(--yohaku-page-gutter)));
+ max-width:none!important;
+ margin-inline:auto;
+ padding-inline:var(--yohaku-page-gutter);
+}
 
 /* Header: three stable regions instead of a two-sided space-between layout. */
 .site-header{
