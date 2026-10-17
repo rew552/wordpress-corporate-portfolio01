@@ -19,6 +19,7 @@
 | 未公開状態からの起動 | PASS：テーマ・専用プラグイン・本文・バイナリを自己完結Blueprintから展開 |
 | 公式ブラウザ版起動 | PASS：READMEと同じリンクでTOP表示・サービスへのスコープ内移動 |
 | GitHubでのREADME表示 | PASS：公式Markdown変換APIでLaunchのhrefが保持され、元URLと完全一致（28,968文字） |
+| GitHub公開・短い起動リンク | PASS：Public / mainへ公開。raw BlueprintがHTTP 200・CORS *・ローカルと一致。公開URLからPlayground起動、管理画面自動ログイン、固定ページ保存・公開反映を確認 |
 | 管理画面 | PASS：公式ブラウザ版で日本語管理画面へ自動ログイン |
 | 公式ブラウザ版CMS | PASS：固定ページへブロック追加→保存→公開画面で追加内容を確認 |
 | 公開画面 | PASS：TOP・紹介・サービス・会社・お知らせ一覧・詳細・問い合わせ・資料・プライバシーの9画面、200・正しいh1・main・自主制作注記 |
@@ -76,4 +77,4 @@
 - デモ投稿3件のためページ送りの複数ページ状態は未検証。core Query Paginationを使用し、6件/ページで構成。
 - 最新WordPressは将来変わるため、依存やWordPressの更新時には再確認する。
 - 起動時に未使用の標準テーマの翻訳取得警告が出る場合がある。本テーマ、日本語コア管理画面、デモ初期化の完了は確認済み。
-- 公開先は `rew552/wordpress-corporate-portfolio01`。GitHub公式Markdown変換APIによる自己完結リンクの保持は確認済み。公開URLからの起動確認は公開時の記録を参照。現在の自己完結Launchリンクは公開URLに依存しない。
+- 公開先は `rew552/wordpress-corporate-portfolio01`。GitHub公式Markdown変換APIによる自己完結リンクの保持は確認済み。公開URLからの起動・CMS編集まで確認済み（2026-10-17）。現在の自己完結Launchリンクは公開URLに依存しない。

@@ -59,5 +59,22 @@
   "github_markdown": {
     "result": "PASS",
     "linkBytes": 28968
+  },
+  "github_publication": {
+    "repository": "https://github.com/rew552/wordpress-corporate-portfolio01",
+    "branch": "main",
+    "initial_commit": "8e6b392bcd722ab679b43aa3feedd6a17f80a24c",
+    "public_blueprint_http_status": 200,
+    "cors": "*",
+    "matches_local": true,
+    "public_url_playground": {
+      "date": "2026-10-17",
+      "result": "PASS",
+      "homepage": true,
+      "navigation": true,
+      "adminAutologin": true,
+      "gutenbergEditSave": true,
+      "frontendReflection": true
+    }
   }
 }
