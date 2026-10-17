@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Yohaku Portfolio Demo
  * Description: WordPress Playground向けのCMS体験ガイドと、保存・送信を行わないデモフォームを提供します。
- * Version: 1.1.0
+ * Version: 1.2.0
  * License: GPL-2.0-or-later
  */
 if (!defined('ABSPATH')) { exit; }
@@ -34,22 +34,24 @@ add_filter('block_core_navigation_render_fallback', function ($fallback_blocks) 
 
 add_action('wp_enqueue_scripts', function () {
     if (!yohaku_demo_is_enabled()) { return; }
-    wp_enqueue_style('yohaku-portfolio-demo', plugins_url('demo.css', __FILE__), [], '1.1.0');
+    wp_enqueue_style('yohaku-portfolio-demo', plugins_url('demo.css', __FILE__), [], '1.2.0');
 });
 
 add_action('admin_enqueue_scripts', function () {
     if (!yohaku_demo_is_enabled()) { return; }
-    wp_enqueue_style('yohaku-portfolio-demo-admin', plugins_url('demo.css', __FILE__), [], '1.1.0');
+    wp_enqueue_style('yohaku-portfolio-demo-admin', plugins_url('demo.css', __FILE__), [], '1.2.0');
 });
 
 add_action('wp_body_open', function () {
     if (!yohaku_demo_is_enabled()) { return; }
     ?>
     <aside class="portfolio-demo-bar" aria-label="ポートフォリオデモ">
-        <div class="portfolio-demo-bar__label">PORTFOLIO DEMO</div>
-        <p class="portfolio-demo-bar__message">このサイトはWordPressの管理画面から実際に編集できます。</p>
-        <a class="portfolio-demo-bar__link" href="<?php echo esc_url(home_url('/#cms-demo')); ?>">編集できる箇所を見る</a>
-        <a class="portfolio-demo-bar__button" href="<?php echo esc_url(admin_url()); ?>">管理画面を試す <span aria-hidden="true">↗</span></a>
+        <div class="portfolio-demo-bar__inner">
+            <div class="portfolio-demo-bar__label">PORTFOLIO DEMO</div>
+            <p class="portfolio-demo-bar__message">このサイトはWordPressの管理画面から実際に編集できます。</p>
+            <a class="portfolio-demo-bar__link" href="<?php echo esc_url(home_url('/#cms-demo')); ?>">編集できる箇所を見る</a>
+            <a class="portfolio-demo-bar__button" href="<?php echo esc_url(admin_url()); ?>">管理画面を試す <span aria-hidden="true">↗</span></a>
+        </div>
     </aside>
     <?php
 }, 1);

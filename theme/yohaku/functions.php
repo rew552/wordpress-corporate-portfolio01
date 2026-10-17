@@ -6,6 +6,7 @@ add_action('after_setup_theme', function () {
     add_theme_support('editor-styles');
     add_editor_style('assets/site.css');
     add_editor_style('assets/quality-polish.css');
+    add_editor_style('assets/layout-system.css');
     load_theme_textdomain('yohaku', get_template_directory() . '/languages');
 });
 
@@ -13,6 +14,7 @@ add_action('wp_enqueue_scripts', function () {
     $version = wp_get_theme()->get('Version');
     wp_enqueue_style('yohaku-site', get_theme_file_uri('assets/site.css'), [], $version);
     wp_enqueue_style('yohaku-quality-polish', get_theme_file_uri('assets/quality-polish.css'), ['yohaku-site'], $version);
+    wp_enqueue_style('yohaku-layout-system', get_theme_file_uri('assets/layout-system.css'), ['yohaku-quality-polish'], $version);
 });
 
 add_action('wp_body_open', function () {
