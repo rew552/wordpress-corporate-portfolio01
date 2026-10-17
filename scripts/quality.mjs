@@ -33,7 +33,7 @@ const waitForPage = async (page, route) => {
   if (route.includes('definitely-not-found')) assert.equal(response.status(), 404, `${route}: expected 404 status`);
   else assert(response.ok(), `${route}: HTTP ${response.status()}`);
   await page.locator('main').waitFor();
-  await page.evaluate(() => document.fonts?.ready);
+  await page.evaluate(async () => { if (document.fonts) await document.fonts.ready; });
   assert.equal(await page.locator('h1').count(), 1, `${route}: expected one h1`);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   assert(overflow <= 1, `${route}: horizontal overflow ${overflow}px`);
@@ -41,28 +41,7 @@ const waitForPage = async (page, route) => {
 
 const isVisible = async (locator) => locator.count() > 0 && locator.first().isVisible();
 
-await mkdir('screenshots/regression-actual', { recursive: true });
-
-for (const [name, type] of browserTypes) {
-  const browser = await type.launch({ headless: true });
-  try {
-    const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
-    const page = await context.newPage();
-    for (const route of routes) {
-      await waitForPage(page, route);
-    }
-    await context.close();
-  } finally {
-    await browser.close();
-  }
-  console.log(`PASS: ${name} route, h1 and overflow checks.`);
-}
-
-const browser = await chromium.launch({ headless: true });
-try {
-  const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
-  const page = await context.newPage();
-
+const runResponsiveChecks = async (page) => {
   for (const width of breakpointWidths) {
     await page.setViewportSize({ width, height: 1000 });
     await waitForPage(page, '/');
@@ -90,7 +69,10 @@ try {
     const expectedTracks = width <= 767 ? 2 : width <= 1023 ? 3 : 4;
     assert.equal(serviceTracks, expectedTracks, `${width}px: service row should have ${expectedTracks} grid tracks, got ${serviceTracks}`);
   }
+  console.log('PASS: breakpoint boundary checks.');
+};
 
+const runAxeChecks = async (page) => {
   for (const width of axeWidths) {
     await page.setViewportSize({ width, height: 1000 });
     for (const route of axeRoutes) {
@@ -100,36 +82,61 @@ try {
       assert.equal(blocking.length, 0, `chromium ${width}px ${route}: accessibility violations\n${formatViolations(blocking)}`);
     }
   }
+  console.log('PASS: mobile/tablet/desktop axe scans.');
+};
 
-  if (process.env.CI) {
-    const baseline = JSON.parse(await readFile('screenshots/visual-baseline.json', 'utf8'));
-    const actual = {};
-    const mismatches = [];
-
-    for (const visual of visualCases) {
-      await page.setViewportSize({ width: visual.width, height: visual.height });
-      await waitForPage(page, visual.route);
-      await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}' });
-      const buffer = await page.screenshot({ path: `screenshots/regression-actual/${visual.name}.png`, fullPage: true });
-      const hash = createHash('sha256').update(buffer).digest('hex');
-      actual[visual.name] = hash;
-      if (!baseline[visual.name] || baseline[visual.name] !== hash) {
-        mismatches.push(`${visual.name}: expected ${baseline[visual.name] || '<unset>'}, actual ${hash}`);
-      }
-    }
-
-    assert.equal(
-      mismatches.length,
-      0,
-      `Visual regression mismatch. Review screenshots/regression-actual artifacts, then explicitly update screenshots/visual-baseline.json if the change is intended.\n${mismatches.join('\n')}\nSuggested baseline:\n${JSON.stringify(actual, null, 2)}`
-    );
-  } else {
+const runVisualChecks = async (page) => {
+  if (!process.env.CI) {
     console.log('INFO: visual screenshot hash comparison is CI-only to avoid OS font-rendering noise.');
+    return;
   }
 
-  await context.close();
-} finally {
-  await browser.close();
+  const baseline = JSON.parse(await readFile('screenshots/visual-baseline.json', 'utf8'));
+  const actual = {};
+  const mismatches = [];
+
+  for (const visual of visualCases) {
+    await page.setViewportSize({ width: visual.width, height: visual.height });
+    await waitForPage(page, visual.route);
+    await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}' });
+    const buffer = await page.screenshot({ path: `screenshots/regression-actual/${visual.name}.png`, fullPage: true });
+    const hash = createHash('sha256').update(buffer).digest('hex');
+    actual[visual.name] = hash;
+    if (!baseline[visual.name] || baseline[visual.name] !== hash) {
+      mismatches.push(`${visual.name}: expected ${baseline[visual.name] || '<unset>'}, actual ${hash}`);
+    }
+  }
+
+  assert.equal(
+    mismatches.length,
+    0,
+    `Visual regression mismatch. Review screenshots/regression-actual artifacts, then explicitly update screenshots/visual-baseline.json if the change is intended.\n${mismatches.join('\n')}\nSuggested baseline:\n${JSON.stringify(actual, null, 2)}`
+  );
+};
+
+await mkdir('screenshots/regression-actual', { recursive: true });
+
+for (const [name, type] of browserTypes) {
+  const browser = await type.launch({ headless: true });
+  try {
+    const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+    const page = await context.newPage();
+
+    for (const route of routes) {
+      await waitForPage(page, route);
+    }
+    console.log(`PASS: ${name} route, h1 and overflow checks.`);
+
+    if (name === 'chromium') {
+      await runResponsiveChecks(page);
+      await runAxeChecks(page);
+      await runVisualChecks(page);
+    }
+
+    await context.close();
+  } finally {
+    await browser.close();
+  }
 }
 
 console.log('PASS: cross-browser routes, breakpoint ±1px checks, mobile/tablet/desktop axe scans, and CI visual regression checks.');
