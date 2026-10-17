@@ -5,31 +5,41 @@ require_once ABSPATH . 'wp-admin/includes/image.php';
 update_option('yohaku_demo_mode', 1);
 
 $home = untrailingslashit(home_url());
-$existing_navigation = get_page_by_path('primary-navigation', OBJECT, 'wp_navigation');
-if (!$existing_navigation) {
-    $navigation_links = [
+$navigation_posts = get_posts([
+    'post_type' => 'wp_navigation',
+    'post_status' => 'publish',
+    'name' => 'primary-navigation',
+    'numberposts' => 1,
+]);
+if (!$navigation_posts) {
+    $navigation_blocks = [];
+    foreach ([
         ['私たちについて', $home . '/about/'],
         ['サービス', $home . '/services/'],
         ['お知らせ', $home . '/news/'],
         ['会社概要', $home . '/company/'],
         ['お問い合わせ', $home . '/contact/'],
-    ];
-    $navigation_content = '';
-    foreach ($navigation_links as [$label, $url]) {
-        $navigation_content .= '<!-- wp:navigation-link ' . wp_json_encode([
-            'label' => $label,
-            'type' => 'custom',
-            'url' => $url,
-            'kind' => 'custom',
-            'isTopLevelLink' => true,
-        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . ' /-->' . "\n";
+    ] as [$label, $url]) {
+        $navigation_blocks[] = [
+            'blockName' => 'core/navigation-link',
+            'attrs' => [
+                'label' => $label,
+                'type' => 'custom',
+                'url' => $url,
+                'kind' => 'custom',
+                'isTopLevelLink' => true,
+            ],
+            'innerBlocks' => [],
+            'innerHTML' => '',
+            'innerContent' => [],
+        ];
     }
     $navigation_id = wp_insert_post([
         'post_type' => 'wp_navigation',
         'post_status' => 'publish',
         'post_name' => 'primary-navigation',
         'post_title' => 'メインナビゲーション',
-        'post_content' => $navigation_content,
+        'post_content' => serialize_blocks($navigation_blocks),
     ], true);
     if (is_wp_error($navigation_id)) { throw new RuntimeException($navigation_id->get_error_message()); }
 }
@@ -82,7 +92,7 @@ update_option('date_format','Y.m.d');
 update_option('default_comment_status','closed');
 update_option('default_ping_status','closed');
 update_option('posts_per_page',6);
-update_option('blog_public',0); // Demo should not be indexed.
+update_option('blog_public',0);
 update_option('WPLANG','ja');
 foreach (['hello-world','sample-page','privacy-policy'] as $slug) {
     $default = get_page_by_path($slug, OBJECT, ['post','page']);

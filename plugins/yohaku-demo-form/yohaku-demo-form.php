@@ -11,6 +11,27 @@ function yohaku_demo_is_enabled() {
     return (bool) get_option('yohaku_demo_mode');
 }
 
+function yohaku_demo_primary_navigation() {
+    $posts = get_posts([
+        'post_type' => 'wp_navigation',
+        'post_status' => 'publish',
+        'name' => 'primary-navigation',
+        'numberposts' => 1,
+        'suppress_filters' => false,
+    ]);
+    return $posts ? $posts[0] : null;
+}
+
+add_filter('block_core_navigation_render_fallback', function ($fallback_blocks) {
+    if (!yohaku_demo_is_enabled()) { return $fallback_blocks; }
+    $navigation = yohaku_demo_primary_navigation();
+    if (!$navigation || !$navigation->post_content) { return $fallback_blocks; }
+    $blocks = array_values(array_filter(parse_blocks($navigation->post_content), static function ($block) {
+        return !empty($block['blockName']);
+    }));
+    return $blocks ?: $fallback_blocks;
+});
+
 add_action('wp_enqueue_scripts', function () {
     if (!yohaku_demo_is_enabled()) { return; }
     wp_enqueue_style('yohaku-portfolio-demo', plugins_url('demo.css', __FILE__), [], '1.1.0');
@@ -45,6 +66,7 @@ add_action('wp_dashboard_setup', function () {
                 <a href="<?php echo esc_url($front_edit); ?>"><strong>TOPページを編集</strong><span>コピーやセクションをブロックエディターで変更</span></a>
                 <a href="<?php echo esc_url(admin_url('post-new.php')); ?>"><strong>お知らせを追加</strong><span>投稿すると一覧へ自動反映</span></a>
                 <a href="<?php echo esc_url(admin_url('upload.php')); ?>"><strong>画像を差し替え</strong><span>メディアから画像を追加・置換</span></a>
+                <a href="<?php echo esc_url(admin_url('site-editor.php?path=/navigation')); ?>"><strong>ナビゲーションを編集</strong><span>WordPress標準のNavigationからメニューを変更</span></a>
                 <a href="<?php echo esc_url(admin_url('site-editor.php')); ?>"><strong>サイト全体を編集</strong><span>ヘッダー・フッター・スタイルを確認</span></a>
             </div>
             <p class="yohaku-demo-dashboard__actions"><a class="button button-primary" href="<?php echo esc_url(home_url('/')); ?>">公開サイトを確認する ↗</a></p>
