@@ -39,6 +39,32 @@ const waitForPage = async (page, route) => {
   assert(overflow <= 1, `${route}: horizontal overflow ${overflow}px`);
 };
 
+const settleVisualPage = async (page) => {
+  await page.evaluate(() => {
+    document.querySelectorAll('img').forEach((image) => {
+      image.loading = 'eager';
+    });
+  });
+  await page.evaluate(async () => {
+    const step = Math.max(Math.floor(window.innerHeight * 0.8), 400);
+    const max = document.documentElement.scrollHeight;
+    for (let y = 0; y < max; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((resolve) => setTimeout(resolve, 35));
+    }
+    window.scrollTo(0, max);
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  });
+  await page.waitForFunction(
+    () => [...document.images].every((image) => image.complete && image.naturalWidth > 0),
+    null,
+    { timeout: 10000 }
+  );
+  await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(100);
+};
+
 const isVisible = async (locator) => (await locator.count()) > 0 && await locator.first().isVisible();
 
 const getNavigationState = async (page) => page.evaluate(() => {
@@ -130,6 +156,7 @@ const runVisualChecks = async (page) => {
     await page.setViewportSize({ width: visual.width, height: visual.height });
     await waitForPage(page, visual.route);
     await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}' });
+    await settleVisualPage(page);
     const buffer = await page.screenshot({ path: `screenshots/regression-actual/${visual.name}.png`, fullPage: true });
     const hash = createHash('sha256').update(buffer).digest('hex');
     actual[visual.name] = hash;
