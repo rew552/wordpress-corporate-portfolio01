@@ -101,6 +101,38 @@ try {
     if (pageMetrics.excerpt) assert(pageMetrics.excerpt.width <= 674, `${route}: page intro exceeds reading measure`);
   }
 
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  {
+    const response = await page.goto(base + '/site-open/', { waitUntil: 'domcontentloaded' });
+    assert(response?.ok(), '/site-open/: failed to load');
+    await page.locator('.post-hero h1').waitFor();
+    const lineLengths = await page.locator('.post-hero h1').evaluate((element) => {
+      const rows = [];
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        for (let index = 0; index < node.textContent.length; index += 1) {
+          const character = node.textContent[index];
+          if (!character.trim()) continue;
+          const range = document.createRange();
+          range.setStart(node, index);
+          range.setEnd(node, index + 1);
+          const rect = range.getBoundingClientRect();
+          if (!rect.width || !rect.height) continue;
+          let row = rows.find((candidate) => Math.abs(candidate.top - rect.top) <= 2);
+          if (!row) {
+            row = { top: rect.top, count: 0 };
+            rows.push(row);
+          }
+          row.count += 1;
+        }
+      }
+      return rows.sort((a, b) => a.top - b.top).map((row) => row.count);
+    });
+    assert(lineLengths.length <= 2, `/site-open/: post title wraps into too many lines (${lineLengths.join(',')})`);
+    assert(lineLengths.length === 1 || lineLengths.at(-1) >= 4, `/site-open/: post title leaves an orphaned Japanese fragment (${lineLengths.join(',')})`);
+  }
+
   console.log('PASS: design review geometry, semantic Japanese wrapping, content measures, CTA hierarchy and wide-screen density.');
   await context.close();
 } finally {
