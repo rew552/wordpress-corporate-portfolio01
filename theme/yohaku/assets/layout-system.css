@@ -72,6 +72,10 @@ body{font-size:var(--yohaku-type-body);line-height:1.85}
  letter-spacing:-.015em;
  text-wrap:wrap;
 }
+.post-hero h1{
+ max-width:18em;
+ font-size:clamp(2.4rem,3.6vw,3.4rem);
+}
 .section-header__title h2,.section-header>h2,.news-head h2,.cms-demo h2,.band h2,.about-story h2,.values-head h2,.process-section h2,.contact-guide h2,.footer-cta h2,.company-stance h2{
  max-width:var(--yohaku-measure-heading);
  font-size:var(--yohaku-type-section-title);
