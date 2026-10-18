@@ -11,6 +11,7 @@ body,button,input,textarea,select{
 }
 body,p,li{line-break:strict;word-break:normal;overflow-wrap:normal}
 .break-anywhere{overflow-wrap:anywhere;word-break:break-word}
+.nowrap-ja{white-space:nowrap}
 h1,h2,h3{text-wrap:wrap}
 .hero-visual figcaption,.hero-meta p,.copyright,.brand-subtitle{color:var(--yohaku-muted-strong)}
 .demo-note{font-size:12px;color:var(--yohaku-muted-strong)}
@@ -42,6 +43,10 @@ h1,h2,h3{text-wrap:wrap}
 .service-row__title-link:hover{text-decoration:underline;text-decoration-thickness:2px}
 .service-row__arrow{min-width:44px;min-height:44px;display:flex;align-items:flex-start;justify-content:flex-end}
 .service-row__arrow span{display:inline-flex;min-width:44px;min-height:44px;align-items:center;justify-content:center}
+
+/* Gutenberg flow layout adds sibling block margins before component CSS runs.
+ * Grid items must start from the same row edge so visual alignment is deterministic. */
+.case-grid>.case-step{margin-block-start:0}
 
 /* Lower-page editorial components. Their global type scale and measures come
  * from layout-system.css; these rules only describe each component's structure. */
