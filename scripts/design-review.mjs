@@ -89,7 +89,14 @@ try {
     }));
     assert.equal(caseMetrics.length, 4, `${width}px: Demo Case must contain four steps`);
 
-    const rowGroups = width >= 1024 ? [[0, 1, 2, 3]] : width >= 768 ? [[0, 1], [2, 3]] : [];
+    const caseColumns = await page.locator('.case-grid').evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(/\s+/).filter(Boolean).length);
+    assert([1, 2, 4].includes(caseColumns), `${width}px: unexpected Demo Case column count ${caseColumns}`);
+    const rowGroups = [];
+    for (let start = 0; start < caseMetrics.length; start += caseColumns) {
+      const count = Math.min(caseColumns, caseMetrics.length - start);
+      const group = Array.from({ length: count }, (_, offset) => start + offset);
+      if (group.length > 1) rowGroups.push(group);
+    }
     for (const group of rowGroups) {
       for (const key of ['containerTop', 'containerBottom', 'labelTop', 'headingTop', 'bodyTop']) {
         const values = group.map((index) => caseMetrics[index][key]);
