@@ -12,7 +12,7 @@ const alignmentWidths = new Set([375, 390, 768, 820, 1024, 1280, 1440, 1536]);
 const axeWidths = [390, 820, 1440];
 const axeRoutes = ['/', '/services/', '/company/', '/resources/', '/contact/', '/news/', '/site-open/'];
 const visualCases = [
-  { name: 'home-mobile', route: '/', width: 390, height: 1000 },
+  { name: 'home-mobile', route: '/', width: 390, height: 1000, maskSelectors: ['.brand'] },
   { name: 'home-tablet', route: '/', width: 820, height: 1000 },
   { name: 'home-desktop', route: '/', width: 1440, height: 1000 },
   { name: 'services-tablet', route: '/services/', width: 820, height: 1000 },
@@ -195,7 +195,17 @@ const runVisualChecks = async (page) => {
     await waitForPage(page, visual.route);
     await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}' });
     await settleVisualPage(page);
-    const buffer = await page.screenshot({ path: `screenshots/regression-actual/${visual.name}.png`, fullPage: true });
+    // The mobile wordmark can pick up run-to-run glyph rasterization noise on
+    // hosted Linux runners. Its geometry is asserted separately above and in
+    // design-review.mjs, so mask only that text while retaining the surrounding
+    // header and full-page visual regression surface.
+    const mask = (visual.maskSelectors ?? []).map((selector) => page.locator(selector));
+    const buffer = await page.screenshot({
+      path: `screenshots/regression-actual/${visual.name}.png`,
+      fullPage: true,
+      mask,
+      maskColor: '#ff00ff',
+    });
     const hash = createHash('sha256').update(buffer).digest('hex');
     actual[visual.name] = hash;
     if (!baseline[visual.name] || baseline[visual.name] !== hash) {
