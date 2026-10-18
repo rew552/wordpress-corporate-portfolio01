@@ -8,7 +8,7 @@
  --yohaku-measure-reading:42rem;
  --yohaku-measure-heading:18em;
  --yohaku-page-gutter:clamp(20px,4vw,64px);
- --yohaku-type-display:clamp(2.75rem,4.6vw,4.5rem);
+ --yohaku-type-display:clamp(2.75rem,4.3vw,4rem);
  --yohaku-type-page-title:clamp(2.5rem,4vw,3.75rem);
  --yohaku-type-section-title:clamp(2rem,3vw,3rem);
  --yohaku-type-component-title:clamp(1.375rem,1.8vw,1.75rem);
@@ -275,6 +275,6 @@ body{font-size:var(--yohaku-type-body);line-height:1.85}
 
 @media(min-width:1536px){
  .hero-grid{gap:88px}
- .hero h1{font-size:4.5rem}
+ .hero h1{font-size:4rem}
  .cms-demo-grid{gap:76px}
 }
