@@ -12,12 +12,12 @@
 - `theme.json` v3
 - Portfolio Demo Bar / Dashboard Guide / CMSデモセクションの存在
 - favicon / OGPアセットの存在
-- READMEのCMS訴求・管理画面スクリーンショット
+- READMEの公開サイト / 管理画面Launchリンク
 - `section-shell / section-header / split-grid / content-measure / wide-content` の定義とTOPでの利用
 - 日本語向け `max-width` に `ch` が再導入されていないこと
 - TOPで Approach が CMS Demo より先に配置されていること
 - Newsのfeatured / compact editorial layoutとDemo Caseの存在
-- Issue #6の統一breakpoint（Mobile 767px以下 / Tablet 768〜1023px / Desktop 1024px以上）
+- 統一breakpoint（Mobile 767px以下 / Tablet 768〜1023px / Desktop 1024px以上）
 - Skip Link / main landmark / current navigation stateの回帰ガード
 - ServicesのTitleリンクとPattern構造ロック
 - Company / Resources / Single PostのEditorial layout
@@ -35,15 +35,13 @@ Playgroundをローカル起動し、以下を自動確認する。
 - Breakpoint境界値：375 / 390 / 599 / 600 / 601 / 760 / 761 / 767 / 768 / 781 / 782 / 783 / 820 / 900 / 960 / 1023 / 1024 / 1280 / 1440 / 1536px
 - Header NavigationのOverlay切替、Header CTA、Demo Bar utility link、Services grid track数
 - Chromium 390 / 820 / 1440px で axe WCAG 2 A / AA・2.1 A / AAのserious / critical違反
-- CI上でスクリーンショットを生成し、復号後のRGB画素SHA-256 baselineと一致すること
+- CI上でスクリーンショットを一時生成し、復号後のRGB画素SHA-256 baselineと一致すること
 
 WebKitはSafari相当エンジンの回帰試験であり、macOS / iOS実機Safariそのものを保証するものではない。
 
 ## Visual Regression Test
 
-Visual Regressionの正本は `screenshots/visual-baseline.json`。CIのUbuntu + Chromium環境でフルページスクリーンショットを生成し、PNGを復号した後のRGB画素列に対するSHA-256を比較する。PNG圧縮表現の差は判定対象にせず、実際に描画された画素は厳密に比較する。
-
-対象：
+Visual Regressionの正本は `screenshots/visual-baseline.json`。CIのUbuntu + Chromium環境でフルページスクリーンショットを一時生成し、PNGを復号した後のRGB画素列に対するSHA-256を比較する。PNG圧縮表現の差は判定対象にせず、実際に描画された画素は厳密に比較する。
 
 | ケース | 幅 | 対象 |
 |---|---:|---|
@@ -55,15 +53,13 @@ Visual Regressionの正本は `screenshots/visual-baseline.json`。CIのUbuntu +
 
 撮影前には全画像の読み込みに加えて `HTMLImageElement.decode()` の完了を待ち、遅延decodeによる未描画をbaseline差分として扱わない。`home-mobile` はGitHub Hosted Runnerで1px単位の字形ラスタライズ差が確認されたヘッダーのブランド文字だけをマスクし、同じブランド表記でもフッターを含むその他の領域は比較対象に残す。
 
-差分が出た場合、CIはbaselineを自動更新しない。`visual-regression-actual` Artifactを目視確認し、意図した変更である場合のみ `screenshots/visual-baseline.json` を明示的に更新する。またVisual Regression差分が見つかってもFirefox / WebKitのルート・`h1`・overflow検査は最後まで実行し、1つの差分でクロスブラウザ検証結果を失わない。
+差分が出た場合、CIはbaselineを自動更新しない。`visual-regression-actual` Artifactを目視確認し、意図した変更である場合のみ `screenshots/visual-baseline.json` を明示的に更新する。Visual Regression差分が見つかってもFirefox / WebKitのルート・`h1`・overflow検査は最後まで実行し、1つの差分でクロスブラウザ検証結果を失わない。
 
 OSごとのフォントレンダリング差をbaselineとして誤検知しないため、Visual Regressionのハッシュ比較はCI環境のみで実行する。ローカルではレイアウト・axe・クロスブラウザ検査を実施する。
 
-## ビジュアルレビュー
+## 手動レビュー
 
-既存のポートフォリオ紹介用スクリーンショットは、README等での見た目確認用として維持する。Visual Regressionの自動判定とは責務を分離し、CIから自動コミットしない。
-
-手動レビューでは最低限、390 / 820 / 1024 / 1440pxを確認する。
+必要に応じて390 / 820 / 1024 / 1440pxを目視確認する。
 
 - Header / Navigation / Demo Barが同じbreakpoint思想で切り替わる
 - Services / Process / Demo Caseが中間幅で窮屈にならない
@@ -89,17 +85,15 @@ OSごとのフォントレンダリング差をbaselineとして誤検知しな�
 | キーボード | Skip Link・フォーカス表示・標準Navigation・フォームラベル |
 | JavaScript | 一連操作でpageerror 0件 |
 
-Issue #1以降は、見た目の変更による基本回帰を `npm run quality` へ寄せ、CMSの保存操作などWordPress管理画面固有の操作は必要に応じて手動確認する。
+見た目の変更による基本回帰は `npm run quality` へ寄せ、CMSの保存操作などWordPress管理画面固有の操作は必要に応じて手動確認する。
 
 ## 推奨リリース前確認
 
 - 実機iPhone / AndroidでTOP、ナビ、問い合わせを目視
 - macOS Safari最新版でTOP、主要下層、管理画面への導線を目視
-- 390 / 820 / 1024 / 1440pxでHeader・Services・News・Company・Resourcesを目視
 - CMSでTOPコピー変更 → 更新 → 公開画面確認
 - 新規投稿 → TOP / News一覧への反映
 - 画像差し替え → 公開画面確認
-- Lighthouseを参考値として確認
 - OGPデバッガー等、本番公開先でのSNSカード確認
 
 ## 再現手順
@@ -112,4 +106,4 @@ npx playwright install chromium firefox webkit
 npm run quality
 ```
 
-公開先は `rew552/wordpress-corporate-portfolio01`。Playgroundの公開サイト用・管理画面用Blueprint URLをそれぞれ生成する。
+公開先は `rew552/wordpress-corporate-portfolio01`。Playgroundの公開サイト用・管理画面用Blueprint URLをそれぞれ利用する。
