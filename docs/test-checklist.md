@@ -35,13 +35,13 @@ Playgroundをローカル起動し、以下を自動確認する。
 - Breakpoint境界値：375 / 390 / 599 / 600 / 601 / 760 / 761 / 767 / 768 / 781 / 782 / 783 / 820 / 900 / 960 / 1023 / 1024 / 1280 / 1440 / 1536px
 - Header NavigationのOverlay切替、Header CTA、Demo Bar utility link、Services grid track数
 - Chromium 390 / 820 / 1440px で axe WCAG 2 A / AA・2.1 A / AAのserious / critical違反
-- CI上でスクリーンショットを生成し、SHA-256 baselineと一致すること
+- CI上でスクリーンショットを生成し、復号後のRGB画素SHA-256 baselineと一致すること
 
 WebKitはSafari相当エンジンの回帰試験であり、macOS / iOS実機Safariそのものを保証するものではない。
 
 ## Visual Regression Test
 
-Visual Regressionの正本は `screenshots/visual-baseline.json`。CIのUbuntu + Chromium環境でフルページスクリーンショットを生成し、PNGのSHA-256を比較する。
+Visual Regressionの正本は `screenshots/visual-baseline.json`。CIのUbuntu + Chromium環境でフルページスクリーンショットを生成し、PNGを復号した後のRGB画素列に対するSHA-256を比較する。PNG圧縮表現の差は判定対象にせず、実際に描画された画素は厳密に比較する。
 
 対象：
 
@@ -53,7 +53,9 @@ Visual Regressionの正本は `screenshots/visual-baseline.json`。CIのUbuntu +
 | `services-tablet` | 820px | Services Tablet |
 | `single-desktop` | 1440px | News Single Desktop |
 
-差分が出た場合、CIはbaselineを自動更新しない。`visual-regression-actual` Artifactを目視確認し、意図した変更である場合のみ `screenshots/visual-baseline.json` を明示的に更新する。
+撮影前には全画像の読み込みに加えて `HTMLImageElement.decode()` の完了を待ち、遅延decodeによる未描画をbaseline差分として扱わない。`home-mobile` はGitHub Hosted Runnerで1px単位の字形ラスタライズ差が確認されたヘッダーのブランド文字だけをマスクし、同じブランド表記でもフッターを含むその他の領域は比較対象に残す。
+
+差分が出た場合、CIはbaselineを自動更新しない。`visual-regression-actual` Artifactを目視確認し、意図した変更である場合のみ `screenshots/visual-baseline.json` を明示的に更新する。またVisual Regression差分が見つかってもFirefox / WebKitのルート・`h1`・overflow検査は最後まで実行し、1つの差分でクロスブラウザ検証結果を失わない。
 
 OSごとのフォントレンダリング差をbaselineとして誤検知しないため、Visual Regressionのハッシュ比較はCI環境のみで実行する。ローカルではレイアウト・axe・クロスブラウザ検査を実施する。
 
