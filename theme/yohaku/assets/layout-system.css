@@ -42,6 +42,7 @@
  width:min(100%,var(--yohaku-container-default));
  margin-inline:auto;
 }
+.section-header{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--yohaku-grid-gap)}
 .service-index,.case-grid,.news-featured,.news-compact{
  width:min(100%,var(--yohaku-container-editorial));
  margin-inline:auto;
