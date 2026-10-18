@@ -1,7 +1,31 @@
 {
-  "home-mobile": "9bf70c28ff38f297f1e771e3b2cacbb99a4024d69c43936003e03d49ced866a7",
-  "home-tablet": "8dac9f8aa0d93bd2c569ee2af8946e9dd60b211dfa262219095957f98333e4f9",
-  "home-desktop": "b3f5b9cf32219d518f509738078719bdb92cfc36739c1cecad7131e4e0d95c2f",
-  "services-tablet": "a32c09e242ee800ef882d3a587e33a427455789187e0407748c69b1aa331a327",
-  "single-desktop": "652d0aa2e82f15064ebd73255cee9eb530060ff8a6406a86c9dc3fe3d61035c5"
+  "version": 2,
+  "algorithm": "sha256-rgb-pixels",
+  "cases": {
+    "home-mobile": {
+      "width": 390,
+      "height": 8635,
+      "sha256": "e552ec4a36772c31821924648f3535ca6bbe685193d9b1c6593f3cf90d3454ca"
+    },
+    "home-tablet": {
+      "width": 820,
+      "height": 6872,
+      "sha256": "77af10ab9175acbb5912db34e6a2883b6ee706c74c5b0a37bd951ce941a912f1"
+    },
+    "home-desktop": {
+      "width": 1440,
+      "height": 6191,
+      "sha256": "d3167def83523a7765bfaf6ec9bb7b64902594f9a4118099fefef34159481f0f"
+    },
+    "services-tablet": {
+      "width": 820,
+      "height": 4264,
+      "sha256": "17fdec5838adc01dfd4e2b268e119c144d2805e2ce8a87427527734c4bfabc5c"
+    },
+    "single-desktop": {
+      "width": 1440,
+      "height": 1897,
+      "sha256": "7482d86e5fa115588a7e47c1da5e297eea411ccfc35b41cd6519661740fc19c6"
+    }
+  }
 }

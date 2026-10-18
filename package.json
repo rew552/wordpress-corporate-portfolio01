@@ -10,7 +10,8 @@
     "build": "node scripts/build.mjs",
     "start": "wp-playground-cli server --blueprint=blueprint.json --port=9400",
     "validate": "node scripts/validate.mjs",
-    "quality:browser": "node scripts/quality.mjs",
+    "quality:design": "node scripts/design-review.mjs",
+    "quality:browser": "node scripts/design-review.mjs && node scripts/quality.mjs",
     "quality": "node scripts/run-quality.mjs"
   },
   "devDependencies": {
