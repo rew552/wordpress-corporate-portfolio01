@@ -3,6 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdir, readFile } from 'node:fs/promises';
+import { inflateSync } from 'node:zlib';
 
 const base = 'http://127.0.0.1:9400';
 const routes = ['/', '/about/', '/services/', '/company/', '/resources/', '/contact/', '/news/', '/site-open/', '/definitely-not-found/'];
@@ -12,7 +13,7 @@ const alignmentWidths = new Set([375, 390, 768, 820, 1024, 1280, 1440, 1536]);
 const axeWidths = [390, 820, 1440];
 const axeRoutes = ['/', '/services/', '/company/', '/resources/', '/contact/', '/news/', '/site-open/'];
 const visualCases = [
-  { name: 'home-mobile', route: '/', width: 390, height: 1000, maskSelectors: ['.brand'] },
+  { name: 'home-mobile', route: '/', width: 390, height: 1000, maskSelectors: ['.site-header .brand'] },
   { name: 'home-tablet', route: '/', width: 820, height: 1000 },
   { name: 'home-desktop', route: '/', width: 1440, height: 1000 },
   { name: 'services-tablet', route: '/services/', width: 820, height: 1000 },
@@ -44,6 +45,7 @@ const settleVisualPage = async (page) => {
   await page.evaluate(() => {
     document.querySelectorAll('img').forEach((image) => {
       image.loading = 'eager';
+      image.decoding = 'sync';
     });
   });
   await page.evaluate(async () => {
@@ -61,9 +63,20 @@ const settleVisualPage = async (page) => {
     null,
     { timeout: 10000 }
   );
+  await page.evaluate(async () => {
+    await Promise.all([...document.images].map(async (image) => {
+      if (typeof image.decode !== 'function') return;
+      try {
+        await image.decode();
+      } catch {
+        // naturalWidth is asserted above; decode() can still reject for browser-specific reasons.
+      }
+    }));
+  });
   await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
   await page.evaluate(() => window.scrollTo(0, 0));
-  await page.waitForTimeout(100);
+  await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  await page.waitForTimeout(150);
 };
 
 const isVisible = async (locator) => (await locator.count()) > 0 && await locator.first().isVisible();
@@ -180,13 +193,111 @@ const runAxeChecks = async (page) => {
   console.log('PASS: mobile/tablet/desktop axe scans.');
 };
 
+const paethPredictor = (left, up, upLeft) => {
+  const estimate = left + up - upLeft;
+  const leftDistance = Math.abs(estimate - left);
+  const upDistance = Math.abs(estimate - up);
+  const upLeftDistance = Math.abs(estimate - upLeft);
+  if (leftDistance <= upDistance && leftDistance <= upLeftDistance) return left;
+  return upDistance <= upLeftDistance ? up : upLeft;
+};
+
+const decodePngRgb = (buffer) => {
+  const pngSignature = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
+  assert(buffer.subarray(0, 8).equals(pngSignature), 'Visual regression screenshot is not a PNG');
+
+  let offset = 8;
+  let width;
+  let height;
+  let bitDepth;
+  let colorType;
+  let compressionMethod;
+  let filterMethod;
+  let interlaceMethod;
+  const idatChunks = [];
+
+  while (offset < buffer.length) {
+    const chunkLength = buffer.readUInt32BE(offset);
+    offset += 4;
+    const chunkType = buffer.toString('ascii', offset, offset + 4);
+    offset += 4;
+    const chunkData = buffer.subarray(offset, offset + chunkLength);
+    offset += chunkLength + 4; // Skip data and CRC.
+
+    if (chunkType === 'IHDR') {
+      width = chunkData.readUInt32BE(0);
+      height = chunkData.readUInt32BE(4);
+      bitDepth = chunkData[8];
+      colorType = chunkData[9];
+      compressionMethod = chunkData[10];
+      filterMethod = chunkData[11];
+      interlaceMethod = chunkData[12];
+    } else if (chunkType === 'IDAT') {
+      idatChunks.push(chunkData);
+    } else if (chunkType === 'IEND') {
+      break;
+    }
+  }
+
+  assert.equal(bitDepth, 8, 'Visual regression PNG must use 8-bit channels');
+  assert([2, 6].includes(colorType), `Unsupported visual regression PNG color type: ${colorType}`);
+  assert.equal(compressionMethod, 0, 'Unsupported PNG compression method');
+  assert.equal(filterMethod, 0, 'Unsupported PNG filter method');
+  assert.equal(interlaceMethod, 0, 'Interlaced visual regression PNGs are unsupported');
+
+  const bytesPerPixel = colorType === 2 ? 3 : 4;
+  const stride = width * bytesPerPixel;
+  const inflated = inflateSync(Buffer.concat(idatChunks));
+  assert.equal(inflated.length, (stride + 1) * height, 'Unexpected visual regression PNG data length');
+
+  const decoded = Buffer.alloc(stride * height);
+  let sourceOffset = 0;
+  for (let y = 0; y < height; y += 1) {
+    const filterType = inflated[sourceOffset];
+    sourceOffset += 1;
+    const rowStart = y * stride;
+    const previousRowStart = (y - 1) * stride;
+
+    for (let x = 0; x < stride; x += 1) {
+      const raw = inflated[sourceOffset];
+      sourceOffset += 1;
+      const left = x >= bytesPerPixel ? decoded[rowStart + x - bytesPerPixel] : 0;
+      const up = y > 0 ? decoded[previousRowStart + x] : 0;
+      const upLeft = y > 0 && x >= bytesPerPixel ? decoded[previousRowStart + x - bytesPerPixel] : 0;
+      let value;
+
+      if (filterType === 0) value = raw;
+      else if (filterType === 1) value = (raw + left) & 0xff;
+      else if (filterType === 2) value = (raw + up) & 0xff;
+      else if (filterType === 3) value = (raw + Math.floor((left + up) / 2)) & 0xff;
+      else if (filterType === 4) value = (raw + paethPredictor(left, up, upLeft)) & 0xff;
+      else assert.fail(`Unsupported PNG scanline filter: ${filterType}`);
+
+      decoded[rowStart + x] = value;
+    }
+  }
+
+  if (colorType === 2) return { width, height, rgb: decoded };
+
+  const rgb = Buffer.alloc(width * height * 3);
+  for (let source = 0, target = 0; source < decoded.length; source += 4, target += 3) {
+    rgb[target] = decoded[source];
+    rgb[target + 1] = decoded[source + 1];
+    rgb[target + 2] = decoded[source + 2];
+  }
+  return { width, height, rgb };
+};
+
 const runVisualChecks = async (page) => {
   if (!process.env.CI) {
-    console.log('INFO: visual screenshot hash comparison is CI-only to avoid OS font-rendering noise.');
-    return;
+    console.log('INFO: visual raw-pixel comparison is CI-only to avoid OS font-rendering noise.');
+    return [];
   }
 
   const baseline = JSON.parse(await readFile('screenshots/visual-baseline.json', 'utf8'));
+  assert.equal(baseline.version, 2, 'Visual regression baseline version must be 2');
+  assert.equal(baseline.algorithm, 'sha256-rgb-pixels', 'Unexpected visual regression baseline algorithm');
+
   const actual = {};
   const mismatches = [];
 
@@ -195,10 +306,9 @@ const runVisualChecks = async (page) => {
     await waitForPage(page, visual.route);
     await page.addStyleTag({ content: '*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}' });
     await settleVisualPage(page);
-    // The mobile wordmark can pick up run-to-run glyph rasterization noise on
-    // hosted Linux runners. Its geometry is asserted separately above and in
-    // design-review.mjs, so mask only that text while retaining the surrounding
-    // header and full-page visual regression surface.
+    // The mobile header wordmark can pick up one-pixel glyph rasterization noise on
+    // hosted Linux runners. Geometry is asserted independently, so mask only that
+    // header text while keeping the footer brand and the rest of the page strict.
     const mask = (visual.maskSelectors ?? []).map((selector) => page.locator(selector));
     const buffer = await page.screenshot({
       path: `screenshots/regression-actual/${visual.name}.png`,
@@ -206,22 +316,33 @@ const runVisualChecks = async (page) => {
       mask,
       maskColor: '#ff00ff',
     });
-    const hash = createHash('sha256').update(buffer).digest('hex');
-    actual[visual.name] = hash;
-    if (!baseline[visual.name] || baseline[visual.name] !== hash) {
-      mismatches.push(`${visual.name}: expected ${baseline[visual.name] || '<unset>'}, actual ${hash}`);
+    const decoded = decodePngRgb(buffer);
+    const sha256 = createHash('sha256').update(decoded.rgb).digest('hex');
+    actual[visual.name] = { width: decoded.width, height: decoded.height, sha256 };
+
+    const expected = baseline.cases?.[visual.name];
+    if (!expected) {
+      mismatches.push(`${visual.name}: baseline is missing`);
+      continue;
+    }
+    if (expected.width !== decoded.width || expected.height !== decoded.height) {
+      mismatches.push(`${visual.name}: expected ${expected.width}x${expected.height}, actual ${decoded.width}x${decoded.height}`);
+      continue;
+    }
+    if (expected.sha256 !== sha256) {
+      mismatches.push(`${visual.name}: expected ${expected.sha256}, actual ${sha256}`);
     }
   }
 
-  assert.equal(
-    mismatches.length,
-    0,
-    `Visual regression mismatch. Review screenshots/regression-actual artifacts, then explicitly update screenshots/visual-baseline.json if the change is intended.\n${mismatches.join('\n')}\nSuggested baseline:\n${JSON.stringify(actual, null, 2)}`
-  );
+  if (mismatches.length === 0) console.log('PASS: CI visual regression raw-pixel checks.');
+  else console.log(`INFO: queued ${mismatches.length} visual regression mismatch(es); cross-browser checks will still complete.`);
+
+  return { mismatches, actual };
 };
 
 await mkdir('screenshots/regression-actual', { recursive: true });
 
+let visualResult = { mismatches: [], actual: {} };
 for (const [name, type] of browserTypes) {
   const browser = await type.launch({ headless: true });
   try {
@@ -236,7 +357,7 @@ for (const [name, type] of browserTypes) {
     if (name === 'chromium') {
       await runResponsiveChecks(page);
       await runAxeChecks(page);
-      await runVisualChecks(page);
+      visualResult = await runVisualChecks(page);
     }
 
     await context.close();
@@ -244,5 +365,11 @@ for (const [name, type] of browserTypes) {
     await browser.close();
   }
 }
+
+assert.equal(
+  visualResult.mismatches.length,
+  0,
+  `Visual regression mismatch. Review screenshots/regression-actual artifacts, then explicitly update screenshots/visual-baseline.json if the change is intended.\n${visualResult.mismatches.join('\n')}\nSuggested baseline cases:\n${JSON.stringify(visualResult.actual, null, 2)}`
+);
 
 console.log('PASS: cross-browser routes, breakpoint ±1px checks, shared-container alignment, CMS action fit, mobile/tablet/desktop axe scans, and CI visual regression checks.');
