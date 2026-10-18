@@ -4,7 +4,6 @@ import assert from 'node:assert/strict';
 const base = 'http://127.0.0.1:9400';
 const widths = [375, 768, 1024, 1440, 1536, 1920];
 
-const px = (value) => Number.parseFloat(value || '0');
 const centerY = (rect) => rect.top + rect.height / 2;
 
 const browser = await chromium.launch({ headless: true });
@@ -79,7 +78,8 @@ try {
     if (width >= 1024) {
       const sectionHeadingLines = await page.locator('.section-header__title h2').evaluateAll((headings) => headings.map((heading) => {
         const style = getComputedStyle(heading);
-        return heading.getBoundingClientRect().height / px(style.lineHeight);
+        const lineHeight = Number.parseFloat(style.lineHeight);
+        return heading.getBoundingClientRect().height / lineHeight;
       }));
       for (const lines of sectionHeadingLines) {
         assert(lines <= 2.35, `${width}px: a top-level section heading grows beyond two editorial lines (${lines.toFixed(2)})`);
@@ -93,10 +93,9 @@ try {
     assert(response?.ok(), `${route}: failed to load`);
     await page.locator('main').waitFor();
     const pageMetrics = await page.evaluate(() => {
-      const h1 = document.querySelector('.page-header h1')?.getBoundingClientRect();
       const content = document.querySelector('.page-header-grid')?.getBoundingClientRect();
       const excerpt = document.querySelector('.page-header .wp-block-post-excerpt')?.getBoundingClientRect();
-      return { h1, content, excerpt };
+      return { content, excerpt };
     });
     assert(pageMetrics.content && pageMetrics.content.width <= 1182, `${route}: page header exceeds default content measure`);
     if (pageMetrics.excerpt) assert(pageMetrics.excerpt.width <= 674, `${route}: page intro exceeds reading measure`);
