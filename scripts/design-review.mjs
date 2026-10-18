@@ -2,9 +2,23 @@ import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 
 const base = 'http://127.0.0.1:9400';
-const widths = [375, 768, 1024, 1440, 1536, 1920];
+const widths = [375, 390, 768, 820, 1024, 1440, 1536, 1920];
 
 const centerY = (rect) => rect.top + rect.height / 2;
+const spread = (values) => Math.max(...values) - Math.min(...values);
+
+async function assertSingleLinePhrase(page, selector, expected, width) {
+  const phrase = page.locator(selector);
+  assert.equal(await phrase.count(), 1, `${width}px: expected one ${expected} phrase guard`);
+  const metrics = await phrase.evaluate((element) => ({
+    text: element.textContent,
+    whiteSpace: getComputedStyle(element).whiteSpace,
+    rectCount: element.getClientRects().length,
+  }));
+  assert.equal(metrics.text, expected, `${width}px: guarded phrase text changed`);
+  assert.equal(metrics.whiteSpace, 'nowrap', `${width}px: ${expected} must remain nowrap`);
+  assert.equal(metrics.rectCount, 1, `${width}px: ${expected} split across visual lines`);
+}
 
 const browser = await chromium.launch({ headless: true });
 try {
@@ -60,6 +74,70 @@ try {
     }));
     for (const travel of cmsTravel) {
       assert(travel <= 12, `${width}px: CMS utility action is horizontally detached from its label (${travel}px)`);
+    }
+
+    const caseMetrics = await page.locator('.case-step').evaluateAll((steps) => steps.map((step) => {
+      const rect = (selector) => step.querySelector(selector)?.getBoundingClientRect() ?? null;
+      const container = step.getBoundingClientRect();
+      return {
+        containerTop: container.top,
+        containerBottom: container.bottom,
+        labelTop: rect('.number-label')?.top ?? null,
+        headingTop: rect('h3')?.top ?? null,
+        bodyTop: rect('p:not(.number-label)')?.top ?? null,
+      };
+    }));
+    assert.equal(caseMetrics.length, 4, `${width}px: Demo Case must contain four steps`);
+
+    const caseColumns = await page.locator('.case-grid').evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(/\s+/).filter(Boolean).length);
+    assert([1, 2, 4].includes(caseColumns), `${width}px: unexpected Demo Case column count ${caseColumns}`);
+    const rowGroups = [];
+    for (let start = 0; start < caseMetrics.length; start += caseColumns) {
+      const count = Math.min(caseColumns, caseMetrics.length - start);
+      const group = Array.from({ length: count }, (_, offset) => start + offset);
+      if (group.length > 1) rowGroups.push(group);
+    }
+    for (const group of rowGroups) {
+      for (const key of ['containerTop', 'containerBottom', 'labelTop', 'headingTop', 'bodyTop']) {
+        const values = group.map((index) => caseMetrics[index][key]);
+        assert(values.every(Number.isFinite), `${width}px: missing ${key} metric in Demo Case`);
+        assert(spread(values) <= 2, `${width}px: Demo Case ${key} differs by ${spread(values).toFixed(2)}px`);
+      }
+    }
+
+    await assertSingleLinePhrase(page, '.demo-case .section-header__title h2 .nowrap-ja', 'サイト', width);
+    await assertSingleLinePhrase(page, '.demo-case .section-header__copy .nowrap-ja', 'います', width);
+
+    const headingRows = await page.locator('.section-header__title h2, .news-head h2, .cms-demo h2').evaluateAll((headings) => headings.map((heading) => {
+      const rows = [];
+      const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        for (let index = 0; index < node.textContent.length; index += 1) {
+          const character = node.textContent[index];
+          if (!character.trim()) continue;
+          const range = document.createRange();
+          range.setStart(node, index);
+          range.setEnd(node, index + 1);
+          const rect = range.getBoundingClientRect();
+          if (!rect.width || !rect.height) continue;
+          let row = rows.find((candidate) => Math.abs(candidate.top - rect.top) <= 2);
+          if (!row) {
+            row = { top: rect.top, count: 0 };
+            rows.push(row);
+          }
+          row.count += 1;
+        }
+      }
+      return {
+        text: heading.textContent.trim(),
+        counts: rows.sort((a, b) => a.top - b.top).map((row) => row.count),
+      };
+    }));
+    for (const heading of headingRows) {
+      if (heading.counts.length > 1) {
+        assert(heading.counts.at(-1) >= 3, `${width}px: section heading leaves a 1-2 character orphan: ${heading.text} (${heading.counts.join(',')})`);
+      }
     }
 
     if (width >= 1024) {
@@ -133,7 +211,7 @@ try {
     assert(lineLengths.length === 1 || lineLengths.at(-1) >= 4, `/site-open/: post title leaves an orphaned Japanese fragment (${lineLengths.join(',')})`);
   }
 
-  console.log('PASS: design review geometry, semantic Japanese wrapping, content measures, CTA hierarchy and wide-screen density.');
+  console.log('PASS: design review geometry, Demo Case alignment, Japanese wrapping, content measures, CTA hierarchy and wide-screen density.');
   await context.close();
 } finally {
   await browser.close();

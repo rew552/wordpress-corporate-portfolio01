@@ -4,18 +4,18 @@
   "cases": {
     "home-mobile": {
       "width": 390,
-      "height": 8635,
-      "sha256": "e552ec4a36772c31821924648f3535ca6bbe685193d9b1c6593f3cf90d3454ca"
+      "height": 8563,
+      "sha256": "c69ff88a2738dcb0103d473de757ddfefd657631699b7459e3074bd9b13ac369"
     },
     "home-tablet": {
       "width": 820,
-      "height": 6872,
-      "sha256": "77af10ab9175acbb5912db34e6a2883b6ee706c74c5b0a37bd951ce941a912f1"
+      "height": 6824,
+      "sha256": "9abe03b01740ee39780ecc263162f3b295f8a82409032314ce9ce87623691c76"
     },
     "home-desktop": {
       "width": 1440,
-      "height": 6191,
-      "sha256": "d3167def83523a7765bfaf6ec9bb7b64902594f9a4118099fefef34159481f0f"
+      "height": 6167,
+      "sha256": "9e096082a4486d627a540d58537dfe27274b90f336c22c4d7a5d9d1cb5bb3a6b"
     },
     "services-tablet": {
       "width": 820,
