@@ -13,7 +13,7 @@
 | `plugins/yohaku-demo-form/` | Playground でだけ必要なデモバー、管理画面ガイド、非送信フォーム |
 | `demo/content/` | Playground 起動時に投入する編集可能なコンテンツの原稿 |
 | `demo/setup.php` | 新規 Playground を初期化する信頼済みブートストラップ処理 |
-| `scripts/build.mjs` | ソースから Blueprint、Launch 用生成物、README を再生成 |
+| `scripts/build.mjs` | ソースから Canonical Blueprint と公開 / 管理画面用 Launch Blueprint を再生成 |
 | `scripts/audit-source.mjs` | 公開ソースの静的な衛生・セキュリティ境界チェック |
 | `scripts/validate.mjs` | Blueprint と生成物、主要な機能・回帰条件の静的検証 |
 
@@ -45,10 +45,10 @@ CSS は役割の異なる3層に分けています。`site.css` を基本コン�
 | `blueprint.json` | `theme/`、`plugins/`、`demo/`、`scripts/build.mjs` |
 | `demo/launch-blueprint.json` | 同上 |
 | `demo/admin-launch-blueprint.json` | 同上 |
-| `demo/launch.html` | `scripts/build.mjs` |
-| `README.md` | `README.template.md` + `scripts/build.mjs` |
 
 巨大な base64 + zlib ペイロードは Launch URL を短く保つための生成結果です。人がレビューするべき実装は `theme/`、`plugins/`、`demo/`、`scripts/` にあり、圧縮ペイロードを手編集する必要はありません。`.gitattributes` でも生成物を明示しています。
+
+`README.md` は生成物ではなく、公開ポートフォリオの入口として直接編集します。
 
 変更時の基本フローは次の通りです。
 
@@ -72,6 +72,7 @@ npm run validate
 - theme / plugin の出力で escape API を使っていること
 - 秘密鍵、APIキーらしい代入、個人PCのローカルパス、個人 Gmail アドレスが公開対象ソースへ混入していないこと
 - 生成物と編集元の境界が `scripts/build.mjs` に残っていること
+- `README.md` がビルドから上書きされないこと
 
 これは専用のセキュリティスキャナを置き換えるものではありませんが、自主制作ポートフォリオとして意図しない情報や暫定コードを公開しないための回帰ガードです。
 

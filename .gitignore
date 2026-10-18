@@ -16,3 +16,4 @@ wp-content/uploads/
 coverage/
 test-results/
 playwright-report/
+screenshots/regression-actual/

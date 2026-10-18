@@ -6,8 +6,6 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const GENERATED_FILES = new Set([
   'blueprint.json',
-  'README.md',
-  'demo/launch.html',
   'demo/launch-blueprint.json',
   'demo/admin-launch-blueprint.json',
 ]);
@@ -87,7 +85,7 @@ assert(setupPhp.includes('JSON_THROW_ON_ERROR'), 'Seed JSON parsing must fail lo
 
 const publicTextFiles = [
   ...runtimeFiles,
-  'README.template.md',
+  'README.md',
   'scripts/build.mjs',
   'scripts/validate.mjs',
   '.gitignore',
@@ -110,11 +108,10 @@ for (const path of publicTextFiles) {
 
 const buildScript = await read('scripts/build.mjs');
 for (const generatedPath of GENERATED_FILES) {
-  if (generatedPath === 'README.md' || generatedPath === 'blueprint.json') {
-    continue;
-  }
+  if (generatedPath === 'blueprint.json') continue;
   assert(buildScript.includes(generatedPath), `Build script must identify generated artifact: ${generatedPath}`);
 }
-assert(buildScript.includes('README.template.md'), 'README.template.md must remain the README source of truth');
+assert(!buildScript.includes('README.template.md'), 'README must remain a directly edited source file');
+assert(!buildScript.includes("writeFile(absolutePath('README.md')"), 'Build must not overwrite README.md');
 
 console.log('PASS: public-source hygiene, demo security boundaries, capability checks, escaping, and generated/source separation.');
