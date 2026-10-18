@@ -110,6 +110,24 @@ function yohaku_normalize_image_labels(string $block_content): string {
 }
 
 /**
+ * Keep short semantic Japanese phrases together in the bundled demo copy.
+ *
+ * Japanese line breaking normally permits breaks between kana characters. For
+ * copy where a split is visibly awkward, wrap only the smallest meaningful
+ * phrase instead of disabling wrapping for the whole heading or paragraph.
+ */
+function yohaku_preserve_demo_copy_phrases(string $block_content): string {
+    return str_replace(
+        ['サイト設計', '構成しています。'],
+        [
+            '<span class="nowrap-ja">サイト</span>設計',
+            '構成して<span class="nowrap-ja">います</span>。',
+        ],
+        $block_content
+    );
+}
+
+/**
  * Improve rendered block semantics without moving authored content into PHP.
  *
  * @param string $block_content Rendered block HTML.
@@ -129,6 +147,10 @@ function yohaku_filter_rendered_block(string $block_content, array $block): stri
 
     if ($block_name === 'core/image') {
         $block_content = yohaku_normalize_image_labels($block_content);
+    }
+
+    if (in_array($block_name, ['core/heading', 'core/paragraph'], true)) {
+        $block_content = yohaku_preserve_demo_copy_phrases($block_content);
     }
 
     return $block_content;
