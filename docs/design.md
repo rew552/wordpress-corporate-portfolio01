@@ -40,7 +40,7 @@ WordPressの `theme.json` は `contentSize: 760px / wideSize: 1440px`。ただ�
 
 役割は次の通り。
 
-- Display / Hero: `clamp(2.75rem, 4.6vw, 4.5rem)`、line-height 1.16。最大化より意味単位の改行を優先。
+- Display / Hero: `clamp(2.75rem, 4.3vw, 4rem)`、line-height 1.16。最大64pxに抑え、意味単位の改行を優先。
 - Page H1: `clamp(2.5rem, 4vw, 3.75rem)`、line-height 1.22。
 - Section H2: `clamp(2rem, 3vw, 3rem)`、line-height 1.3。
 - Component H3: `clamp(1.375rem, 1.8vw, 1.75rem)`。
