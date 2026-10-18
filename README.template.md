@@ -88,9 +88,25 @@ Playgroundはデモ専用の使い捨て環境です。変更はGitHubのソー�
 
 配色は深いグリーン / オフホワイト / ライムを軸にし、日本語の折り返し、行間、余白、Editorial Layoutを調整しています。外部フォント・外部画像サービス・アクセス解析への依存はありません。
 
+## コード品質と生成物
+
+公開リポジトリ自体も制作物としてレビューされる前提で、テーマ・デモ用プラグイン・Playground初期化・生成処理の責務を分離しています。詳細なレビュー方針、セキュリティ境界、CSSレイヤーの役割は [docs/code-quality.md](docs/code-quality.md) にまとめています。
+
+人が読むべき主なソースは `theme/`、`plugins/`、`demo/`、`scripts/` です。以下は `npm run build` が作る生成物なので、base64 + zlib の大きなペイロードを手編集する必要はありません。
+
+- `blueprint.json`
+- `demo/launch-blueprint.json`
+- `demo/admin-launch-blueprint.json`
+- `demo/launch.html`
+- `README.md`（編集元は `README.template.md`）
+
+`.gitattributes` でも生成物を明示し、GitHub 上でソースコードと生成結果の区別がつくようにしています。
+
 ## 品質確認
 
-`npm run validate` ではBlueprint、公開サイト / 管理画面Launch URL、生成物とソースの整合性、CMSデモ導線などを静的検証します。
+`npm run audit` では、公開ソースにデバッグ残骸・危険なデモJS依存・独自リクエスト処理・権限チェック漏れ・秘密情報らしい文字列が混入していないかを静的確認します。
+
+`npm run validate` では上記監査に加えて、Blueprint、公開サイト / 管理画面Launch URL、生成物とソースの整合性、CMSデモ導線などを静的検証します。
 
 `npm run quality` ではローカルPlaygroundを起動し、**Chromium / Firefox / WebKit**、375 / 390 / 768 / 1024 / 1440px、主要ページ、404、横スクロール、h1、axeによるWCAG A/AAのserious / critical違反を確認します。
 
@@ -102,6 +118,7 @@ Node.js **24.18.0以上** とnpmをご用意ください。PHP・MySQL・Docker�
 
 ```sh
 npm ci
+npm run audit
 npm run build
 npm run validate
 npm start
@@ -114,19 +131,20 @@ npx playwright install chromium firefox webkit
 npm run quality
 ```
 
-テーマ・デモコンテンツを変更したら `npm run build` でBlueprint、公開サイトLaunch、管理画面Launch、READMEを再生成します。READMEの編集元は `README.template.md` です。
+テーマ・デモコンテンツを変更したら `npm run build` でBlueprint、公開サイトLaunch、管理画面Launch、READMEを再生成します。READMEの編集元は `README.template.md` です。生成物は直接編集しません。
 
 ## リポジトリ構成
 
 ```text
 .
 ├── theme/yohaku/             # 自作Block Theme
-├── plugins/yohaku-demo-form/ # CMSデモガイド + デモフォーム
+├── plugins/yohaku-demo-form/ # CMSデモガイド + 非送信デモフォーム
 ├── demo/                     # 初期コンテンツ・初期化・生成Launch Blueprint
-├── scripts/                  # build / validate / browser quality
-├── blueprint.json            # Playground用Blueprint
-├── docs/                     # 要件・設計・検証記録・公開手順
+├── scripts/                  # build / source audit / validate / browser quality
+├── blueprint.json            # buildで生成するPlayground Blueprint
+├── docs/                     # 要件・設計・コード品質・検証記録・公開手順
 ├── screenshots/              # 実WordPress上の確認画像
+├── .gitattributes            # 生成物をGitHub上で明示
 ├── README.template.md        # README編集元
 └── README.md                 # buildで生成
 ```
