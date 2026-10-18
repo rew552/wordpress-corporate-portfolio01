@@ -13,7 +13,7 @@ const alignmentWidths = new Set([375, 390, 768, 820, 1024, 1280, 1440, 1536]);
 const axeWidths = [390, 820, 1440];
 const axeRoutes = ['/', '/services/', '/company/', '/resources/', '/contact/', '/news/', '/site-open/'];
 const visualCases = [
-  { name: 'home-mobile', route: '/', width: 390, height: 1000, maskSelectors: ['.site-header .brand'] },
+  { name: 'home-mobile', route: '/', width: 390, height: 1000, maskSelectors: ['.site-header .brand'], maskPadding: 1 },
   { name: 'home-tablet', route: '/', width: 820, height: 1000 },
   { name: 'home-desktop', route: '/', width: 1440, height: 1000 },
   { name: 'services-tablet', route: '/services/', width: 820, height: 1000 },
@@ -288,6 +288,40 @@ const decodePngRgb = (buffer) => {
   return { width, height, rgb };
 };
 
+const normalizeMaskFringe = ({ rgb, width, height }, padding) => {
+  if (!padding) return;
+
+  let minX = width;
+  let minY = height;
+  let maxX = -1;
+  let maxY = -1;
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      const index = (y * width + x) * 3;
+      if (rgb[index] === 255 && rgb[index + 1] === 0 && rgb[index + 2] === 255) {
+        minX = Math.min(minX, x);
+        minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x);
+        maxY = Math.max(maxY, y);
+      }
+    }
+  }
+  assert(maxX >= 0, 'Expected screenshot mask pixels were not found');
+
+  minX = Math.max(0, minX - padding);
+  minY = Math.max(0, minY - padding);
+  maxX = Math.min(width - 1, maxX + padding);
+  maxY = Math.min(height - 1, maxY + padding);
+  for (let y = minY; y <= maxY; y += 1) {
+    for (let x = minX; x <= maxX; x += 1) {
+      const index = (y * width + x) * 3;
+      rgb[index] = 255;
+      rgb[index + 1] = 0;
+      rgb[index + 2] = 255;
+    }
+  }
+};
+
 const runVisualChecks = async (page) => {
   if (!process.env.CI) {
     console.log('INFO: visual raw-pixel comparison is CI-only to avoid OS font-rendering noise.');
@@ -308,7 +342,7 @@ const runVisualChecks = async (page) => {
     await settleVisualPage(page);
     // The mobile header wordmark can pick up one-pixel glyph rasterization noise on
     // hosted Linux runners. Geometry is asserted independently, so mask only that
-    // header text while keeping the footer brand and the rest of the page strict.
+    // header text and normalize a one-pixel fringe around the mask for antialiasing.
     const mask = (visual.maskSelectors ?? []).map((selector) => page.locator(selector));
     const buffer = await page.screenshot({
       path: `screenshots/regression-actual/${visual.name}.png`,
@@ -317,6 +351,7 @@ const runVisualChecks = async (page) => {
       maskColor: '#ff00ff',
     });
     const decoded = decodePngRgb(buffer);
+    normalizeMaskFringe(decoded, visual.maskPadding ?? 0);
     const sha256 = createHash('sha256').update(decoded.rgb).digest('hex');
     actual[visual.name] = { width: decoded.width, height: decoded.height, sha256 };
 
