@@ -1,87 +1,280 @@
-/* Issue #9: shared container, header composition and editorial spacing system. */
+/* Issue #11: semantic layout, typography, spacing and CTA system.
+ * Responsibility: this is the final design-system layer. site.css owns component
+ * skins; quality-polish.css owns accessibility/resilience. */
 :root{
- --yohaku-container-max:1440px;
+ --yohaku-container-wide:1440px;
+ --yohaku-container-default:1180px;
+ --yohaku-container-editorial:1280px;
+ --yohaku-measure-reading:42rem;
+ --yohaku-measure-heading:18em;
  --yohaku-page-gutter:clamp(20px,4vw,64px);
- --yohaku-section-space:clamp(88px,8vw,120px);
+ --yohaku-type-display:clamp(2.75rem,4.6vw,4.5rem);
+ --yohaku-type-page-title:clamp(2.5rem,4vw,3.75rem);
+ --yohaku-type-section-title:clamp(2rem,3vw,3rem);
+ --yohaku-type-component-title:clamp(1.375rem,1.8vw,1.75rem);
+ --yohaku-type-lead:clamp(1.0625rem,1.15vw,1.25rem);
+ --yohaku-type-body:1rem;
+ --yohaku-type-small:.875rem;
+ --yohaku-type-meta:.75rem;
+ --yohaku-space-section:clamp(84px,7.5vw,112px);
+ --yohaku-space-section-compact:clamp(68px,6vw,88px);
+ --yohaku-space-section-header:clamp(40px,4vw,60px);
+ --yohaku-space-heading-copy:clamp(14px,1.4vw,20px);
+ --yohaku-space-copy-action:clamp(22px,2.2vw,30px);
+ --yohaku-space-component:clamp(22px,2.4vw,32px);
+ --yohaku-grid-gap:clamp(32px,4vw,64px);
+ --yohaku-control-height:44px;
+ --yohaku-control-height-compact:38px;
 }
 
-/* Header/footer template parts sit outside the root-padded main flow, so recreate
- * the same 1440px content container + fluid gutter explicitly. */
+/* Wide shell versus readable content. The outer alignwide shell remains the
+ * common 1440px alignment reference; inner editorial grids intentionally do not
+ * stretch just because the canvas is wide. */
 .site-header,.site-footer{
  box-sizing:border-box;
- width:min(100%,calc(var(--yohaku-container-max) + var(--yohaku-page-gutter) + var(--yohaku-page-gutter)));
+ width:min(100%,calc(var(--yohaku-container-wide) + var(--yohaku-page-gutter) + var(--yohaku-page-gutter)));
  max-width:none!important;
  margin-inline:auto;
  padding-inline:var(--yohaku-page-gutter);
 }
-/* The constrained footer wrapper receives root padding from WordPress; the footer
- * owns the shared gutter itself, so remove the duplicate outer inset. */
 .footer-wrap{padding-inline:0!important}
+.hero-grid,.section-header,.split-grid,.cms-demo-grid,.page-header-grid,.about-story-grid,.values-section,.contact-layout{
+ width:min(100%,var(--yohaku-container-default));
+ margin-inline:auto;
+}
+.service-index,.case-grid,.news-featured,.news-compact{
+ width:min(100%,var(--yohaku-container-editorial));
+ margin-inline:auto;
+}
+.content-measure,.section-header__copy,.hero-lead,.cms-demo__lead,.page-header .wp-block-post-excerpt,.footer-brand-copy{
+ max-width:var(--yohaku-measure-reading);
+}
 
-/* Header: three stable regions instead of a two-sided space-between layout. */
+/* Role-based type hierarchy. Japanese headings use restrained tracking and
+ * explicit measures rather than width-driven balance wrapping. */
+body{font-size:var(--yohaku-type-body);line-height:1.85}
+.hero h1{
+ max-width:var(--yohaku-measure-heading);
+ font-size:var(--yohaku-type-display);
+ line-height:1.16;
+ font-weight:650;
+ letter-spacing:-.025em;
+ text-wrap:wrap;
+ margin:18px 0 var(--yohaku-space-heading-copy);
+}
+.hero-title__line{display:block;white-space:nowrap}
+.page-header h1,.post-hero h1{
+ max-width:15em;
+ font-size:var(--yohaku-type-page-title);
+ line-height:1.22;
+ font-weight:650;
+ letter-spacing:-.015em;
+ text-wrap:wrap;
+}
+.section-header__title h2,.section-header>h2,.news-head h2,.cms-demo h2,.band h2,.about-story h2,.values-head h2,.process-section h2,.contact-guide h2,.footer-cta h2,.company-stance h2{
+ max-width:var(--yohaku-measure-heading);
+ font-size:var(--yohaku-type-section-title);
+ line-height:1.3;
+ font-weight:650;
+ letter-spacing:-.01em;
+ text-wrap:wrap;
+}
+.service-row h3,.case-step h3,.value-row h3,.service-detail h2,.resource-card h2,.post-body h2,.post-body h3{
+ font-weight:650;
+ letter-spacing:0;
+ text-wrap:wrap;
+}
+.service-row h3,.value-row h3{font-size:var(--yohaku-type-component-title);line-height:1.4}
+.section-lead,.page-lead,.company-intro,.resources-intro{font-size:var(--yohaku-type-lead);line-height:1.8}
+.eyebrow,.number-label,.service-row__number,.service-row__keyword,.brand-subtitle,.hero-meta p,.copyright,.resource-card__meta{
+ font-size:var(--yohaku-type-meta);
+ line-height:1.5;
+}
+.eyebrow,.number-label,.service-row__number,.service-row__keyword,.resource-card__meta{letter-spacing:.14em}
+
+/* Editorial rhythm: section changes are generous; related content stays close. */
+.section-shell{padding-block:var(--yohaku-space-section)}
+.approach,.cms-demo{padding-block:var(--yohaku-space-section-compact)}
+.hero{padding-block:clamp(78px,7vw,104px) clamp(88px,8vw,116px)}
+.section-header{margin-bottom:var(--yohaku-space-section-header)}
+.approach .section-header{margin-bottom:0}
+.news-head{width:min(100%,var(--yohaku-container-default));margin-inline:auto;margin-bottom:clamp(32px,3vw,44px)}
+.section-header__title .eyebrow,.news-head .eyebrow{margin-bottom:14px}
+.section-header__copy>.section-lead{margin-bottom:var(--yohaku-space-heading-copy)}
+.section-header__copy>p:last-child{margin-bottom:0}
+.hero-lead{font-size:clamp(1.05rem,1.15vw,1.2rem);line-height:1.85;margin-bottom:var(--yohaku-space-copy-action)}
+.about-story{margin-bottom:var(--yohaku-space-section)}
+.process-section{margin-top:var(--yohaku-space-section-compact)}
+.site-footer{padding-block:clamp(68px,6vw,92px) 30px}
+
+/* CTA hierarchy: primary, secondary and utility links should not compete. */
+.wp-block-button__link,.demo-form button,.wp-block-search__button{
+ min-height:var(--yohaku-control-height);
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ border-radius:4px;
+ padding:11px 20px;
+ font-size:.8125rem;
+ font-weight:700;
+ line-height:1.2;
+ letter-spacing:.01em;
+}
+.wp-block-button.is-style-outline .wp-block-button__link{
+ background:transparent;
+ border:1px solid color-mix(in srgb,var(--yohaku-forest) 55%,transparent);
+ box-shadow:none;
+}
+.rule-link,.cms-demo-item a{
+ font-size:.8125rem;
+ font-weight:700;
+ line-height:1.5;
+ text-decoration:none;
+ border-bottom:1px solid currentColor;
+ padding-bottom:2px;
+}
+.header-cta .wp-block-button__link{
+ min-height:var(--yohaku-control-height-compact);
+ padding:8px 15px;
+ font-size:.75rem;
+}
+.hero .wp-block-buttons{gap:10px 12px}
+.hero .wp-block-button__link{min-width:142px}
+.cms-demo .wp-block-buttons{gap:10px 12px;margin-top:var(--yohaku-space-copy-action)}
+.band .wp-block-button__link{background:var(--yohaku-lime);color:var(--yohaku-forest);border-color:transparent}
+
+/* Header optical alignment. Navigation and CTA expose the same 38px visual
+ * center while the brand keeps its own two-level wordmark rhythm. */
 .site-header{
  display:grid;
- grid-template-columns:minmax(280px,1fr) max-content max-content;
+ grid-template-columns:minmax(260px,1fr) max-content max-content;
  align-items:center;
- column-gap:clamp(24px,3vw,44px);
- row-gap:12px;
- padding-block:22px;
+ column-gap:clamp(20px,2.4vw,36px);
+ row-gap:10px;
+ padding-block:18px;
 }
-.header-brand{min-width:0;gap:16px}
+.header-brand{min-width:0;gap:14px;align-items:center;align-self:center}
+.brand{line-height:1.08}
 .brand,.brand-subtitle{white-space:nowrap}
-.header-navigation{justify-self:end;min-width:0}
-.header-navigation .wp-block-navigation__container{gap:clamp(18px,1.8vw,28px)}
-.header-cta{justify-self:end;margin:0}
-.header-cta .wp-block-button__link{padding-inline:18px}
+.brand-subtitle{margin:1px 0 0;line-height:1.35}
+.header-navigation{justify-self:end;align-self:center;min-width:0;line-height:1.2}
+.header-navigation .wp-block-navigation__container{align-items:center;gap:clamp(17px,1.6vw,25px)}
+.header-navigation .wp-block-navigation-item__content{display:flex;align-items:center;min-height:var(--yohaku-control-height-compact);line-height:1.2}
+.header-cta{justify-self:end;align-self:center;margin:0}
+.header-cta .wp-block-button{margin:0}
 
-/* Editorial rhythm: generous section separation, denser content inside each section. */
-.section-shell{padding-block:var(--yohaku-section-space)}
-.hero{padding-block:clamp(88px,8vw,116px) clamp(96px,9vw,132px)}
-.section-header{margin-bottom:clamp(44px,4vw,64px)}
-.news-head{margin-bottom:clamp(36px,3vw,48px)}
-.site-footer{padding-block:clamp(72px,7vw,104px) 32px}
+/* Hero composition: a calmer display scale and a deliberate text/image balance. */
+.hero-grid{
+ grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);
+ gap:clamp(52px,5.6vw,88px);
+ align-items:center;
+}
+.hero-copy{max-width:44rem;padding-right:0}
+.hero-meta{max-width:42rem;margin-top:clamp(34px,3.5vw,44px)}
+.hero-visual{width:min(100%,480px);justify-self:end}
 
-/* CMS demo: reserve space for the action column and keep the copy readable. */
+/* CMS Demo is an experience path rather than a stretched admin table. */
 .cms-demo-grid{
- grid-template-columns:minmax(0,2fr) minmax(0,3fr);
- gap:clamp(48px,5vw,80px);
+ grid-template-columns:minmax(0,.95fr) minmax(420px,1.05fr);
+ gap:clamp(52px,5vw,76px);
+ align-items:start;
 }
-.cms-demo-list{min-width:0}
+.cms-demo-grid>div:first-child{max-width:var(--yohaku-measure-reading)}
+.cms-demo h2{margin:0 0 var(--yohaku-space-heading-copy)}
+.cms-demo__lead{font-size:var(--yohaku-type-body);line-height:1.85}
+.cms-demo-list{width:min(100%,590px);justify-self:end;border-top:1px solid #c5d0c2}
 .cms-demo-item{
- grid-template-columns:52px minmax(0,1fr) minmax(116px,max-content);
- gap:16px 24px;
- padding:22px 0;
+ display:grid;
+ grid-template-columns:36px minmax(0,1fr);
+ gap:5px 16px;
+ align-items:start;
+ padding:20px 0;
+ border-bottom:1px solid #c5d0c2;
 }
-.cms-demo-item>p{min-width:0}
-.cms-demo-item>p:last-child{justify-self:end;text-align:right}
-.cms-demo-item a{white-space:nowrap}
+.cms-demo-item>.number-label{grid-row:1/3;padding-top:2px}
+.cms-demo-item>p{min-width:0;margin:0;font-size:.875rem;line-height:1.65}
+.cms-demo-item>p:last-child{grid-column:2;justify-self:start;text-align:left;margin-top:2px}
+.cms-demo-item a{white-space:normal}
+.cms-demo .demo-note{max-width:34rem;margin-top:16px;line-height:1.7}
+
+/* Lower pages inherit the same measures and rhythm. */
+.page-header{padding-block:clamp(64px,6vw,88px) clamp(44px,4vw,60px)}
+.page-header-grid{align-items:end}
+.page-header .wp-block-post-excerpt{justify-self:end}
+.page-content>.wp-block-post-content{padding-top:clamp(56px,5.5vw,76px)}
+.page-lead{max-width:var(--yohaku-measure-reading);margin-bottom:clamp(36px,4vw,48px)}
+.about-story-grid{gap:clamp(48px,5vw,72px)}
+.about-story-grid>div:first-child>p:not(.eyebrow):not(.page-lead){max-width:var(--yohaku-measure-reading)}
+.values-head{width:100%}
+.value-row p:last-child{max-width:var(--yohaku-measure-reading)}
+.service-detail,.process-section,.company-intro,.company-profile,.company-stance,.resource-grid{
+ width:min(100%,var(--yohaku-container-default));
+ margin-inline:auto;
+}
+.company-intro,.resources-intro{max-width:var(--yohaku-measure-reading)}
+.post-hero{max-width:var(--yohaku-container-default);margin-inline:auto}
+.post-body{max-width:var(--yohaku-measure-reading)}
+
+/* Brand grammar: lime is an accent, rules organize content, and radii stay
+ * restrained. Avoid introducing decorative shapes outside these roles. */
+.eyebrow{margin-bottom:14px}
+.band{border-radius:8px}
+.news-featured .wp-block-post-featured-image img,.post-hero .wp-block-post-featured-image img{border-radius:4px}
 
 @media(min-width:768px) and (max-width:1023px){
- :root{--yohaku-section-space:clamp(76px,9vw,92px)}
- .site-header{
-  grid-template-columns:minmax(0,1fr) auto auto;
-  column-gap:16px;
-  padding-block:18px;
+ :root{
+  --yohaku-space-section:clamp(72px,8vw,88px);
+  --yohaku-space-section-compact:clamp(62px,7vw,76px);
+  --yohaku-space-section-header:clamp(36px,4.8vw,48px);
  }
+ .site-header{grid-template-columns:minmax(0,1fr) auto auto;column-gap:14px;padding-block:16px}
+ .header-brand{gap:10px}
  .header-navigation{justify-self:end}
- .hero{padding-block:72px clamp(84px,10vw,104px)}
- .section-header{margin-bottom:clamp(40px,5vw,52px)}
- .cms-demo-grid{grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:32px}
- .cms-demo-item{grid-template-columns:44px minmax(0,1fr) minmax(108px,max-content);gap:14px 18px;padding:20px 0}
- .site-footer{padding-block:72px 30px}
+ .hero{padding-block:68px 82px}
+ .hero-grid{grid-template-columns:1fr;gap:42px}
+ .hero-copy{max-width:48rem}
+ .hero-visual{width:min(78%,560px);justify-self:start;margin-top:0}
+ .section-header,.split-grid,.page-header-grid,.about-story-grid,.values-head,.contact-layout,.footer-main{grid-template-columns:1fr}
+ .section-header__copy,.page-header .wp-block-post-excerpt{justify-self:start}
+ .cms-demo-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:34px}
+ .cms-demo-list{width:100%}
+ .site-footer{padding-block:68px 28px}
 }
 
 @media(max-width:767px){
- :root{--yohaku-section-space:clamp(58px,16vw,72px)}
- .site-header{grid-template-columns:minmax(0,1fr) auto;column-gap:14px;padding-block:16px}
- .header-brand{gap:10px}
+ :root{
+  --yohaku-space-section:clamp(58px,15vw,72px);
+  --yohaku-space-section-compact:clamp(52px,13vw,64px);
+  --yohaku-space-section-header:34px;
+  --yohaku-grid-gap:28px;
+ }
+ .site-header{grid-template-columns:minmax(0,1fr) auto;column-gap:12px;padding-block:14px}
+ .header-brand{gap:8px}
  .header-navigation{justify-self:end}
  .wp-block-buttons.header-cta{display:none!important}
- .hero{padding-block:60px 72px}
- .section-header{margin-bottom:36px}
- .cms-demo-grid{grid-template-columns:1fr;gap:34px}
- .cms-demo-item{grid-template-columns:42px minmax(0,1fr);gap:8px 14px;padding:18px 0}
- .cms-demo-item>p:last-child{grid-column:2;justify-self:start;text-align:left}
- .cms-demo-item a{white-space:normal}
- .site-footer{padding-block:58px 26px}
+ .hero{padding-block:56px 68px}
+ .hero-grid{grid-template-columns:1fr;gap:34px}
+ .hero h1{font-size:clamp(2.15rem,9.2vw,3rem);line-height:1.18;letter-spacing:-.018em;margin-bottom:18px}
+ .hero-title__line{white-space:nowrap}
+ .hero-lead{font-size:1rem;line-height:1.85}
+ .hero-visual{width:100%;justify-self:stretch}
+ .hero-meta{grid-template-columns:1fr;gap:8px;margin-top:30px;padding-top:16px}
+ .hero-meta br{display:none}
+ .hero-meta p{display:flex;gap:8px}
+ .section-header,.split-grid,.page-header-grid,.about-story-grid,.values-head,.contact-layout,.footer-main{grid-template-columns:1fr}
+ .section-header__copy,.page-header .wp-block-post-excerpt{justify-self:start}
+ .section-header__title h2,.section-header>h2,.news-head h2,.cms-demo h2,.band h2,.about-story h2,.values-head h2,.process-section h2,.contact-guide h2,.footer-cta h2,.company-stance h2{font-size:clamp(1.8rem,8vw,2.35rem)}
+ .cms-demo-grid{grid-template-columns:1fr;gap:32px}
+ .cms-demo-list{width:100%;justify-self:stretch}
+ .cms-demo-item{grid-template-columns:32px minmax(0,1fr);gap:4px 12px;padding:17px 0}
+ .news-head{grid-template-columns:1fr;align-items:start;gap:20px}
+ .page-header{padding-block:52px 38px}
+ .page-header h1,.post-hero h1{font-size:clamp(2.2rem,9vw,2.8rem)}
+ .site-footer{padding-block:56px 24px}
+}
+
+@media(min-width:1536px){
+ .hero-grid{gap:88px}
+ .hero h1{font-size:4.5rem}
+ .cms-demo-grid{gap:76px}
 }
